@@ -1,0 +1,374 @@
+/* Navbar Dropdown Fix */
+.navbar-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: auto;
+  z-index: 1050;
+  min-width: 250px;
+  margin-top: 0.5rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.navbar-nav-right {
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 15px !important;
+}
+
+.navbar-nav-right .nav-item {
+  position: relative;
+}
+
+.navbar-nav-right .nav-item.dropdown {
+  margin-left: 0 !important;
+}
+
+.dropdown-menu-right {
+  right: 0 !important;
+  left: auto !important;
+}
+
+/* Dil dropdown - Custom dropdown, Bootstrap'tan bağımsız */
+#languageDropdownWrapper {
+  position: relative;
+  z-index: 1001;
+}
+
+.custom-language-dropdown {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: auto !important;
+  transform: translateX(-100%) !important;
+  z-index: 1060 !important;
+  min-width: 200px;
+  background: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  margin-top: 5px;
+  padding: 0;
+}
+
+.custom-language-dropdown .dropdown-item {
+  padding: 0.75rem 1rem;
+  display: block;
+  color: #333;
+  text-decoration: none;
+}
+
+.custom-language-dropdown .dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+.custom-language-dropdown .dropdown-divider {
+  height: 0;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  border-top: 1px solid #e9ecef;
+}
+
+/* Profile dropdown z-index ve spacing */
+#profileDropdownWrapper {
+  position: relative;
+  z-index: 1000;
+}
+
+#profileDropdownMenu {
+  z-index: 1055 !important;
+  margin-top: 5px !important;
+  position: absolute !important;
+  top: 100% !important;
+  right: 0 !important;
+  left: auto !important;
+  transform: translateX(0) !important;
+}
+
+.nav-profile .nav-link {
+  padding: 0.5rem 1rem;
+}
+
+/* Dropdown açıkken diğerlerini kapat */
+.navbar-nav-right .nav-item.dropdown.show .dropdown-menu {
+  display: block !important;
+}
+
+/* Dropdown'lar arası boşluk - Dil dropdown'ı solda, profile sağda */
+#languageDropdownWrapper {
+  margin-right: 15px;
+}
+
+#profileDropdownWrapper {
+  margin-left: 0;
+}
+
+/* Dropdown toggle butonları için padding */
+.navbar-nav-right .nav-link.dropdown-toggle {
+  padding: 0.5rem 1rem !important;
+  white-space: nowrap;
+}
+
+/* Dropdown menu'lerin birbirine girmemesi için */
+.navbar-nav-right .nav-item.dropdown.show {
+  z-index: 1001;
+}
+
+.navbar-nav-right .nav-item.dropdown.show ~ .nav-item.dropdown {
+  z-index: 1000;
+}
+
+/* Dropdown menu'lerin overflow'unu engelle */
+.navbar-nav-right .dropdown-menu {
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.nav-profile-img {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.nav-profile-img img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.availability-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.availability-status.online {
+  background-color: #1bcfb4;
+}
+
+.dropdown-header {
+  padding: 1rem;
+  background-color: #f8f9fa;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+/* Dashboard Card Fix */
+.card-img-absolute {
+  display: none !important; /* Circle resmi gizle */
+}
+
+/* Page Header Fix - Mor çizgiyi kaldır */
+.page-header {
+  border-bottom: none !important;
+  margin-bottom: 20px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 15px !important;
+}
+
+.page-header .page-title {
+  border-left: none !important;
+  padding-left: 0 !important;
+  margin-bottom: 0 !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+.page-header .ml-auto,
+.page-header > .btn,
+.page-header > a {
+  flex: 0 0 auto !important;
+  margin-left: auto !important;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .page-header .ml-auto,
+  .page-header > .btn,
+  .page-header > a {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+.page-title {
+  border-left: none !important;
+  padding-left: 0 !important;
+}
+
+.page-title-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 4px !important;
+}
+
+.page-title-icon i {
+  font-size: 20px !important;
+  line-height: 1 !important;
+}
+
+/* Dashboard kartları için dekoratif circle ekle */
+.card.bg-gradient-danger::before,
+.card.bg-gradient-info::before,
+.card.bg-gradient-success::before,
+.card.bg-gradient-warning::before,
+.card.bg-gradient-primary::before,
+.card.bg-gradient-secondary::before,
+.card.bg-gradient-dark::before {
+  content: '';
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 0;
+}
+
+.card-body {
+  position: relative;
+  z-index: 1;
+}
+
+/* Rehberim sayfası - satıra tıklayınca açılan kart */
+.phonebook-row {
+  cursor: pointer;
+}
+
+.phonebook-row:hover {
+  background-color: rgba(111, 66, 193, 0.08);
+}
+
+.phonebook-details-row .phonebook-card {
+  border-radius: 6px;
+  background: #f8f9fa;
+  padding: 12px 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.phonebook-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.phonebook-card-header .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6f42c1, #9b59b6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.phonebook-card-header .info .name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.phonebook-card-header .info .meta {
+  font-size: 12px;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.phonebook-card-body .phonebook-field .label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6c757d;
+  margin-bottom: 2px;
+}
+
+.phonebook-card-body .phonebook-field .value {
+  font-size: 13px;
+  font-weight: 500;
+  color: #343a40;
+}
+
+.phonebook-details-row {
+  transition: all 0.15s ease;
+}
+
+/* --------------------------------------------------
+   Global Responsive Helpers for Yönetim & Bayi Paneli
+   Admin teması zaten Bootstrap tabanlı, burada ekstra
+   mobil iyileştirmeler yapıyoruz.
+---------------------------------------------------*/
+
+/* 1) Sayfa başlıkları ve butonlar – küçük ekranda alt alta gelsin */
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .page-header .page-title {
+    margin-bottom: 5px !important;
+  }
+
+  .page-header .ml-auto,
+  .page-header > .btn,
+  .page-header > a {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* 2) Tablolar – mobilde yatay scroll ile taşmadan görünsün */
+@media (max-width: 768px) {
+  .table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table th,
+  .table td {
+    white-space: nowrap;
+  }
+}
+
+/* 3) Navbar ve brand alanı – dar ekranda taşmayı engelle */
+@media (max-width: 768px) {
+  .navbar.default-layout-navbar .navbar-brand-wrapper {
+    width: auto !important;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .navbar.default-layout-navbar .navbar-menu-wrapper {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

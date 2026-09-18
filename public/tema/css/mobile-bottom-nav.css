@@ -1,0 +1,392 @@
+/* Mobile Bottom Navigation Bar */
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: linear-gradient(135deg, #1a2332 0%, #2d3e52 100%);
+    border-top: 2px solid rgba(212, 210, 91, 0.5);
+    box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.6);
+    padding: 4px 0;
+    overflow: hidden;
+}
+
+.mobile-bottom-nav-scroll {
+    width: 100%;
+    overflow: hidden;
+}
+
+.mobile-bottom-nav-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.mobile-bottom-nav-items {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 8px;
+    flex-wrap: nowrap;
+    justify-content: space-between; /* Her buton sabit genişlik alacak, aralıklar eşit görünecek */
+    width: 100%;
+}
+
+.mobile-bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 4px;
+    flex: 0 0 20%; /* 5 buton için her biri tam %20 genişlikte */
+    min-width: 0;
+    max-width: 100%;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    position: relative;
+    white-space: nowrap;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 0 2px;
+}
+
+.mobile-bottom-nav-item i {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.mobile-bottom-nav-item span {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.mobile-bottom-nav-item i {
+    font-size: 22px;
+    margin-bottom: 4px;
+    transition: all 0.3s ease;
+}
+
+/* "Daha Fazla" ikonunu biraz daha büyük yap */
+.mobile-bottom-nav-more i {
+    font-size: 24px;
+}
+
+.mobile-bottom-nav-item span {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* Mobile "Daha Fazla" için sol taraftan açılan menü */
+.mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 85%;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    z-index: 10001;
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.16, 0.84, 0.44, 1);
+    overflow-y: auto;
+    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.8);
+}
+
+.mobile-menu.active {
+    transform: translateX(0);
+}
+
+.mobile-menu-header {
+    padding: 15px 18px;
+    border-bottom: 1px solid rgba(212, 210, 91, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.mobile-menu-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.mobile-menu-close:hover {
+    background: rgba(212, 210, 91, 0.2);
+    color: #d4d25b;
+}
+
+.mobile-menu-logo-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.mobile-menu-logo {
+    height: 32px;
+    width: auto;
+    display: block;
+}
+
+.mobile-menu-list {
+    padding: 10px 0 100px 0;
+}
+
+.mobile-menu-item {
+    display: block;
+    padding: 14px 20px;
+    color: #e5e7eb;
+    font-size: 15px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.2s ease;
+}
+
+.mobile-menu-item:hover {
+    background: rgba(212, 210, 91, 0.15);
+    color: #d4d25b;
+    padding-left: 26px;
+}
+
+.mobile-submenu {
+    background: rgba(0, 0, 0, 0.3);
+    display: none;
+}
+
+.mobile-submenu-item {
+    padding-left: 35px !important;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Dropdown aktifken alt menüyü göster */
+.mobile-menu-dropdown.active > .mobile-submenu {
+    display: block;
+}
+
+.mobile-menu-section-title {
+    padding: 20px 20px 8px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #d4d25b;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 10px;
+}
+
+.mobile-menu-section-title:first-child {
+    border-top: none;
+    margin-top: 0;
+}
+
+/* Daha Fazla butonunu en saga it */
+.mobile-bottom-nav-item-more {
+    margin-left: auto;
+}
+
+.mobile-bottom-nav-item:hover:not(.active),
+.mobile-bottom-nav-item:focus:not(.active) {
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.05);
+    text-decoration: none;
+}
+
+.mobile-bottom-nav-item:hover:not(.active) i,
+.mobile-bottom-nav-item:focus:not(.active) i {
+    color: rgba(255, 255, 255, 0.8);
+    transform: scale(1);
+}
+
+.mobile-bottom-nav-item:hover:not(.active) span,
+.mobile-bottom-nav-item:focus:not(.active) span {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.mobile-bottom-nav-item.active {
+    color: #d4d25b !important;
+    background: rgba(212, 210, 91, 0.12) !important;
+    border-radius: 10px;
+}
+
+.mobile-bottom-nav-item.active i {
+    color: #d4d25b !important;
+    transform: scale(1.05);
+}
+
+.mobile-bottom-nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 26px;
+    height: 3px;
+    background: #d4d25b;
+    border-radius: 3px;
+}
+
+.mobile-bottom-nav-item.active span {
+    color: #d4d25b !important;
+}
+
+/* Daha Fazla butonu için özel stil */
+.mobile-bottom-nav-more {
+    flex: 0 0 20%; /* Diğerleriyle aynı genişlikte olsun */
+}
+
+/* Sadece mobil cihazlarda göster */
+@media (max-width: 768px) {
+    .mobile-bottom-nav {
+        display: block !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Bottom nav kaldırıldı — rezerve boşluk da sıfırlandı */
+    body {
+        padding-bottom: 0;
+    }
+
+    .footer {
+        margin-bottom: 0;
+    }
+}
+
+/* Desktop'ta kesinlikle gizle */
+@media (min-width: 769px) {
+    .mobile-bottom-nav {
+        display: none !important;
+        visibility: hidden !important;
+    }
+}
+
+/* Çok küçük ekranlar için */
+@media (max-width: 480px) {
+    .mobile-bottom-nav-items {
+        padding: 0 5px;
+    }
+    
+    .mobile-bottom-nav-item {
+        padding: 6px 3px;
+        margin: 0 1px;
+    }
+    
+    .mobile-bottom-nav-item i {
+        font-size: 20px;
+        margin-bottom: 3px;
+    }
+    
+    .mobile-bottom-nav-item span {
+        font-size: 9px;
+        letter-spacing: 0.3px;
+        line-height: 1.2;
+    }
+}
+
+/* Orta boy ekranlar (481px - 640px) */
+@media (min-width: 481px) and (max-width: 640px) {
+    .mobile-bottom-nav-items {
+        padding: 0 6px;
+    }
+    
+    .mobile-bottom-nav-item {
+        padding: 8px 4px;
+        margin: 0 2px;
+    }
+    
+    .mobile-bottom-nav-item i {
+        font-size: 21px;
+        margin-bottom: 4px;
+    }
+    
+    .mobile-bottom-nav-item span {
+        font-size: 10px;
+        letter-spacing: 0.4px;
+        line-height: 1.2;
+    }
+}
+
+/* Büyük mobil ekranlar (641px - 768px) */
+@media (min-width: 641px) and (max-width: 768px) {
+    .mobile-bottom-nav-items {
+        padding: 0 10px;
+    }
+    
+    .mobile-bottom-nav-item {
+        padding: 8px 5px;
+        margin: 0 2px;
+    }
+    
+    .mobile-bottom-nav-item i {
+        font-size: 23px;
+        margin-bottom: 4px;
+    }
+    
+    .mobile-bottom-nav-item span {
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        line-height: 1.2;
+    }
+}
+
+/* Sepet Badge Stili */
+.mobile-bottom-nav-cart {
+    position: relative;
+}
+
+.mobile-cart-badge {
+    position: absolute;
+    top: 2px;
+    right: 6px;
+    background: #d4d25b;
+    color: #000;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}

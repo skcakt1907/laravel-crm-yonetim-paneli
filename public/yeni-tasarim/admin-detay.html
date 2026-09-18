@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fatura Detay — İş Ortağım Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+* { transition: background-color .4s, color .4s; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Inter', sans-serif; background: #000; color: #fff; }
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+.glass { background: rgba(20,20,20,.85); backdrop-filter: blur(20px); border: 1px solid rgba(250,204,21,.25); }
+body.light { background: #fff; color: #000; }
+body.light .glass { background: rgba(255,255,255,.95); border: 1px solid rgba(0,0,0,.08); box-shadow: 0 4px 20px rgba(0,0,0,.04); }
+body.light .text-white { color: #000 !important; } body.light .text-white\/70 { color: rgba(0,0,0,.7) !important; } body.light .text-white\/60 { color: rgba(0,0,0,.6) !important; } body.light .text-white\/50 { color: rgba(0,0,0,.5) !important; }
+body.light .border-yellow-500\/20 { border-color: rgba(0,0,0,.1) !important; }
+body.light .nav-link { color: #000 !important; }
+.gradient-text { background: linear-gradient(135deg, #fde047, #facc15, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #facc15, #f59e0b); border-radius: 8px; }
+.nav-link { color: #fff; transition: all .3s; text-decoration: none; display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; }
+.nav-link.active { background: linear-gradient(135deg, rgba(250,204,21,.2), rgba(250,204,21,.05)); color: #fde047 !important; border-left: 3px solid #facc15; }
+.nav-link:hover { background: rgba(255,255,255,.05); }
+.emoji-icon { transition: all .3s; font-size: 22px; line-height: 1; display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; }
+.sidebar-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(250,204,21,.5), transparent); margin: 1rem 0; }
+.theme-toggle { position: fixed; top: 20px; right: 24px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #facc15, #f59e0b); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 30px rgba(250,204,21,.4); font-size: 20px; border: none; }
+.theme-toggle:hover { transform: scale(1.1) rotate(15deg); } .theme-toggle .icon-sun { display: none; } body.light .theme-toggle .icon-sun { display: block; } body.light .theme-toggle .icon-moon { display: none; }
+.btn-y { background: linear-gradient(135deg, #facc15, #f59e0b); color: #000; font-weight: 700; padding: 10px 20px; border-radius: 12px; transition: all .3s; box-shadow: 0 8px 20px rgba(250,204,21,.3); }
+.btn-y:hover { transform: translateY(-2px); }
+.btn-o { background: rgba(255,255,255,.05); border: 1px solid rgba(250,204,21,.3); color: #fff; padding: 10px 20px; border-radius: 12px; transition: all .3s; }
+.btn-o:hover { background: rgba(250,204,21,.1); }
+body.light .btn-o { background: rgba(0,0,0,.03); color: #000; }
+.badge { padding: 4px 10px; border-radius: 8px; font-weight: 600; font-size: 11px; display: inline-flex; align-items: center; gap: 4px; }
+.badge-success { background: rgba(16,185,129,.2); color: #6ee7b7; border: 1px solid rgba(16,185,129,.3); }
+.badge-yellow { background: rgba(250,204,21,.2); color: #fde047; border: 1px solid rgba(250,204,21,.3); }
+.info-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(250,204,21,.08); }
+.info-row:last-child { border: none; }
+.info-label { color: rgba(255,255,255,.6); font-size: 14px; }
+body.light .info-label { color: rgba(0,0,0,.6); }
+.info-value { font-weight: 600; }
+.timeline-item { position: relative; padding-left: 32px; padding-bottom: 24px; border-left: 2px solid rgba(250,204,21,.2); margin-left: 12px; }
+.timeline-item:last-child { border-left-color: transparent; }
+.timeline-dot { position: absolute; left: -8px; top: 0; width: 14px; height: 14px; border-radius: 50%; background: linear-gradient(135deg, #facc15, #f59e0b); box-shadow: 0 0 10px rgba(250,204,21,.6); }
+.sidebar-collapsed { width: 80px !important; }
+.sidebar-collapsed .nav-text, .sidebar-collapsed .nav-section, .sidebar-collapsed .logo-text { display: none; }
+</style>
+</head>
+<body>
+<button id="themeToggle" class="theme-toggle"><span class="icon-moon">🌙</span><span class="icon-sun">☀️</span></button>
+
+<div class="flex min-h-screen">
+  <aside id="sidebar" class="hidden lg:flex flex-col w-72 glass border-r border-yellow-500/25 sticky top-0 h-screen overflow-y-auto z-30">
+    <div class="p-6 border-b border-yellow-500/20">
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-black font-extrabold text-xl">İ</div>
+        <div class="logo-text"><div class="font-display font-bold text-lg leading-tight">İş Ortağım</div><div class="text-xs text-yellow-400">Admin Panel</div></div>
+      </a>
+    </div>
+    <nav class="flex-1 p-4 space-y-1">
+      <div class="nav-section text-[10px] font-bold text-yellow-400 uppercase tracking-widest px-3 mb-2">Ana Menü</div>
+      <a href="#" class="nav-link"><span class="emoji-icon">📊</span><span class="nav-text font-medium">Dashboard</span></a>
+      <a href="admin-liste.html" class="nav-link"><span class="emoji-icon">👥</span><span class="nav-text font-medium">Üyeler</span></a>
+      <a href="#" class="nav-link active"><span class="emoji-icon">🧾</span><span class="nav-text font-medium">Faturalar</span></a>
+      <a href="#" class="nav-link"><span class="emoji-icon">📦</span><span class="nav-text font-medium">Paketler</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="#" class="nav-link"><span class="emoji-icon">⚙️</span><span class="nav-text font-medium">Ayarlar</span></a>
+      <a href="#" class="nav-link"><span class="emoji-icon">🚪</span><span class="nav-text font-medium">Çıkış</span></a>
+    </nav>
+  </aside>
+
+  <div class="flex-1 flex flex-col min-w-0">
+    <header class="glass border-b border-yellow-500/20 sticky top-0 z-20">
+      <div class="flex items-center justify-between gap-4 px-4 lg:px-8 h-16">
+        <div class="flex items-center gap-3">
+          <button id="sidebarToggle" class="p-2 hover:bg-yellow-500/10 rounded-lg text-2xl">☰</button>
+          <a href="#" class="text-yellow-400 hover:text-yellow-300 font-semibold text-sm">← Faturalara Dön</a>
+        </div>
+        <div class="flex items-center gap-3 pl-3 border-l border-yellow-500/20">
+          <div class="hidden lg:block text-right"><div class="text-sm font-semibold">Nesimi Ateş</div><div class="text-xs text-yellow-400">Süper Admin</div></div>
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-black font-bold">N</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT: DETAY -->
+    <main class="flex-1 p-4 lg:p-8">
+      <div class="max-w-6xl mx-auto space-y-6">
+        <!-- HEADER -->
+        <div class="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <div class="flex items-center gap-2 text-sm text-white/60 mb-2">
+              <a href="#" class="hover:text-yellow-400">🏠 Anasayfa</a> <span>›</span>
+              <a href="#" class="hover:text-yellow-400">🧾 Faturalar</a> <span>›</span>
+              <span>Detay</span>
+            </div>
+            <h1 class="font-display text-3xl font-extrabold flex items-center gap-3">
+              🧾 Fatura <span class="gradient-text">F-2026-0451</span>
+              <span class="badge badge-success">✅ Ödendi</span>
+            </h1>
+            <p class="text-white/60 mt-1">13 Mayıs 2026, 14:32 — Ahmet Yılmaz</p>
+          </div>
+          <div class="flex gap-2">
+            <button class="btn-o flex items-center gap-2">📧 Mail Gönder</button>
+            <button class="btn-o flex items-center gap-2">🖨️ Yazdır</button>
+            <button class="btn-y flex items-center gap-2">📥 PDF İndir</button>
+          </div>
+        </div>
+
+        <!-- TUTAR ÖZET -->
+        <div class="glass rounded-2xl p-8 bg-gradient-to-br from-yellow-500/10 to-transparent">
+          <div class="grid md:grid-cols-4 gap-6">
+            <div>
+              <div class="text-sm text-white/60 mb-2">💰 Toplam Tutar</div>
+              <div class="font-display text-4xl font-extrabold gradient-text">₺2.499</div>
+              <div class="text-xs text-white/50 mt-1">KDV Dahil</div>
+            </div>
+            <div>
+              <div class="text-sm text-white/60 mb-2">💵 Ara Toplam</div>
+              <div class="font-display text-2xl font-bold">₺2.117</div>
+              <div class="text-xs text-white/50 mt-1">KDV Hariç</div>
+            </div>
+            <div>
+              <div class="text-sm text-white/60 mb-2">📊 KDV (%18)</div>
+              <div class="font-display text-2xl font-bold">₺382</div>
+              <div class="text-xs text-white/50 mt-1">Devlet payı</div>
+            </div>
+            <div>
+              <div class="text-sm text-white/60 mb-2">⚡ Durum</div>
+              <div><span class="badge badge-success text-base">✅ Ödendi</span></div>
+              <div class="text-xs text-white/50 mt-2">14.05.2026 09:15</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+          <!-- SOL: MÜŞTERİ + FATURA BİLGİLERİ -->
+          <div class="lg:col-span-2 space-y-6">
+            <!-- MÜŞTERİ BİLGİLERİ -->
+            <div class="glass rounded-2xl p-6">
+              <h3 class="font-display text-lg font-bold mb-5 flex items-center gap-2">👤 Müşteri Bilgileri</h3>
+              <div class="flex items-center gap-4 mb-4 pb-4 border-b border-yellow-500/10">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-black font-extrabold text-2xl">A</div>
+                <div class="flex-1">
+                  <div class="font-bold text-lg">Ahmet Yılmaz</div>
+                  <div class="text-sm text-white/60">📧 ahmet@yilmaz.com • 📱 +90 555 123 45 67</div>
+                </div>
+                <a href="#" class="btn-o text-sm">👁️ Profili Gör</a>
+              </div>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="info-row"><span class="info-label">🆔 Üye No</span><span class="info-value">#1247</span></div>
+                <div class="info-row"><span class="info-label">🏢 Firma</span><span class="info-value">Yılmaz Tekstil Ltd.</span></div>
+                <div class="info-row"><span class="info-label">📍 Şehir</span><span class="info-value">İstanbul / Kadıköy</span></div>
+                <div class="info-row"><span class="info-label">🎭 Rol</span><span class="info-value"><span class="badge badge-yellow">🏪 Bayi</span></span></div>
+                <div class="info-row md:col-span-2"><span class="info-label">🏠 Adres</span><span class="info-value text-right">Caferağa Mah. Moda Cad. No:42 D:5</span></div>
+              </div>
+            </div>
+
+            <!-- FATURA KALEMLERİ -->
+            <div class="glass rounded-2xl overflow-hidden">
+              <div class="p-6 border-b border-yellow-500/10">
+                <h3 class="font-display text-lg font-bold flex items-center gap-2">📋 Fatura Kalemleri</h3>
+              </div>
+              <table class="w-full">
+                <thead>
+                  <tr class="text-xs uppercase border-b border-yellow-500/10" style="background: rgba(250,204,21,0.05);">
+                    <th class="text-left font-semibold px-6 py-3 text-yellow-400">Açıklama</th>
+                    <th class="text-center font-semibold px-6 py-3 text-yellow-400">Adet</th>
+                    <th class="text-right font-semibold px-6 py-3 text-yellow-400">Birim</th>
+                    <th class="text-right font-semibold px-6 py-3 text-yellow-400">Toplam</th>
+                  </tr>
+                </thead>
+                <tbody class="text-sm">
+                  <tr class="border-b border-yellow-500/5">
+                    <td class="px-6 py-4">
+                      <div class="font-semibold">📦 Profesyonel Web Paketi</div>
+                      <div class="text-xs text-white/50 mt-1">Yıllık abonelik</div>
+                    </td>
+                    <td class="px-6 py-4 text-center">1</td>
+                    <td class="px-6 py-4 text-right">₺1.999</td>
+                    <td class="px-6 py-4 text-right font-bold">₺1.999</td>
+                  </tr>
+                  <tr class="border-b border-yellow-500/5">
+                    <td class="px-6 py-4">
+                      <div class="font-semibold">🌐 Domain (.com)</div>
+                      <div class="text-xs text-white/50 mt-1">1 yıllık tescil — yilmaztekstil.com</div>
+                    </td>
+                    <td class="px-6 py-4 text-center">1</td>
+                    <td class="px-6 py-4 text-right">₺249</td>
+                    <td class="px-6 py-4 text-right font-bold">₺249</td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4">
+                      <div class="font-semibold">🔐 SSL Sertifikası</div>
+                      <div class="text-xs text-white/50 mt-1">Premium SSL</div>
+                    </td>
+                    <td class="px-6 py-4 text-center">1</td>
+                    <td class="px-6 py-4 text-right">₺251</td>
+                    <td class="px-6 py-4 text-right font-bold">₺251</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr class="border-t-2 border-yellow-500/20">
+                    <td colspan="3" class="px-6 py-3 text-right font-semibold">Ara Toplam:</td>
+                    <td class="px-6 py-3 text-right font-bold">₺2.117</td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" class="px-6 py-3 text-right font-semibold">KDV (%18):</td>
+                    <td class="px-6 py-3 text-right font-bold">₺382</td>
+                  </tr>
+                  <tr class="border-t border-yellow-500/20">
+                    <td colspan="3" class="px-6 py-4 text-right font-bold text-lg">TOPLAM:</td>
+                    <td class="px-6 py-4 text-right font-extrabold text-xl gradient-text">₺2.499</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            <!-- ÖDEME BİLGİLERİ -->
+            <div class="glass rounded-2xl p-6">
+              <h3 class="font-display text-lg font-bold mb-5 flex items-center gap-2">💳 Ödeme Bilgileri</h3>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="info-row"><span class="info-label">💳 Ödeme Yöntemi</span><span class="info-value">🏦 Kredi Kartı (Iyzico)</span></div>
+                <div class="info-row"><span class="info-label">🆔 İşlem ID</span><span class="info-value font-mono text-xs">IYZ-2026-X9F4P</span></div>
+                <div class="info-row"><span class="info-label">📅 Ödeme Tarihi</span><span class="info-value">14.05.2026 09:15</span></div>
+                <div class="info-row"><span class="info-label">🔢 Taksit</span><span class="info-value">Tek Çekim</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SAĞ: AKSİYONLAR + ZAMAN ÇİZELGESİ -->
+          <div class="space-y-6">
+            <!-- HIZLI AKSİYONLAR -->
+            <div class="glass rounded-2xl p-6">
+              <h3 class="font-display text-lg font-bold mb-5 flex items-center gap-2">⚡ Hızlı Aksiyonlar</h3>
+              <div class="space-y-2">
+                <button class="w-full btn-y text-sm flex items-center justify-center gap-2">📧 Faturayı Müşteriye Gönder</button>
+                <button class="w-full btn-o text-sm flex items-center justify-center gap-2">🔄 Durumu Değiştir</button>
+                <button class="w-full btn-o text-sm flex items-center justify-center gap-2">✏️ Faturayı Düzenle</button>
+                <button class="w-full btn-o text-sm flex items-center justify-center gap-2">📋 Kopyala</button>
+                <button class="w-full btn-o text-sm flex items-center justify-center gap-2 text-red-400 border-red-500/30">❌ İptal Et</button>
+              </div>
+            </div>
+
+            <!-- ZAMAN ÇİZELGESİ -->
+            <div class="glass rounded-2xl p-6">
+              <h3 class="font-display text-lg font-bold mb-5 flex items-center gap-2">⏱️ Zaman Çizelgesi</h3>
+              <div>
+                <div class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div class="font-semibold text-sm">✅ Ödeme Alındı</div>
+                  <div class="text-xs text-white/50 mt-1">14.05.2026 09:15</div>
+                  <div class="text-xs mt-1">Iyzico üzerinden ₺2.499</div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div class="font-semibold text-sm">📧 Fatura Gönderildi</div>
+                  <div class="text-xs text-white/50 mt-1">13.05.2026 15:00</div>
+                  <div class="text-xs mt-1">ahmet@yilmaz.com</div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div class="font-semibold text-sm">🧾 Fatura Oluşturuldu</div>
+                  <div class="text-xs text-white/50 mt-1">13.05.2026 14:32</div>
+                  <div class="text-xs mt-1">Nesimi Ateş tarafından</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- NOTLAR -->
+            <div class="glass rounded-2xl p-6">
+              <h3 class="font-display text-lg font-bold mb-3 flex items-center gap-2">📝 Notlar</h3>
+              <div class="text-sm text-white/70 italic mb-4">
+                "Müşteri yıllık ödeme yaptı, gelecek yıl indirim teklif edilebilir."
+              </div>
+              <textarea rows="3" placeholder="Yeni not ekle..." style="background: rgba(255,255,255,.05); border: 1px solid rgba(250,204,21,.25); color: #fff; padding: 12px; border-radius: 12px; width: 100%; font-family: inherit;"></textarea>
+              <button class="btn-y mt-3 text-sm">➕ Not Ekle</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+const t = document.getElementById('themeToggle');
+if(localStorage.getItem('admin_theme') === 'light') document.body.classList.add('light');
+t.addEventListener('click', () => { document.body.classList.toggle('light'); localStorage.setItem('admin_theme', document.body.classList.contains('light') ? 'light' : 'dark'); });
+document.getElementById('sidebarToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('sidebar-collapsed'));
+</script>
+</body>
+</html>

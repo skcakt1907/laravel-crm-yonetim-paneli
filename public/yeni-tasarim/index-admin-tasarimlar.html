@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Tasarım Galerisi — İş Ortağım</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body { font-family: 'Inter', sans-serif; background: #000; color: #fff; }
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+.glass { background: rgba(20,20,20,.85); backdrop-filter: blur(20px); border: 1px solid rgba(250,204,21,.25); }
+.gradient-text { background: linear-gradient(135deg, #fde047, #facc15, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.preview-card { transition: all .4s; }
+.preview-card:hover { transform: translateY(-8px) scale(1.02); border-color: #facc15; box-shadow: 0 25px 50px rgba(250,204,21,.3); }
+@keyframes blob { 0%,100% { transform: translate(0,0); } 50% { transform: translate(30px,-40px); } }
+.blob { position: absolute; border-radius: 50%; filter: blur(120px); animation: blob 12s ease-in-out infinite; pointer-events: none; }
+</style>
+</head>
+<body class="min-h-screen p-8 relative overflow-x-hidden">
+<div class="blob bg-yellow-500/30 w-96 h-96 -top-20 -left-20"></div>
+<div class="blob bg-amber-500/20 w-96 h-96 -bottom-20 -right-20" style="animation-delay: 4s;"></div>
+
+<div class="max-w-7xl mx-auto relative z-10">
+  <!-- Header -->
+  <div class="text-center mb-12">
+    <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-3xl shadow-2xl text-black font-extrabold text-4xl mb-4">İ</div>
+    <h1 class="font-display text-5xl font-extrabold mb-3">Admin Tasarım <span class="gradient-text">Galerisi</span></h1>
+    <p class="text-white/70 text-lg">İş Ortağım admin paneli için 7 hazır şablon</p>
+  </div>
+
+  <!-- Grid -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <a href="admin-login.html" class="preview-card glass rounded-2xl p-6 group">
+      <div class="aspect-video bg-gradient-to-br from-yellow-500/20 to-black rounded-xl flex items-center justify-center text-8xl mb-4">🔐</div>
+      <h3 class="font-display font-bold text-xl mb-2">Login Sayfası</h3>
+      <p class="text-sm text-white/60 mb-4">Giriş ekranı, beni hatırla, şifre unuttum</p>
+      <div class="text-yellow-400 font-semibold text-sm flex items-center gap-1">İncele →</div>
+    </a>
+
+    <a href="admin-liste.html" class="preview-card glass rounded-2xl p-6 group">
+      <div class="aspect-video bg-gradient-to-br from-yellow-500/20 to-black rounded-xl flex items-center justify-center text-8xl mb-4">📋</div>
+      <h3 class="font-display font-bold text-xl mb-2">Liste Sayfası</h3>
+      <p class="text-sm text-white/60 mb-4">Üyeler/Bayiler/Faturalar tarzı tablo + filter + pagination</p>
+      <div class="text-yellow-400 font-semibold text-sm flex items-center gap-1">İncele →</div>
+    </a>
+
+    <a href="admin-grid.html" class="preview-card glass rounded-2xl p-6 group">
+      <div class="aspect-video bg-gradient-to-br from-yellow-500/20 to-black rounded-xl flex items-center justify-center text-8xl mb-4">⊞</div>
+      <h3 class="font-display font-bold text-xl mb-2">Kart Grid</h3>
+      <p class="text-sm text-white/60 mb-4">Paketler/Ürünler tarzı kart görünümü</p>
+      <div class="text-yellow-400 font-semibold text-sm flex items-center gap-1">İncele →</div>
+    </a>
+
+    <a href="admin-form.html" class="preview-card glass rounded-2xl p-6 group">
+      <div class="aspect-video bg-gradient-to-br from-yellow-500/20 to-black rounded-xl flex items-center justify-center text-8xl mb-4">📝</div>
+      <h3 class="font-display font-bold text-xl mb-2">Form Sayfası</h3>
+      <p class="text-sm text-white/60 mb-4">Üye/Bayi/Paket Ekle-Düzenle formları</p>
+      <div class="text-yellow-400 font-semibold text-sm flex items-center gap-1">İncele →</div>
+    </a>
+
+    <a href="admin-detay.html" class="preview-card glass rounded-2xl p-6 group">
+      <div class="aspect-video bg-gradient-to-br from-yellow-500/20 to-black rounded-xl flex items-center justify-center text-8xl mb-4">📊</div>
+      <h3 class="font-display font-bold text-xl mb-2">Detay Sayfası</h3>
+      <p class="text-sm text-white/60 mb-4">Fatura/Müşteri/Sipariş detay ekranı + zaman çizelgesi</p>
+      <div class="text-yellow-400 font-semibold text-sm flex items-center gap-1">İncele →</div>
+    </a>
+
+    <a href="admin-ayarlar.html" class="preview-card glass rounded-2xl p-6 group">
+      <div class="aspect-video bg-gradient-to-br from-yellow-500/20 to-black rounded-xl flex items-center justify-center text-8xl mb-4">⚙️</div>
+      <h3 class="font-display font-bold text-xl mb-2">Ayarlar (Sekmeli)</h3>
+      <p class="text-sm text-white/60 mb-4">9 kategori sekme — Mail, SMS, POS, SEO, Bakım vs.</p>
+      <div class="text-yellow-400 font-semibold text-sm flex items-center gap-1">İncele →</div>
+    </a>
+
+    <a href="admin-kanban.html" class="preview-card glass rounded-2xl p-6 group">
+      <div class="aspect-video bg-gradient-to-br from-yellow-500/20 to-black rounded-xl flex items-center justify-center text-8xl mb-4">📋</div>
+      <h3 class="font-display font-bold text-xl mb-2">Kanban Board</h3>
+      <p class="text-sm text-white/60 mb-4">CRM Pipeline — sürükle-bırak kart sistemi</p>
+      <div class="text-yellow-400 font-semibold text-sm flex items-center gap-1">İncele →</div>
+    </a>
+
+    <div class="glass rounded-2xl p-6 opacity-60">
+      <div class="aspect-video bg-gradient-to-br from-yellow-500/10 to-black rounded-xl flex items-center justify-center text-8xl mb-4">🚧</div>
+      <h3 class="font-display font-bold text-xl mb-2">Daha Çok Var</h3>
+      <p class="text-sm text-white/60 mb-4">Modal, profil, takvim, mesajlar, raporlar — istersen yapayım</p>
+      <div class="text-yellow-400 font-semibold text-sm flex items-center gap-1">Yakında ⏳</div>
+    </div>
+  </div>
+
+  <!-- Info -->
+  <div class="mt-12 glass rounded-2xl p-6 text-center">
+    <div class="text-4xl mb-3">💡</div>
+    <h3 class="font-bold text-lg mb-2">Bu 7 şablon admin panelin %95'ini kapsar</h3>
+    <p class="text-white/70 mb-4">Tüm 50+ admin sayfası bu şablonların türevleri olacak. Hepsini onayladığında topluca Laravel'e geçireceğim.</p>
+    <div class="flex items-center justify-center gap-4 text-sm">
+      <span class="text-yellow-400">🌙/☀️ Sağ üstten gündüz/gece geçişi</span>
+      <span class="text-white/30">|</span>
+      <span class="text-yellow-400">📱 Mobile responsive</span>
+      <span class="text-white/30">|</span>
+      <span class="text-yellow-400">⚡ Tailwind CDN</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

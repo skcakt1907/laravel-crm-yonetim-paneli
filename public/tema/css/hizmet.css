@@ -1,0 +1,54 @@
+.service-content {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #333;
+}
+.feature-list {
+  list-style: none;
+  padding: 0;
+}
+.feature-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+.feature-list li:last-child {
+  border-bottom: none;
+}
+.price-card .price-amount {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 5px;
+}
+.price-card .price {
+  font-size: 32px;
+  font-weight: bold;
+  color: #007bff;
+}
+.price-card .period {
+  font-size: 16px;
+  color: #666;
+}
+.contact-info p {
+  font-size: 14px;
+}
+.contact-info a {
+  color: #333;
+  text-decoration: none;
+}
+.contact-info a:hover {
+  text-decoration: underline;
+}
+.other-services ul li a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+  padding: 8px 10px;
+  border-radius: 3px;
+  transition: all 0.3s;
+}
+.other-services ul li a:hover {
+  background: #f8f9fa;
+  color: #007bff;
+  padding-left: 15px;
+}
+

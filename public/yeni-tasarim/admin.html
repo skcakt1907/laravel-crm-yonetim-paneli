@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İş Ortağım — Admin Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] },
+  colors: { brand: { 400:'#818cf8',500:'#6366f1',600:'#4f46e5',700:'#4338ca' } },
+  animation: {
+    'pulse-ring': 'pulseRing 2s ease-out infinite',
+    'shimmer': 'shimmer 2s linear infinite',
+    'slide-in': 'slideIn 0.4s ease-out',
+    'count-up': 'countUp 1s ease-out',
+  },
+  keyframes: {
+    pulseRing: { '0%': { boxShadow:'0 0 0 0 rgba(99,102,241,0.7)' }, '70%': { boxShadow:'0 0 0 15px rgba(99,102,241,0)' }, '100%': { boxShadow:'0 0 0 0 rgba(99,102,241,0)' } },
+    shimmer: { '0%': { 'background-position':'-1000px 0' }, '100%': { 'background-position':'1000px 0' } },
+    slideIn: { from: { opacity:'0', transform:'translateY(20px)' }, to: { opacity:'1', transform:'translateY(0)' } },
+  }
+}}}
+</script>
+<style>
+* { -webkit-font-smoothing: antialiased; }
+body { font-family: 'Inter', sans-serif; background: #000000; color: #ffffff; }
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+
+/* Pure black background */
+.app-bg {
+  background: #000000;
+}
+
+.glass {
+  background: rgba(20,20,20,0.85);
+  backdrop-filter: blur(20px) saturate(200%);
+  -webkit-backdrop-filter: blur(20px) saturate(200%);
+  border: 1px solid rgba(250,204,21,0.25);
+  box-shadow: 0 8px 32px 0 rgba(250,204,21,0.05);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #fde047 0%, #facc15 50%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 30px rgba(250,204,21,0.5));
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.3); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(99,102,241,0.5); }
+
+/* Sidebar nav item active */
+.nav-item.active {
+  background: linear-gradient(135deg, rgba(250,204,21,0.18), rgba(250,204,21,0.05));
+  color: #fde047;
+  border-left: 3px solid #facc15;
+  box-shadow: inset 0 0 30px rgba(250,204,21,0.1);
+}
+.nav-item.active .emoji-icon {
+  filter: drop-shadow(0 0 12px rgba(250,204,21,0.8));
+  transform: scale(1.15);
+}
+.nav-item:hover .emoji-icon {
+  transform: scale(1.1);
+}
+.emoji-icon { transition: all 0.3s; font-size: 22px; line-height: 1; display: inline-block; }
+
+/* Hover effects */
+.stat-card { transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px -12px rgba(99,102,241,0.3);
+}
+.stat-card:hover .stat-icon { transform: scale(1.1) rotate(-5deg); }
+.stat-icon { transition: transform 0.4s; }
+
+/* Notification dot pulse */
+.notif-dot {
+  position: relative;
+}
+.notif-dot::after {
+  content: '';
+  position: absolute;
+  top: -2px; right: -2px;
+  width: 10px; height: 10px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 2px solid #0a0a0f;
+  animation: pulse 2s infinite;
+}
+
+/* Toast slide in */
+@keyframes slideRight { from { transform: translateX(120%); } to { transform: translateX(0); } }
+.toast-slide { animation: slideRight 0.4s ease-out; }
+
+/* Loading skeleton */
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 100%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* Sidebar gradient line - SARI */
+.sidebar-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(250,204,21,0.5), transparent);
+  margin: 1rem 0;
+}
+
+/* Tüm border'ları sarı yap */
+.glass { border-color: rgba(250,204,21,0.25) !important; }
+.border-white\/5, .border-white\/10 { border-color: rgba(250,204,21,0.2) !important; }
+
+/* Number count animation - BEYAZ */
+.count {
+  color: #ffffff;
+  text-shadow: 0 0 40px rgba(250,204,21,0.4);
+}
+
+/* Sari scrollbar */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #facc15, #f59e0b) !important;
+}
+
+/* TUM YAZILAR BEYAZ */
+.text-zinc-300 { color: #ffffff !important; }
+.text-zinc-400 { color: #f4f4f5 !important; }
+.text-zinc-500 { color: #d4d4d8 !important; }
+
+/* Sari accent yazi - subtle yerlerde */
+.text-brand-300, .text-brand-400 { color: #fde047 !important; }
+.text-emerald-400 { color: #facc15 !important; }
+.text-emerald-300 { color: #fde047 !important; }
+.text-pink-300 { color: #fde047 !important; }
+.text-amber-300, .text-amber-400 { color: #fde047 !important; }
+
+/* Yıldız renkleri */
+.text-amber-400 { color: #facc15 !important; }
+.fill-amber-400 { fill: #facc15 !important; }
+
+/* Table row hover */
+tr.data-row { transition: background 0.2s; }
+tr.data-row:hover { background: rgba(99,102,241,0.05); }
+
+/* Sidebar collapsed state */
+.sidebar-collapsed { width: 80px; }
+.sidebar-collapsed .nav-text,
+.sidebar-collapsed .nav-section,
+.sidebar-collapsed .logo-text { display: none; }
+.sidebar-collapsed .nav-item { justify-content: center; }
+</style>
+</head>
+<body class="app-bg min-h-screen">
+
+<div class="flex min-h-screen">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar" class="hidden lg:flex flex-col w-72 glass border-r border-white/10 sticky top-0 h-screen overflow-y-auto z-30">
+    <!-- Logo -->
+    <div class="p-6 border-b border-white/10">
+      <a href="#" class="flex items-center gap-3">
+        <div class="relative">
+          <div class="absolute inset-0 bg-gradient-to-br from-brand-500 to-pink-500 rounded-xl blur-md"></div>
+          <div class="relative w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-extrabold text-xl shadow-lg">İ</div>
+        </div>
+        <div class="logo-text">
+          <div class="font-display font-bold text-white text-lg leading-tight">İş Ortağım</div>
+          <div class="text-xs text-brand-300">Admin Panel</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Nav -->
+    <nav class="flex-1 p-4 space-y-1">
+      <div class="nav-section text-[10px] font-bold text-zinc-500 uppercase tracking-widest px-3 mb-2">Ana Menü</div>
+
+      <a href="#" class="nav-item active flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">📊</span>
+        <span class="nav-text font-medium">Dashboard</span>
+      </a>
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">🛒</span>
+        <span class="nav-text font-medium flex-1">Siparişler</span>
+        <span class="text-xs bg-yellow-500/20 text-yellow-300 px-2 py-0.5 rounded-full font-semibold border border-yellow-500/30">12</span>
+      </a>
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">👥</span>
+        <span class="nav-text font-medium">Müşteriler</span>
+      </a>
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">📦</span>
+        <span class="nav-text font-medium">Paketler</span>
+      </a>
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">🖥️</span>
+        <span class="nav-text font-medium">Hosting</span>
+      </a>
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">🌐</span>
+        <span class="nav-text font-medium">Domainler</span>
+      </a>
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">🧾</span>
+        <span class="nav-text font-medium">Faturalar</span>
+      </a>
+
+      <div class="sidebar-divider"></div>
+      <div class="nav-section text-[10px] font-bold text-yellow-400 uppercase tracking-widest px-3 mb-2">Bayilik</div>
+
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">🏪</span>
+        <span class="nav-text font-medium flex-1">Bayiler</span>
+        <span class="text-xs bg-yellow-500/20 text-yellow-300 px-2 py-0.5 rounded-full font-semibold border border-yellow-500/30">120</span>
+      </a>
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">🎟️</span>
+        <span class="nav-text font-medium">Promo Kodlar</span>
+      </a>
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">💰</span>
+        <span class="nav-text font-medium">Komisyonlar</span>
+      </a>
+
+      <div class="sidebar-divider"></div>
+      <div class="nav-section text-[10px] font-bold text-yellow-400 uppercase tracking-widest px-3 mb-2">CRM</div>
+
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">📋</span>
+        <span class="nav-text font-medium">Kanban</span>
+      </a>
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">📈</span>
+        <span class="nav-text font-medium">Fırsatlar</span>
+      </a>
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">✅</span>
+        <span class="nav-text font-medium">Görevler</span>
+      </a>
+
+      <div class="sidebar-divider"></div>
+      <div class="nav-section text-[10px] font-bold text-yellow-400 uppercase tracking-widest px-3 mb-2">Sistem</div>
+
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">⚙️</span>
+        <span class="nav-text font-medium">Ayarlar</span>
+      </a>
+      <a href="#" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-white hover:bg-white/5 transition group">
+        <span class="emoji-icon w-9 h-9 flex items-center justify-center">🔐</span>
+        <span class="nav-text font-medium">Yöneticiler</span>
+      </a>
+    </nav>
+
+    <!-- Sidebar bottom: upgrade card -->
+    <div class="p-4">
+      <div class="relative bg-gradient-to-br from-brand-600 via-purple-600 to-pink-600 rounded-2xl p-4 overflow-hidden shadow-2xl">
+        <div class="absolute -top-8 -right-8 w-24 h-24 bg-white/20 rounded-full blur-2xl"></div>
+        <div class="relative">
+          <div class="w-10 h-10 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center mb-3"><i data-lucide="crown" class="w-5 h-5 text-amber-200"></i></div>
+          <div class="text-white font-bold text-sm mb-1 nav-text">Pro'ya Yükselt</div>
+          <div class="text-brand-100 text-xs mb-3 nav-text">Sınırsız özellik + öncelikli destek</div>
+          <button class="nav-text w-full bg-white text-brand-700 text-xs font-bold py-2 rounded-lg hover:bg-zinc-100 transition">Yükselt →</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="flex-1 flex flex-col min-w-0">
+
+    <!-- TOP BAR -->
+    <header class="glass border-b border-white/10 sticky top-0 z-20">
+      <div class="flex items-center justify-between gap-4 px-4 lg:px-8 h-16">
+        <div class="flex items-center gap-3">
+          <button id="sidebarToggle" class="p-2 hover:bg-white/5 rounded-lg text-zinc-400 hover:text-white transition"><i data-lucide="menu" class="w-5 h-5"></i></button>
+          <!-- Search -->
+          <div class="hidden md:flex items-center gap-2 bg-white/5 hover:bg-white/10 transition border border-white/10 rounded-xl px-4 py-2 w-96">
+            <i data-lucide="search" class="w-4 h-4 text-zinc-500"></i>
+            <input type="text" placeholder="Ara: müşteri, sipariş, fatura..." class="bg-transparent flex-1 text-sm text-white placeholder-zinc-500 focus:outline-none">
+            <kbd class="text-xs bg-white/10 px-1.5 py-0.5 rounded text-zinc-400">⌘K</kbd>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Quick action -->
+          <button class="hidden md:flex items-center gap-2 bg-gradient-to-r from-brand-500 to-purple-500 hover:from-brand-600 hover:to-purple-600 text-white text-sm font-semibold px-4 py-2 rounded-xl shadow-lg transition hover:shadow-brand-500/50">
+            <i data-lucide="plus" class="w-4 h-4"></i> Hızlı Ekle
+          </button>
+          <!-- Notifications -->
+          <button class="notif-dot p-2.5 hover:bg-white/5 rounded-xl text-zinc-400 hover:text-white transition relative">
+            <i data-lucide="bell" class="w-5 h-5"></i>
+          </button>
+          <!-- Messages -->
+          <button class="p-2.5 hover:bg-white/5 rounded-xl text-zinc-400 hover:text-white transition">
+            <i data-lucide="mail" class="w-5 h-5"></i>
+          </button>
+          <!-- Theme toggle -->
+          <button class="p-2.5 hover:bg-white/5 rounded-xl text-zinc-400 hover:text-white transition">
+            <i data-lucide="moon" class="w-5 h-5"></i>
+          </button>
+          <!-- User -->
+          <div class="flex items-center gap-3 ml-2 pl-3 border-l border-white/10">
+            <div class="hidden lg:block text-right">
+              <div class="text-sm font-semibold text-white">Nesimi Ateş</div>
+              <div class="text-xs text-brand-300">Süper Admin</div>
+            </div>
+            <div class="relative">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold shadow-lg">N</div>
+              <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[#0a0a0f]"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="flex-1 p-4 lg:p-8 space-y-6">
+      <!-- Page Title -->
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <div class="flex items-center gap-2 text-sm text-zinc-500 mb-2">
+            <a href="#" class="hover:text-white transition">Anasayfa</a>
+            <i data-lucide="chevron-right" class="w-3 h-3"></i>
+            <span class="text-zinc-300">Dashboard</span>
+          </div>
+          <h1 class="font-display text-3xl font-extrabold text-white">Hoş geldin, <span class="gradient-text">Nesimi 👋</span></h1>
+          <p class="text-zinc-400 mt-1">Bugün <strong class="text-white">3 yeni sipariş</strong> ve <strong class="text-emerald-400">₺4.250 gelir</strong> var.</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="glass hover:bg-white/10 text-white px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition">
+            <i data-lucide="calendar" class="w-4 h-4"></i> Son 30 gün
+            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </button>
+          <button class="glass hover:bg-white/10 text-white px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition">
+            <i data-lucide="download" class="w-4 h-4"></i> Rapor İndir
+          </button>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div class="stat-card glass rounded-2xl p-5">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <div class="text-white text-sm mb-1 opacity-70">Toplam Gelir</div>
+              <div class="font-display text-3xl font-extrabold count">₺124.580</div>
+            </div>
+            <div class="stat-icon w-14 h-14 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl flex items-center justify-center text-3xl">💰</div>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <span class="text-yellow-400 font-bold flex items-center gap-1">📈 +18.2%</span>
+            <span class="text-white opacity-60">geçen aya göre</span>
+          </div>
+        </div>
+
+        <div class="stat-card glass rounded-2xl p-5">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <div class="text-white text-sm mb-1 opacity-70">Yeni Siparişler</div>
+              <div class="font-display text-3xl font-extrabold count">847</div>
+            </div>
+            <div class="stat-icon w-14 h-14 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl flex items-center justify-center text-3xl">🛍️</div>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <span class="text-yellow-400 font-bold flex items-center gap-1">📈 +12.5%</span>
+            <span class="text-white opacity-60">geçen aya göre</span>
+          </div>
+        </div>
+
+        <div class="stat-card glass rounded-2xl p-5">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <div class="text-white text-sm mb-1 opacity-70">Aktif Müşteriler</div>
+              <div class="font-display text-3xl font-extrabold count">5.247</div>
+            </div>
+            <div class="stat-icon w-14 h-14 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl flex items-center justify-center text-3xl">👥</div>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <span class="text-yellow-400 font-bold flex items-center gap-1">📈 +5.8%</span>
+            <span class="text-white opacity-60">geçen aya göre</span>
+          </div>
+        </div>
+
+        <div class="stat-card glass rounded-2xl p-5">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <div class="text-white text-sm mb-1 opacity-70">Bayi Komisyonu</div>
+              <div class="font-display text-3xl font-extrabold count">₺18.450</div>
+            </div>
+            <div class="stat-icon w-14 h-14 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl flex items-center justify-center text-3xl">🎁</div>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <span class="text-rose-400 font-bold flex items-center gap-1">📉 -2.1%</span>
+            <span class="text-white opacity-60">geçen aya göre</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts row -->
+      <div class="grid lg:grid-cols-3 gap-4">
+        <!-- Revenue chart (2 col) -->
+        <div class="lg:col-span-2 glass rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h3 class="font-display text-lg font-bold text-white">Gelir Analizi</h3>
+              <p class="text-xs text-zinc-500 mt-1">Son 7 günün satış performansı</p>
+            </div>
+            <div class="flex gap-1 bg-white/5 rounded-lg p-1">
+              <button class="text-xs px-3 py-1.5 rounded-md bg-brand-500 text-white font-semibold">7G</button>
+              <button class="text-xs px-3 py-1.5 rounded-md text-zinc-400 hover:text-white transition">30G</button>
+              <button class="text-xs px-3 py-1.5 rounded-md text-zinc-400 hover:text-white transition">90G</button>
+            </div>
+          </div>
+          <div id="revenueChart"></div>
+        </div>
+
+        <!-- Donut chart -->
+        <div class="glass rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h3 class="font-display text-lg font-bold text-white">Trafik Kaynakları</h3>
+              <p class="text-xs text-zinc-500 mt-1">Bu ayın dağılımı</p>
+            </div>
+            <button class="p-2 hover:bg-white/5 rounded-lg text-zinc-400"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+          </div>
+          <div id="donutChart"></div>
+          <div class="space-y-2 mt-4">
+            <div class="flex items-center justify-between text-sm">
+              <div class="flex items-center gap-2"><span class="w-2 h-2 bg-brand-500 rounded-full"></span> <span class="text-zinc-400">Direkt</span></div>
+              <span class="text-white font-semibold">42%</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <div class="flex items-center gap-2"><span class="w-2 h-2 bg-pink-500 rounded-full"></span> <span class="text-zinc-400">Sosyal Medya</span></div>
+              <span class="text-white font-semibold">28%</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <div class="flex items-center gap-2"><span class="w-2 h-2 bg-amber-500 rounded-full"></span> <span class="text-zinc-400">Arama Motoru</span></div>
+              <span class="text-white font-semibold">22%</span>
+            </div>
+            <div class="flex items-center justify-between text-sm">
+              <div class="flex items-center gap-2"><span class="w-2 h-2 bg-emerald-500 rounded-full"></span> <span class="text-zinc-400">Referans</span></div>
+              <span class="text-white font-semibold">8%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tables row -->
+      <div class="grid lg:grid-cols-3 gap-4">
+        <!-- Recent orders -->
+        <div class="lg:col-span-2 glass rounded-2xl overflow-hidden">
+          <div class="p-6 flex items-center justify-between">
+            <div>
+              <h3 class="font-display text-lg font-bold text-white">Son Siparişler</h3>
+              <p class="text-xs text-zinc-500 mt-1">Bugün gelen 12 sipariş</p>
+            </div>
+            <a href="#" class="text-sm text-brand-400 hover:text-brand-300 font-semibold flex items-center gap-1">Tümü <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="text-xs text-zinc-500 uppercase border-y border-white/5">
+                  <th class="text-left font-semibold px-6 py-3">Müşteri</th>
+                  <th class="text-left font-semibold px-6 py-3">Paket</th>
+                  <th class="text-left font-semibold px-6 py-3">Tutar</th>
+                  <th class="text-left font-semibold px-6 py-3">Durum</th>
+                  <th class="text-right font-semibold px-6 py-3"></th>
+                </tr>
+              </thead>
+              <tbody class="text-sm">
+                <tr class="data-row border-b border-white/5">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-purple-500 flex items-center justify-center text-white font-bold text-sm">A</div>
+                      <div>
+                        <div class="font-semibold text-white">Ahmet Yılmaz</div>
+                        <div class="text-xs text-zinc-500">ahmet@yilmaz.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-zinc-300">Profesyonel</td>
+                  <td class="px-6 py-4 font-bold text-white">₺1.999</td>
+                  <td class="px-6 py-4">
+                    <span class="inline-flex items-center gap-1.5 bg-emerald-500/15 text-emerald-300 px-2.5 py-1 rounded-full text-xs font-semibold border border-emerald-500/20">
+                      <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span> Tamamlandı
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 text-right"><button class="p-1.5 hover:bg-white/5 rounded-lg text-zinc-400 hover:text-white"><i data-lucide="more-vertical" class="w-4 h-4"></i></button></td>
+                </tr>
+                <tr class="data-row border-b border-white/5">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-9 h-9 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center text-white font-bold text-sm">E</div>
+                      <div>
+                        <div class="font-semibold text-white">Elif Demir</div>
+                        <div class="text-xs text-zinc-500">elif@demir.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-zinc-300">Kurumsal</td>
+                  <td class="px-6 py-4 font-bold text-white">₺3.999</td>
+                  <td class="px-6 py-4">
+                    <span class="inline-flex items-center gap-1.5 bg-amber-500/15 text-amber-300 px-2.5 py-1 rounded-full text-xs font-semibold border border-amber-500/20">
+                      <span class="w-1.5 h-1.5 bg-amber-400 rounded-full"></span> Beklemede
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 text-right"><button class="p-1.5 hover:bg-white/5 rounded-lg text-zinc-400 hover:text-white"><i data-lucide="more-vertical" class="w-4 h-4"></i></button></td>
+                </tr>
+                <tr class="data-row border-b border-white/5">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-sm">M</div>
+                      <div>
+                        <div class="font-semibold text-white">Mehmet Kaya</div>
+                        <div class="text-xs text-zinc-500">mehmet@kaya.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-zinc-300">Başlangıç</td>
+                  <td class="px-6 py-4 font-bold text-white">₺899</td>
+                  <td class="px-6 py-4">
+                    <span class="inline-flex items-center gap-1.5 bg-emerald-500/15 text-emerald-300 px-2.5 py-1 rounded-full text-xs font-semibold border border-emerald-500/20">
+                      <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span> Tamamlandı
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 text-right"><button class="p-1.5 hover:bg-white/5 rounded-lg text-zinc-400 hover:text-white"><i data-lucide="more-vertical" class="w-4 h-4"></i></button></td>
+                </tr>
+                <tr class="data-row border-b border-white/5">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white font-bold text-sm">Z</div>
+                      <div>
+                        <div class="font-semibold text-white">Zeynep Şahin</div>
+                        <div class="text-xs text-zinc-500">zeynep@sahin.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-zinc-300">Profesyonel</td>
+                  <td class="px-6 py-4 font-bold text-white">₺1.999</td>
+                  <td class="px-6 py-4">
+                    <span class="inline-flex items-center gap-1.5 bg-rose-500/15 text-rose-300 px-2.5 py-1 rounded-full text-xs font-semibold border border-rose-500/20">
+                      <span class="w-1.5 h-1.5 bg-rose-400 rounded-full"></span> İptal
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 text-right"><button class="p-1.5 hover:bg-white/5 rounded-lg text-zinc-400 hover:text-white"><i data-lucide="more-vertical" class="w-4 h-4"></i></button></td>
+                </tr>
+                <tr class="data-row">
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-9 h-9 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center text-white font-bold text-sm">B</div>
+                      <div>
+                        <div class="font-semibold text-white">Burak Aydın</div>
+                        <div class="text-xs text-zinc-500">burak@aydin.com</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-zinc-300">Kurumsal</td>
+                  <td class="px-6 py-4 font-bold text-white">₺3.999</td>
+                  <td class="px-6 py-4">
+                    <span class="inline-flex items-center gap-1.5 bg-emerald-500/15 text-emerald-300 px-2.5 py-1 rounded-full text-xs font-semibold border border-emerald-500/20">
+                      <span class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span> Tamamlandı
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 text-right"><button class="p-1.5 hover:bg-white/5 rounded-lg text-zinc-400 hover:text-white"><i data-lucide="more-vertical" class="w-4 h-4"></i></button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Top bayiler -->
+        <div class="glass rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h3 class="font-display text-lg font-bold text-white">Top Bayiler</h3>
+              <p class="text-xs text-zinc-500 mt-1">Bu ayın yıldızları</p>
+            </div>
+            <button class="p-2 hover:bg-white/5 rounded-lg text-zinc-400"><i data-lucide="more-horizontal" class="w-4 h-4"></i></button>
+          </div>
+          <div class="space-y-4">
+            <div class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition cursor-pointer">
+              <div class="relative">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold">🥇</div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="font-semibold text-white truncate">Mert Çelik</div>
+                <div class="text-xs text-zinc-400">42 satış • ₺28.500 komisyon</div>
+              </div>
+              <span class="text-emerald-400 text-xs font-bold">+24%</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition cursor-pointer">
+              <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-zinc-400 to-zinc-500 flex items-center justify-center text-white font-bold">🥈</div>
+              <div class="flex-1 min-w-0">
+                <div class="font-semibold text-white truncate">Aylin Doğan</div>
+                <div class="text-xs text-zinc-400">38 satış • ₺22.100 komisyon</div>
+              </div>
+              <span class="text-emerald-400 text-xs font-bold">+18%</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition cursor-pointer">
+              <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-orange-700 to-orange-800 flex items-center justify-center text-white font-bold">🥉</div>
+              <div class="flex-1 min-w-0">
+                <div class="font-semibold text-white truncate">Cem Yıldırım</div>
+                <div class="text-xs text-zinc-400">31 satış • ₺19.800 komisyon</div>
+              </div>
+              <span class="text-emerald-400 text-xs font-bold">+12%</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition cursor-pointer">
+              <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-zinc-300 font-bold">4</div>
+              <div class="flex-1 min-w-0">
+                <div class="font-semibold text-white truncate">Selin Arslan</div>
+                <div class="text-xs text-zinc-400">28 satış • ₺17.200 komisyon</div>
+              </div>
+              <span class="text-emerald-400 text-xs font-bold">+8%</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition cursor-pointer">
+              <div class="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-zinc-300 font-bold">5</div>
+              <div class="flex-1 min-w-0">
+                <div class="font-semibold text-white truncate">Kemal Avcı</div>
+                <div class="text-xs text-zinc-400">25 satış • ₺15.900 komisyon</div>
+              </div>
+              <span class="text-rose-400 text-xs font-bold">-3%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom row: activity + tasks -->
+      <div class="grid lg:grid-cols-2 gap-4">
+        <!-- Activity feed -->
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-display text-lg font-bold text-white mb-6">Son Aktiviteler</h3>
+          <div class="space-y-5">
+            <div class="flex gap-3">
+              <div class="relative">
+                <div class="w-9 h-9 bg-emerald-500/20 rounded-full flex items-center justify-center"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i></div>
+                <div class="absolute top-9 left-1/2 -translate-x-1/2 w-px h-full bg-white/10"></div>
+              </div>
+              <div class="flex-1">
+                <div class="text-sm text-white"><strong>Ahmet Yılmaz</strong> Profesyonel paket satın aldı</div>
+                <div class="text-xs text-zinc-500 mt-1">3 dakika önce • ₺1.999</div>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="relative">
+                <div class="w-9 h-9 bg-brand-500/20 rounded-full flex items-center justify-center"><i data-lucide="user-plus" class="w-4 h-4 text-brand-400"></i></div>
+                <div class="absolute top-9 left-1/2 -translate-x-1/2 w-px h-full bg-white/10"></div>
+              </div>
+              <div class="flex-1">
+                <div class="text-sm text-white">Yeni bayi başvurusu: <strong>Murat Tekin</strong></div>
+                <div class="text-xs text-zinc-500 mt-1">12 dakika önce • Onay bekliyor</div>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="relative">
+                <div class="w-9 h-9 bg-amber-500/20 rounded-full flex items-center justify-center"><i data-lucide="message-circle" class="w-4 h-4 text-amber-400"></i></div>
+                <div class="absolute top-9 left-1/2 -translate-x-1/2 w-px h-full bg-white/10"></div>
+              </div>
+              <div class="flex-1">
+                <div class="text-sm text-white">Yeni destek talebi: <strong>"SSL kurulumu"</strong></div>
+                <div class="text-xs text-zinc-500 mt-1">28 dakika önce • Yüksek öncelik</div>
+              </div>
+            </div>
+            <div class="flex gap-3">
+              <div class="w-9 h-9 bg-pink-500/20 rounded-full flex items-center justify-center"><i data-lucide="banknote" class="w-4 h-4 text-pink-400"></i></div>
+              <div class="flex-1">
+                <div class="text-sm text-white"><strong>Mert Çelik</strong> komisyon ödemesi onaylandı</div>
+                <div class="text-xs text-zinc-500 mt-1">1 saat önce • ₺2.450</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tasks -->
+        <div class="glass rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="font-display text-lg font-bold text-white">Bugünün Görevleri</h3>
+            <button class="text-xs bg-brand-500/20 text-brand-300 px-3 py-1.5 rounded-lg hover:bg-brand-500/30 transition flex items-center gap-1">
+              <i data-lucide="plus" class="w-3 h-3"></i> Ekle
+            </button>
+          </div>
+          <div class="space-y-3">
+            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition cursor-pointer group">
+              <input type="checkbox" class="w-5 h-5 rounded border-white/20 bg-white/5 text-brand-500 focus:ring-brand-500 focus:ring-offset-0">
+              <div class="flex-1">
+                <div class="text-sm text-white font-medium">Bayi başvurularını incele (5 adet)</div>
+                <div class="text-xs text-zinc-500">14:00 - 14:30</div>
+              </div>
+              <span class="text-xs bg-rose-500/20 text-rose-300 px-2 py-1 rounded-md font-semibold">Acil</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition cursor-pointer group">
+              <input type="checkbox" checked class="w-5 h-5 rounded border-white/20 bg-white/5 text-brand-500 focus:ring-brand-500 focus:ring-offset-0">
+              <div class="flex-1">
+                <div class="text-sm text-zinc-500 line-through">Aylık rapor hazırla</div>
+                <div class="text-xs text-zinc-600">Tamamlandı</div>
+              </div>
+            </label>
+            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition cursor-pointer group">
+              <input type="checkbox" class="w-5 h-5 rounded border-white/20 bg-white/5 text-brand-500 focus:ring-brand-500 focus:ring-offset-0">
+              <div class="flex-1">
+                <div class="text-sm text-white font-medium">Ekiple toplantı yap</div>
+                <div class="text-xs text-zinc-500">15:00 - 16:00</div>
+              </div>
+              <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded-md font-semibold">Orta</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition cursor-pointer group">
+              <input type="checkbox" class="w-5 h-5 rounded border-white/20 bg-white/5 text-brand-500 focus:ring-brand-500 focus:ring-offset-0">
+              <div class="flex-1">
+                <div class="text-sm text-white font-medium">SEO blog yazısı yayınla</div>
+                <div class="text-xs text-zinc-500">17:00</div>
+              </div>
+              <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-md font-semibold">Düşük</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition cursor-pointer group">
+              <input type="checkbox" class="w-5 h-5 rounded border-white/20 bg-white/5 text-brand-500 focus:ring-brand-500 focus:ring-offset-0">
+              <div class="flex-1">
+                <div class="text-sm text-white font-medium">Komisyon ödemelerini onayla</div>
+                <div class="text-xs text-zinc-500">18:00</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Toast example -->
+<div class="fixed top-20 right-4 z-50 w-80 toast-slide hidden" id="toast">
+  <div class="glass rounded-xl p-4 border-l-4 border-emerald-400 shadow-2xl">
+    <div class="flex items-start gap-3">
+      <div class="w-10 h-10 bg-emerald-500/20 rounded-xl flex items-center justify-center flex-shrink-0"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i></div>
+      <div class="flex-1">
+        <div class="font-semibold text-white text-sm">Başarılı!</div>
+        <div class="text-xs text-zinc-400 mt-0.5">Yeni sipariş başarıyla kaydedildi.</div>
+      </div>
+      <button class="text-zinc-500 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+
+  // Sidebar toggle
+  document.getElementById('sidebarToggle').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('sidebar-collapsed');
+  });
+
+  // Demo toast
+  setTimeout(() => {
+    const toast = document.getElementById('toast');
+    toast.classList.remove('hidden');
+    setTimeout(() => toast.classList.add('hidden'), 5000);
+  }, 1500);
+
+  // Revenue chart
+  new ApexCharts(document.querySelector("#revenueChart"), {
+    series: [
+      { name: 'Gelir', data: [3200, 4100, 3800, 5200, 4900, 6800, 7400] },
+      { name: 'Komisyon', data: [800, 1200, 950, 1400, 1300, 1900, 2200] }
+    ],
+    chart: { type: 'area', height: 280, background: 'transparent', toolbar: { show: false }, animations: { enabled: true, speed: 800 } },
+    theme: { mode: 'dark' },
+    colors: ['#818cf8', '#f472b6'],
+    fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0, stops: [0, 90, 100] } },
+    stroke: { curve: 'smooth', width: 3 },
+    grid: { borderColor: 'rgba(255,255,255,0.05)', strokeDashArray: 4 },
+    xaxis: { categories: ['Pzt','Sal','Çar','Per','Cum','Cmt','Paz'], axisBorder: { show: false }, axisTicks: { show: false }, labels: { style: { colors: '#71717a' } } },
+    yaxis: { labels: { style: { colors: '#71717a' }, formatter: (v) => '₺' + v } },
+    tooltip: { theme: 'dark', y: { formatter: (v) => '₺' + v.toLocaleString('tr-TR') } },
+    legend: { labels: { colors: '#a1a1aa' }, markers: { width: 12, height: 12, radius: 12 } },
+  }).render();
+
+  // Donut chart
+  new ApexCharts(document.querySelector("#donutChart"), {
+    series: [42, 28, 22, 8],
+    chart: { type: 'donut', height: 220, background: 'transparent' },
+    theme: { mode: 'dark' },
+    colors: ['#818cf8', '#f472b6', '#fbbf24', '#34d399'],
+    labels: ['Direkt', 'Sosyal Medya', 'Arama', 'Referans'],
+    stroke: { colors: ['transparent'] },
+    plotOptions: { pie: { donut: { size: '75%', labels: { show: true, total: { show: true, label: 'Toplam', color: '#a1a1aa', formatter: () => '5.247' }, value: { color: '#fff', fontSize: '24px', fontWeight: 700 } } } } },
+    legend: { show: false },
+    dataLabels: { enabled: false },
+    tooltip: { theme: 'dark' }
+  }).render();
+</script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+/* ======================================================
+   Admin Panel — Mobile Responsiveness
+   Tum admin sayfalarinda mobil/tablet uyumu icin overrides.
+   ====================================================== */
+
+/* Global: prevent horizontal scroll */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Wide tables -> scrollable on mobile */
+.table-responsive {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto !important;
+}
+
+/* ============== <= 991px (tablet & mobile) ============== */
+@media (max-width: 991.98px) {
+    .container-scroller .navbar.fixed-top {
+        flex-wrap: nowrap !important;
+    }
+    .navbar-brand-wrapper {
+        width: auto !important;
+        max-width: 60%;
+    }
+    .navbar-brand img,
+    .navbar-brand-mini img {
+        max-height: 38px;
+        width: auto;
+    }
+
+    /* Sidebar -> off-canvas slide */
+    .sidebar {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        height: 100vh !important;
+        width: 260px !important;
+        max-width: 80vw;
+        z-index: 1050;
+        transform: translateX(-100%);
+        transition: transform .3s cubic-bezier(.4, 0, .2, 1);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, .2);
+        overflow-y: auto;
+    }
+    body.sidebar-icon-only .sidebar,
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    /* Backdrop */
+    body.sidebar-icon-only::before,
+    body:has(.sidebar.active)::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, .5);
+        z-index: 1049;
+        backdrop-filter: blur(2px);
+    }
+
+    /* Main content full width */
+    .main-panel {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+
+    /* Page content padding tighter */
+    .content-wrapper {
+        padding: 1rem !important;
+    }
+
+    /* Page header */
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 8px;
+        margin-bottom: 1rem !important;
+    }
+    .page-header .page-title {
+        font-size: 1.1rem !important;
+    }
+    .page-header .breadcrumb {
+        font-size: 12px;
+        flex-wrap: wrap;
+    }
+
+    /* Cards */
+    .card {
+        margin-bottom: 1rem !important;
+    }
+    .card-body {
+        padding: 1rem !important;
+    }
+    .card-title {
+        font-size: 1rem !important;
+    }
+
+    /* Tables: smaller font, less padding */
+    .table {
+        font-size: 12.5px;
+    }
+    .table th,
+    .table td {
+        padding: 8px 6px !important;
+        white-space: nowrap;
+    }
+
+    /* Forms: stack columns */
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    .form-control,
+    .form-select,
+    select.form-control {
+        font-size: 14px !important;
+        height: auto !important;
+        min-height: 40px;
+    }
+
+    /* Buttons: full width when alone in a card footer/action row */
+    .btn-block-mobile,
+    .card-body > .btn:only-child {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    /* Btn group on mobile -> wrap, full width buttons */
+    .btn-group {
+        display: flex !important;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .btn-group .btn {
+        flex: 1 1 auto;
+        border-radius: 10px !important;
+        margin-left: 0 !important;
+    }
+
+    /* Stats cards stack */
+    .col-md-3,
+    .col-md-4,
+    .col-md-6,
+    .col-lg-3,
+    .col-lg-4,
+    .col-lg-6 {
+        margin-bottom: 1rem;
+    }
+
+    /* Pagination smaller */
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .page-item .page-link {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    /* Modal full width */
+    .modal-dialog {
+        margin: 0.5rem;
+        max-width: calc(100% - 1rem);
+    }
+
+    /* Hide right panel/settings on mobile */
+    #right-sidebar,
+    .settings-panel {
+        display: none !important;
+    }
+
+    /* Footer */
+    .footer {
+        text-align: center;
+        font-size: 11px;
+        padding: 10px;
+    }
+}
+
+/* ============== <= 575px (small phones) ============== */
+@media (max-width: 575.98px) {
+    .navbar-brand-wrapper {
+        max-width: 50%;
+    }
+    .navbar-brand img {
+        max-height: 32px;
+    }
+    .content-wrapper {
+        padding: 0.75rem !important;
+    }
+    .card-body {
+        padding: 0.85rem !important;
+    }
+
+    .page-title {
+        font-size: 1rem !important;
+    }
+    .page-title .page-title-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+
+    /* Hide breadcrumb separators on tiny screens */
+    .breadcrumb {
+        font-size: 11px !important;
+    }
+
+    /* Tables: ultra compact */
+    .table {
+        font-size: 12px;
+    }
+    .table th,
+    .table td {
+        padding: 6px 5px !important;
+    }
+    /* Hide low-priority columns */
+    .table .d-none-xs,
+    .table-responsive .d-none-xs {
+        display: none !important;
+    }
+
+    /* Buttons smaller on mobile */
+    .btn {
+        padding: 8px 14px !important;
+        font-size: 12.5px !important;
+    }
+    .btn-sm {
+        padding: 5px 10px !important;
+        font-size: 11.5px !important;
+    }
+
+    /* Form labels */
+    label {
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    /* Action buttons in tables: only icons */
+    .table .btn-sm {
+        padding: 5px 8px !important;
+        min-width: 30px;
+    }
+
+    /* Filter/search rows stack */
+    .input-group {
+        flex-wrap: wrap;
+    }
+    .input-group > .form-control {
+        width: 100%;
+        margin-bottom: 6px;
+        border-radius: 10px !important;
+    }
+    .input-group-append {
+        width: 100%;
+    }
+    .input-group-append .btn {
+        flex: 1;
+        border-radius: 10px !important;
+    }
+
+    /* Alert smaller */
+    .alert {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    /* Badges */
+    .badge {
+        font-size: 10.5px !important;
+        padding: 4px 8px !important;
+    }
+
+    /* Headings */
+    h3 {
+        font-size: 1.05rem;
+    }
+    h4 {
+        font-size: 0.95rem;
+    }
+    h5 {
+        font-size: 0.88rem;
+    }
+}
+
+/* ============== Touch improvements ============== */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger tap targets for buttons */
+    .btn {
+        min-height: 40px;
+    }
+    .btn-sm {
+        min-height: 34px;
+    }
+    .btn-xs {
+        min-height: 28px;
+    }
+
+    /* Larger checkbox/radio */
+    .form-check-input[type="checkbox"],
+    .form-check-input[type="radio"] {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Disable hover lift on touch (prevents stuck states) */
+    .btn:hover {
+        transform: none !important;
+    }
+}
+
+/* ============== Sidebar toggle button on mobile ============== */
+@media (max-width: 991.98px) {
+    .navbar-toggler {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, .08);
+        background: #fff;
+        margin: 0 8px;
+    }
+    .navbar-toggler i {
+        font-size: 22px;
+    }
+}

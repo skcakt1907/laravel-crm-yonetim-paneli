@@ -1,0 +1,203 @@
+<IfModule mod_php_module>
+    php_value upload_max_filesize 64M
+    php_value post_max_size 64M
+</IfModule>
+
+# ============================================================
+# LiteSpeed SUNUCU CACHE'İNİ KAPAT — dinamik site (419 / oturum düşme fix)
+# Girişli + CSRF token'lı sayfalar cache'lenmemeli; her istek PHP'den taze gelsin.
+# ============================================================
+<IfModule LiteSpeed>
+    RewriteEngine On
+    RewriteRule .* - [E=Cache-Control:no-cache]
+    CacheLookup off
+</IfModule>
+
+# ========================
+# MIME TYPE TANIMLAMALARI
+# ========================
+<IfModule mod_mime.c>
+    # CSS
+    AddType text/css .css
+    AddType text/css .css.map
+    
+    # JavaScript
+    AddType application/javascript .js
+    AddType application/javascript .js.map
+    AddType text/javascript .js
+    
+    # JSON
+    AddType application/json .json
+    AddType application/json .json.map
+    
+    # Fonts
+    AddType font/woff .woff
+    AddType font/woff2 .woff2
+    AddType application/font-woff .woff
+    AddType application/font-woff2 .woff2
+    AddType font/ttf .ttf
+    AddType font/otf .otf
+    AddType application/vnd.ms-fontobject .eot
+    
+    # Images
+    AddType image/jpeg .jpg .jpeg
+    AddType image/png .png
+    AddType image/gif .gif
+    AddType image/webp .webp
+    AddType image/svg+xml .svg
+    AddType image/x-icon .ico
+    
+    # XML
+    AddType application/xml .xml
+    AddType text/xml .xml
+</IfModule>
+
+# ========================
+# PERFORMANS OPTİMİZASYONU
+# ========================
+
+# Gzip Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml
+    # Eski tarayıcılar için
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+</IfModule>
+
+# Browser Caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # CSS & JavaScript
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    
+    # Fonts
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType font/eot "access plus 1 year"
+    
+    # HTML: cache YOK — dinamik/girişli sayfalar (CSRF token) cache'lenmemeli (419 fix)
+    ExpiresByType text/html "access plus 0 seconds"
+    
+    # Default
+    ExpiresDefault "access plus 1 month"
+</IfModule>
+
+# Cache-Control Headers ve Content-Type
+<IfModule mod_headers.c>
+    # CSS dosyaları için Content-Type
+    <FilesMatch "\.css$">
+        Header set Content-Type "text/css; charset=utf-8"
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    # JavaScript dosyaları için Content-Type
+    <FilesMatch "\.js$">
+        Header set Content-Type "application/javascript; charset=utf-8"
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    # Diğer statik dosyalar için uzun süreli cache
+    <FilesMatch "\.(jpg|jpeg|png|gif|ico|svg|webp|woff|woff2|ttf|eot|map|json)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # WebP içerik pazarlığı: cache'ler doğru sürümü saklasın diye Accept'e göre Vary
+    <FilesMatch "\.(jpe?g|png)$">
+        Header append Vary Accept
+    </FilesMatch>
+    
+    # HTML için kısa süreli cache
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "public, max-age=3600"
+    </FilesMatch>
+    
+    # ETag desteği
+    FileETag MTime Size
+</IfModule>
+
+# ========================
+# REWRITE RULES
+# ========================
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Handle X-XSRF-Token Header
+    RewriteCond %{HTTP:x-xsrf-token} .
+    RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
+
+    # ── WebP otomatik servis ──
+    # Tarayıcı webp destekliyorsa VE .webp dosyası varsa, jpg/png yerine onu sun.
+    # Referanslar (.jpg/.png) değişmez; orijinaller fallback olarak durur.
+    RewriteCond %{HTTP_ACCEPT} image/webp
+    RewriteCond %{REQUEST_FILENAME} (.+)\.(jpe?g|png)$ [NC]
+    RewriteCond %1.webp -f
+    RewriteRule (.+)\.(jpe?g|png)$ $1.webp [T=image/webp,L]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # KRİTİK: Statik dosyaları EN ÖNCE kontrol et - Laravel route'larına gitmesin!
+    # Bu kural MUTLAKA index.php'den ÖNCE olmalı
+    
+    # 1. CSS dosyaları
+    RewriteCond %{REQUEST_URI} \.css$ [NC]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule . - [L]
+    
+    # 2. JavaScript dosyaları
+    RewriteCond %{REQUEST_URI} \.js$ [NC]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule . - [L]
+    
+    # 3. Diğer statik dosyalar (images, fonts, vb.)
+    RewriteCond %{REQUEST_URI} \.(jpg|jpeg|png|gif|ico|svg|webp|woff|woff2|ttf|eot|map|json|pdf|zip|rar)$ [NC]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule . - [L]
+    
+    # 4. PHP dosyalarını doğrudan çalıştır
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteCond %{REQUEST_URI} \.php$ [NC]
+    RewriteRule . - [L]
+    
+    # 5. Genel dosya kontrolü (yukarıdakilerden sonra)
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule . - [L]
+    
+    # 6. Statik dosya uzantıları için özel kontrol (dosya yoksa 404)
+    RewriteCond %{REQUEST_URI} \.(css|js|jpg|jpeg|png|gif|ico|svg|webp|woff|woff2|ttf|eot|map|json)$ [NC]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule . - [R=404,L]
+    
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>

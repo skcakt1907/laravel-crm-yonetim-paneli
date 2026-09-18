@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Üyeler — İş Ortağım Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+* { transition: background-color .4s, color .4s; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Inter', sans-serif; background: #000; color: #fff; }
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+.glass { background: rgba(20,20,20,.85); backdrop-filter: blur(20px); border: 1px solid rgba(250,204,21,.25); }
+body.light { background: #fff; color: #000; }
+body.light .glass { background: rgba(255,255,255,.95); border: 1px solid rgba(0,0,0,.08); box-shadow: 0 4px 20px rgba(0,0,0,.04); }
+body.light .text-white { color: #000 !important; }
+body.light .text-white\/70 { color: rgba(0,0,0,.7) !important; }
+body.light .text-white\/60 { color: rgba(0,0,0,.6) !important; }
+body.light .text-white\/50 { color: rgba(0,0,0,.5) !important; }
+body.light .border-yellow-500\/20 { border-color: rgba(0,0,0,.1) !important; }
+body.light .border-yellow-500\/10 { border-color: rgba(0,0,0,.08) !important; }
+body.light .nav-link { color: #000 !important; }
+body.light input, body.light select { background: rgba(0,0,0,.04) !important; color: #000 !important; border-color: rgba(0,0,0,.1) !important; }
+.gradient-text { background: linear-gradient(135deg, #fde047, #facc15, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #facc15, #f59e0b); border-radius: 8px; }
+
+.nav-link { color: #fff; transition: all .3s; text-decoration: none; display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; }
+.nav-link.active { background: linear-gradient(135deg, rgba(250,204,21,.2), rgba(250,204,21,.05)); color: #fde047 !important; border-left: 3px solid #facc15; }
+.nav-link.active .emoji-icon { transform: scale(1.15); filter: drop-shadow(0 0 12px rgba(250,204,21,.8)); }
+.nav-link:hover { background: rgba(255,255,255,.05); }
+.nav-link:hover .emoji-icon { transform: scale(1.1); }
+.emoji-icon { transition: all .3s; font-size: 22px; line-height: 1; display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; }
+.sidebar-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(250,204,21,.5), transparent); margin: 1rem 0; }
+
+.theme-toggle { position: fixed; top: 20px; right: 24px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #facc15, #f59e0b); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 30px rgba(250,204,21,.4); font-size: 20px; border: none; }
+.theme-toggle:hover { transform: scale(1.1) rotate(15deg); }
+.theme-toggle .icon-sun { display: none; } body.light .theme-toggle .icon-sun { display: block; } body.light .theme-toggle .icon-moon { display: none; }
+
+.btn-y { background: linear-gradient(135deg, #facc15, #f59e0b); color: #000; font-weight: 700; padding: 10px 20px; border-radius: 12px; transition: all .3s; box-shadow: 0 8px 20px rgba(250,204,21,.3); }
+.btn-y:hover { transform: translateY(-2px); box-shadow: 0 15px 35px rgba(250,204,21,.5); }
+.btn-o { background: rgba(255,255,255,.05); border: 1px solid rgba(250,204,21,.3); color: #fff; padding: 10px 20px; border-radius: 12px; transition: all .3s; }
+.btn-o:hover { background: rgba(250,204,21,.1); border-color: #facc15; }
+body.light .btn-o { background: rgba(0,0,0,.03); color: #000; }
+
+input, select { background: rgba(255,255,255,.05); border: 1px solid rgba(250,204,21,.25); color: #fff; padding: 10px 14px; border-radius: 10px; transition: all .2s; }
+input:focus, select:focus { border-color: #facc15; outline: none; box-shadow: 0 0 0 3px rgba(250,204,21,.15); }
+input::placeholder { color: rgba(255,255,255,.3); }
+body.light input::placeholder { color: rgba(0,0,0,.3); }
+
+.badge { padding: 4px 10px; border-radius: 8px; font-weight: 600; font-size: 11px; display: inline-flex; align-items: center; gap: 4px; }
+.badge-success { background: rgba(16,185,129,.2); color: #6ee7b7; border: 1px solid rgba(16,185,129,.3); }
+.badge-danger { background: rgba(239,68,68,.2); color: #fca5a5; border: 1px solid rgba(239,68,68,.3); }
+.badge-warning { background: rgba(251,146,60,.2); color: #fdba74; border: 1px solid rgba(251,146,60,.3); }
+.badge-yellow { background: rgba(250,204,21,.2); color: #fde047; border: 1px solid rgba(250,204,21,.3); }
+
+tr.data-row { transition: background .2s; }
+tr.data-row:hover { background: rgba(250,204,21,.05); }
+body.light tr.data-row:hover { background: rgba(250,204,21,.1); }
+
+.action-btn { width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; transition: all .2s; cursor: pointer; }
+.action-btn:hover { background: rgba(250,204,21,.15); transform: scale(1.1); }
+
+.sidebar-collapsed { width: 80px !important; }
+.sidebar-collapsed .nav-text, .sidebar-collapsed .nav-section, .sidebar-collapsed .logo-text { display: none; }
+.sidebar-collapsed .nav-link { justify-content: center; }
+</style>
+</head>
+<body>
+<button id="themeToggle" class="theme-toggle"><span class="icon-moon">🌙</span><span class="icon-sun">☀️</span></button>
+
+<div class="flex min-h-screen">
+  <!-- SIDEBAR -->
+  <aside id="sidebar" class="hidden lg:flex flex-col w-72 glass border-r border-yellow-500/25 sticky top-0 h-screen overflow-y-auto z-30">
+    <div class="p-6 border-b border-yellow-500/20">
+      <a href="#" class="flex items-center gap-3">
+        <div class="relative">
+          <div class="absolute inset-0 bg-yellow-400 rounded-xl blur-md opacity-50"></div>
+          <div class="relative w-11 h-11 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-black font-extrabold text-xl">İ</div>
+        </div>
+        <div class="logo-text">
+          <div class="font-display font-bold text-lg leading-tight">İş Ortağım</div>
+          <div class="text-xs text-yellow-400">Admin Panel</div>
+        </div>
+      </a>
+    </div>
+    <nav class="flex-1 p-4 space-y-1">
+      <div class="nav-section text-[10px] font-bold text-yellow-400 uppercase tracking-widest px-3 mb-2">Ana Menü</div>
+      <a href="#" class="nav-link"><span class="emoji-icon">📊</span><span class="nav-text font-medium">Dashboard</span></a>
+      <a href="#" class="nav-link active"><span class="emoji-icon">👥</span><span class="nav-text font-medium">Üyeler</span></a>
+      <a href="#" class="nav-link"><span class="emoji-icon">📦</span><span class="nav-text font-medium">Paketler</span></a>
+      <a href="#" class="nav-link"><span class="emoji-icon">🖥️</span><span class="nav-text font-medium">Hosting</span></a>
+      <a href="#" class="nav-link"><span class="emoji-icon">🌐</span><span class="nav-text font-medium">Domainler</span></a>
+      <a href="#" class="nav-link"><span class="emoji-icon">🧾</span><span class="nav-text font-medium">Faturalar</span></a>
+      <div class="sidebar-divider"></div>
+      <div class="nav-section text-[10px] font-bold text-yellow-400 uppercase tracking-widest px-3 mb-2">Bayilik</div>
+      <a href="#" class="nav-link"><span class="emoji-icon">🏪</span><span class="nav-text font-medium">Bayiler</span></a>
+      <a href="#" class="nav-link"><span class="emoji-icon">🎟️</span><span class="nav-text font-medium">Promo</span></a>
+      <div class="sidebar-divider"></div>
+      <div class="nav-section text-[10px] font-bold text-yellow-400 uppercase tracking-widest px-3 mb-2">Sistem</div>
+      <a href="#" class="nav-link"><span class="emoji-icon">⚙️</span><span class="nav-text font-medium">Ayarlar</span></a>
+      <a href="#" class="nav-link"><span class="emoji-icon">🚪</span><span class="nav-text font-medium">Çıkış</span></a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="flex-1 flex flex-col min-w-0">
+    <!-- TOPBAR -->
+    <header class="glass border-b border-yellow-500/20 sticky top-0 z-20">
+      <div class="flex items-center justify-between gap-4 px-4 lg:px-8 h-16">
+        <div class="flex items-center gap-3">
+          <button id="sidebarToggle" class="p-2 hover:bg-yellow-500/10 rounded-lg text-2xl">☰</button>
+          <div class="hidden md:flex items-center gap-2 bg-white/5 border border-yellow-500/20 rounded-xl px-4 py-2 w-96">
+            <span class="text-yellow-400">🔍</span>
+            <input type="text" placeholder="Hızlı ara..." class="bg-transparent flex-1 text-sm focus:outline-none border-0 p-0">
+          </div>
+        </div>
+        <div class="flex items-center gap-3 pl-3 border-l border-yellow-500/20">
+          <div class="hidden lg:block text-right">
+            <div class="text-sm font-semibold">Nesimi Ateş</div>
+            <div class="text-xs text-yellow-400">Süper Admin</div>
+          </div>
+          <div class="relative">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-black font-bold">N</div>
+            <div class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-black"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT: LISTE SAYFASI -->
+    <main class="flex-1 p-4 lg:p-8 space-y-6">
+      <!-- Header -->
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <div class="flex items-center gap-2 text-sm text-white/60 mb-2">
+            <a href="#" class="hover:text-yellow-400">🏠 Anasayfa</a> <span>›</span> <span>Üyeler</span>
+          </div>
+          <h1 class="font-display text-3xl font-extrabold flex items-center gap-3">👥 Üyeler <span class="badge badge-yellow text-base">5.247</span></h1>
+          <p class="text-white/60 mt-1">Tüm kayıtlı üyeleri yönet</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn-o flex items-center gap-2">📥 Excel'e Aktar</button>
+          <a href="admin-form.html" class="btn-y flex items-center gap-2">➕ Yeni Üye Ekle</a>
+        </div>
+      </div>
+
+      <!-- FILTERS -->
+      <div class="glass rounded-2xl p-5">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <input type="text" placeholder="🔍 Üye ara (ad, email, telefon)..." class="md:col-span-2">
+          <select>
+            <option>Tüm Durumlar</option><option>✅ Aktif</option><option>❌ Pasif</option>
+          </select>
+          <select>
+            <option>Tüm Roller</option><option>👑 Patron</option><option>💼 Çalışan</option><option>🏪 Bayi</option><option>👤 Müşteri</option>
+          </select>
+        </div>
+        <div class="flex items-center justify-between mt-3">
+          <div class="text-sm text-white/60">
+            <span class="badge badge-yellow">5.247 toplam</span> |
+            <span class="text-emerald-400">4.890 aktif</span> |
+            <span class="text-white/50">357 pasif</span>
+          </div>
+          <button class="text-sm text-yellow-400 hover:text-yellow-300 font-semibold">🔄 Filtreleri Sıfırla</button>
+        </div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="glass rounded-2xl overflow-hidden">
+        <div class="flex items-center justify-between p-5 border-b border-yellow-500/10">
+          <div class="text-sm">
+            <strong class="text-yellow-400">25</strong> kayıt gösteriliyor / <span class="text-white/60">Sayfa 1 / 211</span>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <select class="text-xs">
+              <option>Sayfa başı 25</option><option>50</option><option>100</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="text-xs uppercase border-b border-yellow-500/10" style="background: rgba(250,204,21,0.05);">
+                <th class="text-left font-semibold px-6 py-4 text-yellow-400"><input type="checkbox" class="w-4 h-4 accent-yellow-500"></th>
+                <th class="text-left font-semibold px-6 py-4 text-yellow-400">Üye</th>
+                <th class="text-left font-semibold px-6 py-4 text-yellow-400">İletişim</th>
+                <th class="text-left font-semibold px-6 py-4 text-yellow-400">Rol</th>
+                <th class="text-left font-semibold px-6 py-4 text-yellow-400">Bakiye</th>
+                <th class="text-left font-semibold px-6 py-4 text-yellow-400">Durum</th>
+                <th class="text-left font-semibold px-6 py-4 text-yellow-400">Kayıt</th>
+                <th class="text-right font-semibold px-6 py-4 text-yellow-400">İşlem</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm">
+              <!-- Row 1 -->
+              <tr class="data-row border-b border-yellow-500/5">
+                <td class="px-6 py-4"><input type="checkbox" class="w-4 h-4 accent-yellow-500"></td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-black font-bold">A</div>
+                    <div>
+                      <div class="font-semibold">Ahmet Yılmaz</div>
+                      <div class="text-xs text-white/50">ID: #1247</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="text-sm">📧 ahmet@yilmaz.com</div>
+                  <div class="text-xs text-white/50 mt-1">📱 +90 555 123 45 67</div>
+                </td>
+                <td class="px-6 py-4"><span class="badge badge-yellow">👑 Patron</span></td>
+                <td class="px-6 py-4 font-bold">₺12.450</td>
+                <td class="px-6 py-4"><span class="badge badge-success">✅ Aktif</span></td>
+                <td class="px-6 py-4 text-xs text-white/60">15.05.2025</td>
+                <td class="px-6 py-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <a href="admin-detay.html" class="action-btn" title="Detay">👁️</a>
+                    <a href="admin-form.html" class="action-btn" title="Düzenle">✏️</a>
+                    <button class="action-btn" title="Sil">🗑️</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="data-row border-b border-yellow-500/5">
+                <td class="px-6 py-4"><input type="checkbox" class="w-4 h-4 accent-yellow-500"></td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center text-black font-bold">E</div>
+                    <div><div class="font-semibold">Elif Demir</div><div class="text-xs text-white/50">ID: #1246</div></div>
+                  </div>
+                </td>
+                <td class="px-6 py-4"><div class="text-sm">📧 elif@demir.com</div><div class="text-xs text-white/50 mt-1">📱 +90 532 987 65 43</div></td>
+                <td class="px-6 py-4"><span class="badge badge-yellow">🏪 Bayi</span></td>
+                <td class="px-6 py-4 font-bold">₺3.200</td>
+                <td class="px-6 py-4"><span class="badge badge-success">✅ Aktif</span></td>
+                <td class="px-6 py-4 text-xs text-white/60">14.05.2025</td>
+                <td class="px-6 py-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <a href="#" class="action-btn">👁️</a><a href="#" class="action-btn">✏️</a><button class="action-btn">🗑️</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="data-row border-b border-yellow-500/5">
+                <td class="px-6 py-4"><input type="checkbox" class="w-4 h-4 accent-yellow-500"></td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-black font-bold">M</div>
+                    <div><div class="font-semibold">Mehmet Kaya</div><div class="text-xs text-white/50">ID: #1245</div></div>
+                  </div>
+                </td>
+                <td class="px-6 py-4"><div class="text-sm">📧 mehmet@kaya.com</div><div class="text-xs text-white/50 mt-1">📱 +90 533 456 78 90</div></td>
+                <td class="px-6 py-4"><span class="badge badge-yellow">👤 Müşteri</span></td>
+                <td class="px-6 py-4 font-bold">₺0</td>
+                <td class="px-6 py-4"><span class="badge badge-warning">⏳ Beklemede</span></td>
+                <td class="px-6 py-4 text-xs text-white/60">13.05.2025</td>
+                <td class="px-6 py-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <a href="#" class="action-btn">👁️</a><a href="#" class="action-btn">✏️</a><button class="action-btn">🗑️</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="data-row border-b border-yellow-500/5">
+                <td class="px-6 py-4"><input type="checkbox" class="w-4 h-4 accent-yellow-500"></td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-black font-bold">Z</div>
+                    <div><div class="font-semibold">Zeynep Şahin</div><div class="text-xs text-white/50">ID: #1244</div></div>
+                  </div>
+                </td>
+                <td class="px-6 py-4"><div class="text-sm">📧 zeynep@sahin.com</div><div class="text-xs text-white/50 mt-1">📱 +90 534 111 22 33</div></td>
+                <td class="px-6 py-4"><span class="badge badge-yellow">💼 Çalışan</span></td>
+                <td class="px-6 py-4 font-bold">₺850</td>
+                <td class="px-6 py-4"><span class="badge badge-danger">❌ Pasif</span></td>
+                <td class="px-6 py-4 text-xs text-white/60">12.05.2025</td>
+                <td class="px-6 py-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <a href="#" class="action-btn">👁️</a><a href="#" class="action-btn">✏️</a><button class="action-btn">🗑️</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="data-row">
+                <td class="px-6 py-4"><input type="checkbox" class="w-4 h-4 accent-yellow-500"></td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center text-black font-bold">B</div>
+                    <div><div class="font-semibold">Burak Aydın</div><div class="text-xs text-white/50">ID: #1243</div></div>
+                  </div>
+                </td>
+                <td class="px-6 py-4"><div class="text-sm">📧 burak@aydin.com</div><div class="text-xs text-white/50 mt-1">📱 +90 535 999 88 77</div></td>
+                <td class="px-6 py-4"><span class="badge badge-yellow">🏪 Bayi</span></td>
+                <td class="px-6 py-4 font-bold">₺7.890</td>
+                <td class="px-6 py-4"><span class="badge badge-success">✅ Aktif</span></td>
+                <td class="px-6 py-4 text-xs text-white/60">11.05.2025</td>
+                <td class="px-6 py-4 text-right">
+                  <div class="flex items-center justify-end gap-1">
+                    <a href="#" class="action-btn">👁️</a><a href="#" class="action-btn">✏️</a><button class="action-btn">🗑️</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- BULK ACTIONS BAR -->
+        <div class="px-5 py-3 border-t border-yellow-500/10 flex items-center justify-between">
+          <div class="text-sm text-white/60">Seçili: <span class="text-yellow-400 font-bold">0</span></div>
+          <div class="flex items-center gap-2">
+            <button class="btn-o text-sm py-1.5 px-3">📤 Toplu Mail Gönder</button>
+            <button class="btn-o text-sm py-1.5 px-3">🔄 Toplu Durum Değiştir</button>
+            <button class="btn-o text-sm py-1.5 px-3 text-red-400 border-red-500/30">🗑️ Toplu Sil</button>
+          </div>
+        </div>
+
+        <!-- PAGINATION -->
+        <div class="p-5 border-t border-yellow-500/10 flex items-center justify-between flex-wrap gap-3">
+          <div class="text-sm text-white/60">1 - 25 arası, toplam <strong class="text-yellow-400">5.247</strong></div>
+          <div class="flex items-center gap-1">
+            <button class="action-btn">⬅️</button>
+            <button class="action-btn bg-yellow-500/20 text-yellow-400 font-bold">1</button>
+            <button class="action-btn">2</button>
+            <button class="action-btn">3</button>
+            <span class="px-2 text-white/40">...</span>
+            <button class="action-btn">211</button>
+            <button class="action-btn">➡️</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+const t = document.getElementById('themeToggle');
+if(localStorage.getItem('admin_theme') === 'light') document.body.classList.add('light');
+t.addEventListener('click', () => { document.body.classList.toggle('light'); localStorage.setItem('admin_theme', document.body.classList.contains('light') ? 'light' : 'dark'); });
+document.getElementById('sidebarToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('sidebar-collapsed'));
+</script>
+</body>
+</html>

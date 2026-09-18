@@ -1,0 +1,934 @@
+/* Modern Sidebar Tasarımı */
+.sidebar-widget {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
+}
+
+.sidebar-widget .widget-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.sidebar-widget ul {
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-widget ul li {
+  list-style: none;
+  padding: 12px 0;
+  border-bottom: 1px solid #f5f5f5;
+  transition: all 0.3s ease;
+}
+
+.sidebar-widget ul li:last-child {
+  border-bottom: none;
+}
+
+.sidebar-widget ul li a {
+  color: #555;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.sidebar-widget ul li a .badge {
+  background: #e9ecef;
+  color: #6c757d;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.sidebar-widget ul li.active {
+  background: linear-gradient(90deg, #007bff15 0%, transparent 100%);
+  border-left: 3px solid #007bff;
+  padding-left: 15px;
+}
+
+.sidebar-widget ul li.active a {
+  color: #007bff;
+  font-weight: 600;
+}
+
+.sidebar-widget ul li.active a .badge {
+  background: #007bff;
+  color: #fff;
+}
+
+.sidebar-widget ul li:hover {
+  background: #f8f9fa;
+  padding-left: 10px;
+}
+
+.sidebar-widget ul li:hover a {
+  color: #007bff;
+}
+
+/* Modern Paket Kartı Tasarımı */
+.item-demo {
+  display: block !important;
+  flex-direction: column;
+  height: auto !important;
+  min-height: 400px !important;
+  border: none;
+  border-radius: 20px !important;
+  overflow: visible !important;
+  background: rgba(30, 40, 60, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7) !important;
+  border: 3px solid rgba(212, 210, 91, 0.5) !important;
+  transition: all 0.3s ease;
+  position: relative !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 1 !important;
+  margin-bottom: 30px !important;
+}
+
+.tab-content {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+}
+
+.tab-content .row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  margin: 0 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.tab-content .row .col-md-4,
+.tab-content .row .col-sm-6 {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+}
+
+.item-demo::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.item-demo:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4) !important;
+  border-color: rgba(212, 210, 91, 0.3) !important;
+}
+
+.item-demo:hover::before {
+  opacity: 1;
+}
+
+.paketkapak {
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  min-height: 280px;
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.paketkapak::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.item-demo:hover .paketkapak::after {
+  opacity: 1;
+}
+
+.product-caption {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.7);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.item-demo:hover .product-caption {
+  opacity: 1;
+}
+
+.product-link a {
+  background: #fff;
+  color: #007bff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  margin: 5px;
+  display: inline-block;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.product-link a:hover {
+  background: #007bff;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.product-info {
+  display: block !important;
+  flex-direction: column;
+  flex: 1;
+  padding: 25px !important;
+  min-height: 120px;
+  background: rgba(20, 30, 50, 0.6) !important;
+  border-top: 1px solid rgba(212, 210, 91, 0.2) !important;
+}
+
+.product-header {
+  flex: 1;
+  margin-bottom: 15px;
+  display: block !important;
+}
+
+.product-name {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  margin-bottom: 15px !important;
+  color: #fff !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.product-name a {
+  color: #fff !important;
+  text-decoration: none !important;
+  transition: color 0.3s ease;
+  display: block !important;
+}
+
+.product-name a:hover {
+  color: #d4d25b !important;
+}
+
+.paketfiyat {
+  color: #dc3545;
+  font-weight: 800;
+  font-size: 24px;
+  white-space: nowrap;
+  margin-left: 10px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Modern Badge Tasarımları */
+.paket-kategori-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+  transition: all 0.3s ease;
+}
+
+.paket-kategori-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+.paket-kategori-badge i {
+  font-size: 11px;
+  margin-right: 5px;
+}
+
+.paket-hit-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+  transition: all 0.3s ease;
+}
+
+.paket-hit-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
+.paket-hit-badge i {
+  font-size: 11px;
+  margin-right: 5px;
+}
+
+/* Arama ve Filtre Tasarımı */
+.content-before {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
+}
+
+.dropForm .input-prepend {
+  display: flex;
+  gap: 10px;
+}
+
+.dropForm .form-control,
+.dropForm select {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 10px 15px;
+  transition: all 0.3s ease;
+}
+
+.dropForm .form-control:focus,
+.dropForm select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+  outline: none;
+}
+
+.dropForm .btn-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.dropForm .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,123,255,0.3);
+}
+
+/* =============================================
+   YENİ PAKET FİLTRE TASARIMI - 2x2 Grid
+   ============================================= */
+.paket-filter-container {
+  background: rgba(30, 40, 60, 0.95) !important;
+  background-color: rgba(30, 40, 60, 0.95) !important;
+  border-radius: 20px !important;
+  padding: 25px 28px !important;
+  margin-bottom: 28px !important;
+  border: 3px solid rgba(212, 210, 91, 0.5) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.paket-filter-form {
+  width: 100%;
+}
+
+.paket-filter-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 20px !important;
+}
+
+.paket-filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.paket-filter-label {
+  color: #d4d25b !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin-bottom: 4px !important;
+}
+
+.paket-filter-label i {
+  color: #d4d25b !important;
+  font-size: 13px !important;
+}
+
+.paket-filter-select,
+.paket-filter-input {
+  width: 100% !important;
+  padding: 14px 18px !important;
+  background: rgba(30, 40, 60, 0.95) !important;
+  background-color: rgba(30, 40, 60, 0.95) !important;
+  color: #fff !important;
+  border: 2px solid rgba(212, 210, 91, 0.4) !important;
+  border-radius: 12px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  outline: none !important;
+  transition: all 0.3s ease !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  box-sizing: border-box !important;
+  min-height: 50px !important;
+}
+
+.paket-filter-select {
+  background-color: rgba(30, 40, 60, 0.95) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23d4d25b' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 16px center !important;
+  padding-right: 45px !important;
+  cursor: pointer !important;
+}
+
+.paket-filter-select:focus,
+.paket-filter-input:focus {
+  border-color: rgba(212, 210, 91, 0.6) !important;
+  box-shadow: 0 0 0 3px rgba(212, 210, 91, 0.15);
+}
+
+.paket-filter-select option {
+  background: #1a2332 !important;
+  color: #fff !important;
+  padding: 10px;
+}
+
+.paket-filter-input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.paket-filter-btn-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.paket-filter-btn {
+  width: 100% !important;
+  padding: 14px 24px !important;
+  background: linear-gradient(135deg, #d4d25b 0%, #c4c24b 100%) !important;
+  background-color: #d4d25b !important;
+  color: #000 !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 8px 25px rgba(212, 210, 91, 0.4) !important;
+  min-height: 50px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.paket-filter-btn:hover {
+  background: linear-gradient(135deg, #e4e26b 0%, #d4d25b 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 210, 91, 0.4);
+}
+
+.paket-filter-btn i {
+  font-size: 16px;
+}
+
+/* Mobil: tek sütun */
+@media (max-width: 768px) {
+  .paket-filter-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .paket-filter-container {
+    padding: 16px;
+  }
+}
+
+/* ESKİ STİLLER (geriye uyumluluk için) */
+.paket-filter-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.paket-search-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+/* Alert Tasarımı */
+.alert-info {
+  background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+  border: none;
+  border-left: 4px solid #17a2b8;
+  border-radius: 8px;
+  padding: 15px 20px;
+}
+
+/* Responsive İyileştirmeler */
+@media (max-width: 768px) {
+  .item-demo {
+    margin-bottom: 20px;
+  }
+  
+  .paketkapak {
+    min-height: 220px;
+  }
+  
+  .product-info {
+    padding: 20px;
+  }
+  
+  .paketfiyat {
+    font-size: 20px;
+  }
+
+  /* Mobilde kategori + arama alt alta gelsin */
+  .paket-filter-row {
+    align-items: stretch;
+  }
+}
+
+.paket-filter-row .category-select {
+  width: 100% !important;
+  max-width: none !important;
+  border-radius: 999px !important;
+}
+
+.paket-search-input {
+  width: 100%;
+  border-radius: 999px !important;
+}
+
+.paket-filter-submit {
+  width: 100%;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, #d4d25b 0%, #c4c24b 100%) !important;
+  color: #000 !important;
+  border: none !important;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(212, 210, 91, 0.45);
+}
+
+/* Filtre elemanlarini ayni stil ailesine sok */
+.paket-filter-row .category-select,
+.paket-filter-row .paket-search-input,
+.paket-filter-row .order-select,
+.paket-filter-row .paket-filter-submit {
+  box-shadow: none;
+  font-size: 14px;
+  min-height: 44px;
+}
+
+/* Desktop görünümünde filtre alanını 2x2 grid yap (üstte 2 select, altta arama + buton) */
+@media (min-width: 768px) {
+  .paket-filter-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "cat order"
+      "search button";
+    column-gap: 12px;
+    row-gap: 10px;
+  }
+
+  .paket-filter-row .category-select {
+    grid-area: cat;
+  }
+
+  .paket-filter-row .order-select {
+    grid-area: order;
+  }
+
+  .paket-filter-row .paket-search-input {
+    grid-area: search;
+  }
+
+  .paket-filter-row .paket-filter-submit {
+    grid-area: button;
+  }
+}
+
+.paket-filter-row .category-select,
+.paket-filter-row .paket-search-input,
+.paket-filter-row .order-select {
+  background: rgba(15, 24, 40, 0.9) !important;
+  color: #fff !important;
+  border: 2px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+.paket-filter-row .category-select:focus,
+.paket-filter-row .paket-search-input:focus,
+.paket-filter-row .order-select:focus {
+  border-color: rgba(212, 210, 91, 0.8) !important;
+  box-shadow: 0 0 0 2px rgba(212, 210, 91, 0.25);
+}
+
+/* Paket Detay Sayfası */
+.section.single-wrap {
+  /* Arka plan inline olarak blade içinde override ediliyor. Buradaki sadece fallback. */
+  background: linear-gradient(135deg, #020617 0%, #020617 100%);
+  padding: 80px 0;
+}
+
+.section.single-wrap .container {
+  position: relative;
+  z-index: 1;
+}
+
+.single-wrap .paket-detay-card {
+  background: radial-gradient(circle at top left, rgba(15,23,42,0.98), rgba(15,23,42,0.92));
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  padding: 30px;
+  border: 1px solid rgba(148,163,184,0.3);
+  color: #e5e7eb;
+}
+
+.single-wrap .paket-detay-card .title-sub {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #e5e7eb;
+  display: flex;
+  align-items: center;
+}
+
+.single-wrap .paket-detay-card .title-sub i {
+  margin-right: 8px;
+}
+
+.paket-detay-price-box {
+  background: linear-gradient(135deg, #6366f1 0%, #ec4899 50%, #f97316 100%);
+  border-radius: 16px;
+  padding: 25px 20px;
+  color: #fff;
+  box-shadow: 0 10px 25px rgba(0,123,255,0.3);
+}
+
+.paket-detay-price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.paket-detay-price .amount {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.paket-detay-price .vat {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.paket-detay-price-box .payment-type {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.paket-detay-meta {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.paket-detay-meta i {
+  margin-right: 5px;
+}
+
+.paket-detay-section {
+  background: rgba(15,23,42,0.95);
+  border-radius: 12px;
+  padding: 20px 22px;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.7);
+  border: 1px solid rgba(148,163,184,0.3);
+}
+
+.paket-detay-section .content {
+  font-size: 14px;
+  color: #e5e7eb;
+  line-height: 1.7;
+}
+
+.paket-detay-section .content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Paket Detay Sağ Sidebar Butonları */
+.single-wrap .sidebar-widget .btn {
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.single-wrap .sidebar-widget .btn-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  border: none;
+  box-shadow: 0 8px 18px rgba(0,123,255,0.35);
+}
+
+.single-wrap .sidebar-widget .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0,123,255,0.45);
+}
+
+.single-wrap .sidebar-widget .btn-secondary {
+  background: #15212a;
+  border: none;
+  color: #fff;
+}
+
+.single-wrap .sidebar-widget .btn-secondary:hover {
+  background: #1f2f3b;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+}
+
+/* Sepete Ekle butonu yazı rengi her durumda beyaz kalsın */
+.section.single-wrap .btn-secondary,
+.section.single-wrap .btn-secondary:hover,
+.section.single-wrap .btn-secondary:active,
+.section.single-wrap .btn-secondary:focus {
+  color: #fff !important;
+}
+
+.paket-sidebar-card {
+  background: radial-gradient(circle at top, rgba(15,23,42,0.98), rgba(15,23,42,0.96));
+  border-radius: 16px;
+  border: 1px solid rgba(148,163,184,0.35);
+  box-shadow: 0 18px 55px rgba(0,0,0,0.75);
+  color: #e5e7eb;
+}
+
+.paket-sidebar-card h4 {
+  color: #e5e7eb;
+  font-weight: 700;
+}
+
+.single-wrap .sidebar-widget .btn-outline-primary,
+.single-wrap .sidebar-widget .btn-outline-secondary {
+  border-width: 2px;
+}
+
+.single-wrap .sidebar-widget .btn-outline-primary:hover,
+.single-wrap .sidebar-widget .btn-outline-secondary:hover {
+  transform: translateY(-2px);
+}
+
+/* Modern Input Styles - Paketler Sayfası */
+.modern-input {
+    color: #fff !important;
+}
+
+.modern-input::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.modern-input:-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.modern-input:-moz-placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.modern-input:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Select Dropdown Dark Theme */
+.modern-input select,
+select.modern-input,
+.category-select,
+.order-select {
+    background: rgba(15, 24, 40, 0.9) !important;
+    color: #fff !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+}
+
+.modern-input select option,
+select.modern-input option,
+.category-select option,
+.order-select option {
+    background: rgba(30, 40, 60, 0.95) !important;
+    color: #fff !important;
+    padding: 12px 16px !important;
+}
+
+.modern-input select option:hover,
+select.modern-input option:hover,
+.category-select option:hover,
+.order-select option:hover {
+    background: rgba(212, 210, 91, 0.2) !important;
+    color: #d4d25b !important;
+}
+
+.modern-input select option:checked,
+select.modern-input option:checked,
+.category-select option:checked,
+.order-select option:checked {
+    background: rgba(212, 210, 91, 0.3) !important;
+    color: #d4d25b !important;
+}
+
+/* Select Dropdown Focus */
+.modern-input select:focus,
+select.modern-input:focus,
+.category-select:focus,
+.order-select:focus {
+    background: rgba(15, 24, 40, 0.9) !important;
+    color: #fff !important;
+    border-color: rgba(212, 210, 91, 0.8) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(212, 210, 91, 0.2) !important;
+}
+
+/* Webkit Scrollbar Styles */
+.modern-input select::-webkit-scrollbar,
+select.modern-input::-webkit-scrollbar,
+.category-select::-webkit-scrollbar,
+.order-select::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modern-input select::-webkit-scrollbar-track,
+select.modern-input::-webkit-scrollbar-track,
+.category-select::-webkit-scrollbar-track,
+.order-select::-webkit-scrollbar-track {
+    background: rgba(30, 40, 60, 0.95);
+}
+
+.modern-input select::-webkit-scrollbar-thumb,
+select.modern-input::-webkit-scrollbar-thumb,
+.category-select::-webkit-scrollbar-thumb,
+.order-select::-webkit-scrollbar-thumb {
+    background: rgba(212, 210, 91, 0.5);
+    border-radius: 4px;
+}
+
+.modern-input select::-webkit-scrollbar-thumb:hover,
+select.modern-input::-webkit-scrollbar-thumb:hover,
+.category-select::-webkit-scrollbar-thumb:hover,
+.order-select::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 210, 91, 0.7);
+}
+
+/* Firefox Select Dropdown Styles */
+@-moz-document url-prefix() {
+    .modern-input select,
+    select.modern-input,
+    .category-select,
+    .order-select {
+        background-color: rgba(30, 40, 60, 0.95) !important;
+        color: #fff !important;
+    }
+    
+    .modern-input select option,
+    select.modern-input option,
+    .category-select option,
+    .order-select option {
+        background-color: rgba(30, 40, 60, 0.95) !important;
+        color: #fff !important;
+    }
+}
+
+/* Paket Kartları Container Styles */
+#paket-kartlari-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+}
+
+#paket-kartlari-container > div {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 30px !important;
+    width: 100% !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+#paket-kartlari-container > div > div {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+}
+
+@media (max-width: 991px) {
+    #paket-kartlari-container > div {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 575px) {
+    #paket-kartlari-container > div {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* MixItUp Override */
+.mix,
+.item-demo,
+.tab-content {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}

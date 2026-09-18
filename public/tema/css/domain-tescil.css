@@ -1,0 +1,68 @@
+/* Domain Tescil Sayfası Özel Stiller */
+
+/* Domain Arama Formu + Özellik Kartları Responsive */
+
+/* Masaüstü varsayılanı */
+.domain-features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+@media (max-width: 768px) {
+    .search-domain-content form {
+        flex-direction: column !important;
+    }
+    
+    .search-domain-content form input,
+    .search-domain-content form select,
+    .search-domain-content form button {
+        width: 100% !important;
+        flex: 1 1 100% !important;
+    }
+    
+    .domain-type {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* Alan adı özellik kartları (7/24 destek vb.) mobil düzeni */
+    .domain-features-grid {
+        grid-template-columns: 1fr !important;
+        gap: 24px !important;
+    }
+
+    .domain-feature-card {
+        min-height: auto !important;
+        padding: 20px !important;
+    }
+
+    .domain-feature-card h4 {
+        font-size: 18px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .domain-feature-card p {
+        font-size: 14px !important;
+        line-height: 1.6 !important;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .domain-type {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+/* Domain Sonuç Kartı Hover */
+.domain-result button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 15px 40px rgba(212, 210, 91, 0.6) !important;
+}
+
+/* Domain Tip Kartları Hover */
+.single-domain-type:hover {
+    transform: translateY(-5px) !important;
+    border-color: rgba(212, 210, 91, 0.6) !important;
+    box-shadow: 0 10px 30px rgba(212, 210, 91, 0.3) !important;
+}
+

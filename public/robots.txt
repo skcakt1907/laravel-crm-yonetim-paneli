@@ -1,0 +1,23 @@
+# İşOrtağım - robots.txt
+# https://crm.ornek.com
+
+User-agent: *
+Allow: /
+
+# Admin ve özel alanları engelle
+Disallow: /admin/
+Disallow: /admin
+Disallow: /yonetim/
+Disallow: /storage/
+Disallow: /_class/
+Disallow: /vendor/
+
+# Dinamik parametreleri engelle
+Disallow: /*?currency=
+Disallow: /*?lang=
+
+# Sitemap konumu
+Sitemap: https://crm.ornek.com/sitemap.xml
+
+# Crawl delay (sunucu yükü için)
+Crawl-delay: 1

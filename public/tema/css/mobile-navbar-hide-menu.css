@@ -1,0 +1,35 @@
+/* Mobilde navbar menü öğelerini gizle, sadece logo görünsün */
+@media (max-width: 768px) {
+  .nav-menu .main-menu,
+  .nav-menu .main-menu > .menu-item,
+  .nav-menu .col-9,
+  .nav-menu .col-md-9,
+  .nav-menu .navigation {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+  }
+  
+  /* Logo görünür kalsın */
+  .nav-menu .col-3,
+  .nav-menu .col-md-3,
+  .nav-menu .logo-menu {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  /* Navbar container'ı küçült */
+  .nav-menu .container {
+    padding: 0 !important;
+  }
+  
+  .nav-menu .row {
+    margin: 0 !important;
+    padding: 10px 0 !important;
+  }
+}
+

@@ -1,0 +1,298 @@
+/* ======================================================
+   Admin Panel — Modern Button Theme
+   Tek dosyadan tum .btn varyantlarini moderne donusturur.
+   ====================================================== */
+
+:root {
+    --btn-radius: 10px;
+    --btn-padding-y: 9px;
+    --btn-padding-x: 18px;
+    --btn-font-size: 13px;
+    --btn-font-weight: 600;
+    --btn-letter-spacing: 0.2px;
+    --btn-transition: all .25s cubic-bezier(.4, 0, .2, 1);
+    --btn-shadow: 0 4px 14px rgba(15, 23, 42, .12);
+    --btn-shadow-hover: 0 8px 22px rgba(15, 23, 42, .18);
+}
+
+/* Base */
+.btn,
+button.btn,
+a.btn,
+input[type="submit"].btn,
+input[type="button"].btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: var(--btn-padding-y) var(--btn-padding-x) !important;
+    font-size: var(--btn-font-size) !important;
+    font-weight: var(--btn-font-weight) !important;
+    letter-spacing: var(--btn-letter-spacing);
+    line-height: 1.2 !important;
+    border-radius: var(--btn-radius) !important;
+    border: 1px solid transparent !important;
+    text-transform: none !important;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: var(--btn-transition);
+    box-shadow: var(--btn-shadow);
+    white-space: nowrap;
+    user-select: none;
+}
+
+.btn:hover,
+button.btn:hover,
+a.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--btn-shadow-hover);
+    text-decoration: none !important;
+}
+
+.btn:active,
+button.btn:active {
+    transform: translateY(0);
+    box-shadow: var(--btn-shadow);
+}
+
+.btn:focus,
+button.btn:focus {
+    outline: none !important;
+    box-shadow: var(--btn-shadow-hover), 0 0 0 3px rgba(99, 102, 241, .25) !important;
+}
+
+.btn i,
+button.btn i {
+    font-size: 15px;
+    line-height: 1;
+}
+
+/* Sizes */
+.btn-sm {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+    border-radius: 8px !important;
+}
+.btn-lg {
+    padding: 13px 26px !important;
+    font-size: 14px !important;
+    border-radius: 12px !important;
+}
+.btn-xs {
+    padding: 4px 9px !important;
+    font-size: 11px !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+}
+
+/* ===== Solid variants (gradient) ===== */
+.btn-primary,
+.btn-gradient-primary {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+}
+.btn-primary:hover,
+.btn-gradient-primary:hover {
+    background: linear-gradient(135deg, #5558e3 0%, #4338ca 100%) !important;
+    color: #fff !important;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #64748b 0%, #475569 100%) !important;
+    color: #fff !important;
+}
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #475569 0%, #334155 100%) !important;
+    color: #fff !important;
+}
+
+.btn-success,
+.btn-gradient-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: #fff !important;
+}
+.btn-success:hover,
+.btn-gradient-success:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    color: #fff !important;
+}
+
+.btn-danger,
+.btn-gradient-danger {
+    background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%) !important;
+    color: #fff !important;
+}
+.btn-danger:hover,
+.btn-gradient-danger:hover {
+    background: linear-gradient(135deg, #e11d48 0%, #be123c 100%) !important;
+    color: #fff !important;
+}
+
+.btn-warning,
+.btn-gradient-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    color: #fff !important;
+}
+.btn-warning:hover,
+.btn-gradient-warning:hover {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+    color: #fff !important;
+}
+
+.btn-info,
+.btn-gradient-info {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%) !important;
+    color: #fff !important;
+}
+.btn-info:hover,
+.btn-gradient-info:hover {
+    background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%) !important;
+    color: #fff !important;
+}
+
+.btn-dark {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+    color: #fff !important;
+}
+.btn-dark:hover {
+    background: linear-gradient(135deg, #0f172a 0%, #020617 100%) !important;
+    color: #fff !important;
+}
+
+.btn-light {
+    background: #f8fafc !important;
+    color: #334155 !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, .06) !important;
+}
+.btn-light:hover {
+    background: #f1f5f9 !important;
+    color: #1e293b !important;
+    border-color: #cbd5e1 !important;
+}
+
+/* ===== Outline variants ===== */
+.btn-outline-primary {
+    background: transparent !important;
+    color: #6366f1 !important;
+    border: 1.5px solid #6366f1 !important;
+    box-shadow: none !important;
+}
+.btn-outline-primary:hover {
+    background: #6366f1 !important;
+    color: #fff !important;
+}
+
+.btn-outline-secondary {
+    background: transparent !important;
+    color: #64748b !important;
+    border: 1.5px solid #cbd5e1 !important;
+    box-shadow: none !important;
+}
+.btn-outline-secondary:hover {
+    background: #64748b !important;
+    color: #fff !important;
+    border-color: #64748b !important;
+}
+
+.btn-outline-success {
+    background: transparent !important;
+    color: #10b981 !important;
+    border: 1.5px solid #10b981 !important;
+    box-shadow: none !important;
+}
+.btn-outline-success:hover {
+    background: #10b981 !important;
+    color: #fff !important;
+}
+
+.btn-outline-danger {
+    background: transparent !important;
+    color: #f43f5e !important;
+    border: 1.5px solid #f43f5e !important;
+    box-shadow: none !important;
+}
+.btn-outline-danger:hover {
+    background: #f43f5e !important;
+    color: #fff !important;
+}
+
+.btn-outline-warning {
+    background: transparent !important;
+    color: #d97706 !important;
+    border: 1.5px solid #f59e0b !important;
+    box-shadow: none !important;
+}
+.btn-outline-warning:hover {
+    background: #f59e0b !important;
+    color: #fff !important;
+}
+
+.btn-outline-info {
+    background: transparent !important;
+    color: #0891b2 !important;
+    border: 1.5px solid #06b6d4 !important;
+    box-shadow: none !important;
+}
+.btn-outline-info:hover {
+    background: #06b6d4 !important;
+    color: #fff !important;
+}
+
+/* ===== Disabled state ===== */
+.btn:disabled,
+.btn.disabled,
+button.btn[disabled] {
+    opacity: 0.55 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* ===== Btn group ===== */
+.btn-group .btn {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+.btn-group .btn:first-child {
+    border-top-left-radius: var(--btn-radius) !important;
+    border-bottom-left-radius: var(--btn-radius) !important;
+}
+.btn-group .btn:last-child {
+    border-top-right-radius: var(--btn-radius) !important;
+    border-bottom-right-radius: var(--btn-radius) !important;
+}
+.btn-group .btn + .btn {
+    margin-left: 1px;
+}
+
+/* ===== Inputs in input-group buttons ===== */
+.input-group-append .btn,
+.input-group-prepend .btn {
+    box-shadow: none !important;
+}
+.input-group-append .btn:first-child {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+/* ===== Table action buttons (icon-only) ===== */
+.table .btn-sm,
+td .btn-sm {
+    padding: 5px 9px !important;
+    min-width: 32px;
+}
+.table .btn-sm i,
+td .btn-sm i {
+    font-size: 14px;
+    margin: 0;
+}
+
+/* ===== Form check input style refresh ===== */
+.form-check-input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}

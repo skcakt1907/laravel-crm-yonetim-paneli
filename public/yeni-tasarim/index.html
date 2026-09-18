@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İş Ortağım — Web, Hosting, Domain ve Bayilik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: { extend: {
+    fontFamily: { sans: ['Inter','sans-serif'], display: ['Space Grotesk','sans-serif'] },
+    colors: {
+      brand: { 400:'#818cf8',500:'#6366f1',600:'#4f46e5',700:'#4338ca',900:'#312e81' },
+    },
+    animation: {
+      'float': 'float 6s ease-in-out infinite',
+      'float-slow': 'float 8s ease-in-out infinite',
+      'spin-slow': 'spin 20s linear infinite',
+      'gradient': 'gradient 8s ease infinite',
+      'blob': 'blob 12s ease-in-out infinite',
+      'shimmer': 'shimmer 3s linear infinite',
+      'glow': 'glow 3s ease-in-out infinite',
+      'tilt': 'tilt 10s infinite linear',
+      'bounce-slow': 'bounce 3s infinite',
+    },
+    keyframes: {
+      float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-30px)' } },
+      gradient: { '0%,100%': { 'background-position':'0% 50%' }, '50%': { 'background-position':'100% 50%' } },
+      blob: { '0%,100%': { transform: 'translate(0,0) scale(1)' }, '33%': { transform: 'translate(50px,-80px) scale(1.1)' }, '66%': { transform: 'translate(-40px,40px) scale(0.9)' } },
+      shimmer: { '0%': { 'background-position':'-1000px 0' }, '100%': { 'background-position':'1000px 0' } },
+      glow: { '0%,100%': { 'box-shadow':'0 0 20px rgba(99,102,241,.5)' }, '50%': { 'box-shadow':'0 0 60px rgba(139,92,246,.8), 0 0 100px rgba(236,72,153,.4)' } },
+      tilt: { '0%,50%,100%': { transform:'rotate(0deg)' }, '25%': { transform:'rotate(1deg)' }, '75%': { transform:'rotate(-1deg)' } },
+    }
+  }}
+}
+</script>
+<style>
+* { -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: #0a0a0f; color: #e4e4e7; overflow-x: hidden; }
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+
+/* Mesh gradient background */
+.mesh-bg {
+  background:
+    radial-gradient(at 20% 0%, hsla(253,90%,40%,0.5) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, hsla(307,76%,50%,0.4) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, hsla(228,82%,52%,0.4) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, hsla(312,73%,60%,0.3) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(204,73%,57%,0.3) 0px, transparent 50%),
+    radial-gradient(at 80% 100%, hsla(282,93%,60%,0.4) 0px, transparent 50%);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #818cf8 0%, #c084fc 40%, #f472b6 70%, #fbbf24 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 8s ease infinite;
+}
+.gradient-text-static {
+  background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #f472b6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.glass-dark {
+  background: rgba(10,10,15,0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Animated border */
+.border-glow {
+  position: relative;
+}
+.border-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(45deg, #6366f1, #ec4899, #f59e0b, #6366f1);
+  background-size: 300% 300%;
+  animation: gradient 4s linear infinite;
+  z-index: -1;
+}
+
+/* Card hover effect */
+.tilt-card {
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.4s;
+  transform-style: preserve-3d;
+}
+.tilt-card:hover {
+  transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-10px) scale(1.02);
+}
+
+/* Button magic */
+.btn-magic {
+  position: relative;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  background-size: 200% 100%;
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+.btn-magic::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s;
+}
+.btn-magic:hover::before { left: 100%; }
+.btn-magic:hover {
+  background-position: 100% 0;
+  transform: translateY(-3px);
+  box-shadow: 0 25px 50px -12px rgba(139,92,246,0.6), 0 0 50px rgba(236,72,153,0.3);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0a0a0f; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6366f1, #ec4899);
+  border-radius: 10px;
+}
+
+/* Marquee */
+.marquee { display: flex; overflow: hidden; mask-image: linear-gradient(to right, transparent, white 15%, white 85%, transparent); }
+.marquee-track {
+  display: flex;
+  animation: marquee 30s linear infinite;
+  gap: 4rem;
+  white-space: nowrap;
+}
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* Sparkle */
+.sparkle::before, .sparkle::after {
+  content: '';
+  position: absolute;
+  width: 6px; height: 6px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite;
+}
+.sparkle::before { top: 20%; left: 10%; }
+.sparkle::after { bottom: 20%; right: 10%; animation-delay: 1s; }
+@keyframes twinkle { 0%,100% { opacity: 0; transform: scale(0); } 50% { opacity: 1; transform: scale(1); } }
+
+/* Number counter glow */
+.stat-number {
+  background: linear-gradient(180deg, #fff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 80px rgba(165,180,252,0.5);
+}
+
+/* Floating particles */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(165,180,252,0.8), transparent);
+  animation: float-particle linear infinite;
+}
+@keyframes float-particle {
+  from { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10%, 90% { opacity: 1; }
+  to { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Grid bg */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(99,102,241,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.07) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, black, transparent 70%);
+}
+
+/* Pricing card glow */
+.pricing-popular {
+  position: relative;
+}
+.pricing-popular::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #f59e0b, #ec4899, #6366f1);
+  background-size: 200% 200%;
+  border-radius: inherit;
+  z-index: -1;
+  animation: gradient 3s ease infinite;
+  filter: blur(15px);
+  opacity: 0.7;
+}
+
+/* Rotating badge */
+.spin-text {
+  animation: spin 15s linear infinite;
+}
+
+/* Cursor blob (mouse follow) */
+#cursorBlob {
+  position: fixed;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(139,92,246,0.15), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease-out;
+  mix-blend-mode: screen;
+}
+
+/* AOS overrides */
+[data-aos] { transition-duration: 0.8s !important; }
+</style>
+</head>
+<body class="bg-[#0a0a0f]">
+
+<div id="cursorBlob"></div>
+
+<!-- Floating particles -->
+<div class="fixed inset-0 pointer-events-none overflow-hidden z-0" id="particles"></div>
+
+<!-- HEADER -->
+<header id="header" class="fixed top-0 left-0 right-0 z-50 glass-dark transition-all">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="relative">
+          <div class="absolute inset-0 bg-gradient-to-br from-brand-500 to-pink-500 rounded-xl blur-md group-hover:blur-lg transition"></div>
+          <div class="relative w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-extrabold text-xl shadow-lg">İ</div>
+        </div>
+        <span class="text-xl font-bold tracking-tight font-display text-white">İş Ortağım</span>
+      </a>
+
+      <div class="hidden lg:flex items-center gap-1">
+        <a href="#anasayfa" class="px-4 py-2 text-zinc-300 hover:text-white hover:bg-white/5 rounded-xl font-medium transition">Anasayfa</a>
+        <div class="relative group">
+          <button class="px-4 py-2 text-zinc-300 hover:text-white hover:bg-white/5 rounded-xl font-medium transition flex items-center gap-1">
+            Hizmetler <i data-lucide="chevron-down" class="w-4 h-4"></i>
+          </button>
+          <div class="absolute top-full left-0 pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition">
+            <div class="glass rounded-2xl shadow-2xl p-2 w-72">
+              <a href="#paketler" class="flex items-start gap-3 p-3 hover:bg-white/10 rounded-xl transition">
+                <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-purple-500 rounded-lg flex items-center justify-center flex-shrink-0"><i data-lucide="layout-grid" class="w-5 h-5 text-white"></i></div>
+                <div><div class="font-semibold text-white">Web Paketleri</div><div class="text-xs text-zinc-400">Kurumsal/E-ticaret çözümleri</div></div>
+              </a>
+              <a href="#" class="flex items-start gap-3 p-3 hover:bg-white/10 rounded-xl transition">
+                <div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0"><i data-lucide="server" class="w-5 h-5 text-white"></i></div>
+                <div><div class="font-semibold text-white">Hosting</div><div class="text-xs text-zinc-400">SSD, NVMe, hızlı, güvenli</div></div>
+              </a>
+              <a href="#" class="flex items-start gap-3 p-3 hover:bg-white/10 rounded-xl transition">
+                <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-500 rounded-lg flex items-center justify-center flex-shrink-0"><i data-lucide="globe" class="w-5 h-5 text-white"></i></div>
+                <div><div class="font-semibold text-white">Domain</div><div class="text-xs text-zinc-400">.com, .com.tr, .net, .io</div></div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <a href="#paketler" class="px-4 py-2 text-zinc-300 hover:text-white hover:bg-white/5 rounded-xl font-medium transition">Paketler</a>
+        <a href="#bayilik" class="px-4 py-2 text-zinc-300 hover:text-white hover:bg-white/5 rounded-xl font-medium transition">Bayilik</a>
+        <a href="#blog" class="px-4 py-2 text-zinc-300 hover:text-white hover:bg-white/5 rounded-xl font-medium transition">Blog</a>
+        <a href="#iletisim" class="px-4 py-2 text-zinc-300 hover:text-white hover:bg-white/5 rounded-xl font-medium transition">İletişim</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="#" class="hidden sm:inline-flex text-zinc-300 hover:text-white font-medium px-4 py-2 transition">Giriş</a>
+        <a href="#" class="btn-magic text-white font-semibold px-6 py-2.5 rounded-xl shadow-lg flex items-center gap-2 relative">
+          <span class="relative z-10">Üye Ol</span>
+          <i data-lucide="sparkles" class="w-4 h-4 relative z-10"></i>
+        </a>
+        <button id="mobileMenuBtn" class="lg:hidden p-2 -mr-2 text-zinc-300"><i data-lucide="menu" class="w-6 h-6"></i></button>
+      </div>
+    </div>
+  </nav>
+  <div id="mobileMenu" class="lg:hidden hidden border-t border-white/10 bg-[#0a0a0f]/95 backdrop-blur">
+    <div class="px-4 py-4 space-y-1">
+      <a href="#anasayfa" class="block px-4 py-3 rounded-xl hover:bg-white/5 text-zinc-300">Anasayfa</a>
+      <a href="#paketler" class="block px-4 py-3 rounded-xl hover:bg-white/5 text-zinc-300">Paketler</a>
+      <a href="#bayilik" class="block px-4 py-3 rounded-xl hover:bg-white/5 text-zinc-300">Bayilik</a>
+      <a href="#blog" class="block px-4 py-3 rounded-xl hover:bg-white/5 text-zinc-300">Blog</a>
+      <a href="#iletisim" class="block px-4 py-3 rounded-xl hover:bg-white/5 text-zinc-300">İletişim</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="anasayfa" class="relative pt-32 pb-20 lg:pt-44 lg:pb-32 overflow-hidden mesh-bg">
+  <div class="absolute inset-0 grid-bg"></div>
+
+  <!-- Animated blobs -->
+  <div class="absolute top-20 -left-20 w-96 h-96 bg-brand-600 rounded-full filter blur-[120px] opacity-40 animate-blob"></div>
+  <div class="absolute top-40 right-0 w-96 h-96 bg-pink-600 rounded-full filter blur-[120px] opacity-40 animate-blob" style="animation-delay: 4s;"></div>
+  <div class="absolute bottom-0 left-1/2 w-96 h-96 bg-purple-600 rounded-full filter blur-[120px] opacity-40 animate-blob" style="animation-delay: 8s;"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div data-aos="fade-right">
+        <div class="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-sm font-semibold text-zinc-200 mb-6">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          Yeni: Bayilik komisyonları %35'e yükseldi
+          <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
+        </div>
+        <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold leading-[1] tracking-tight mb-6 text-white">
+          Dijital işinizin
+          <span class="gradient-text block mt-2">tek adresi.</span>
+        </h1>
+        <p class="text-lg lg:text-xl text-zinc-400 leading-relaxed mb-10 max-w-xl">
+          Web tasarım, hosting, domain ve gelir paylaşımlı bayilik sistemi — hepsi tek platformda. <strong class="text-white">5.000+ işletme</strong> İş Ortağım'la büyüyor.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 mb-10">
+          <a href="#paketler" class="btn-magic text-white font-semibold px-8 py-4 rounded-2xl shadow-xl flex items-center justify-center gap-2 text-lg group relative">
+            <span class="relative z-10">Paketleri Keşfet</span>
+            <i data-lucide="arrow-right" class="w-5 h-5 relative z-10 group-hover:translate-x-1 transition"></i>
+          </a>
+          <a href="#bayilik" class="glass hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-2xl flex items-center justify-center gap-2 text-lg transition group">
+            <i data-lucide="play-circle" class="w-5 h-5 text-amber-400"></i>
+            Bayi Ol — Demo İzle
+          </a>
+        </div>
+        <div class="flex flex-wrap items-center gap-6 text-sm text-zinc-400">
+          <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i> 7 gün iade garantisi</div>
+          <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i> Kart bilgisi gerekmez</div>
+          <div class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400"></i> 7/24 destek</div>
+        </div>
+      </div>
+
+      <div data-aos="fade-left" data-aos-delay="200" class="relative">
+        <!-- Spinning gradient ring -->
+        <div class="absolute -inset-8 animate-spin-slow opacity-50">
+          <div class="w-full h-full bg-gradient-conic from-brand-500 via-pink-500 to-brand-500 rounded-full blur-3xl"></div>
+        </div>
+
+        <!-- Dashboard mockup -->
+        <div class="relative animate-float">
+          <div class="absolute -inset-1 bg-gradient-to-r from-brand-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-75"></div>
+          <div class="relative glass rounded-3xl p-6 shadow-2xl">
+            <div class="flex items-center gap-2 mb-4 pb-4 border-b border-white/10">
+              <div class="w-3 h-3 rounded-full bg-red-400"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+              <div class="w-3 h-3 rounded-full bg-green-400"></div>
+              <div class="ml-3 text-xs text-zinc-400 font-mono">isortagim.com/dashboard</div>
+            </div>
+            <div class="space-y-4">
+              <div class="grid grid-cols-3 gap-3">
+                <div class="bg-gradient-to-br from-brand-500 to-purple-600 rounded-2xl p-4 text-white relative overflow-hidden">
+                  <div class="absolute -top-2 -right-2 w-16 h-16 bg-white/20 rounded-full blur-2xl"></div>
+                  <div class="relative">
+                    <div class="text-xs opacity-80 mb-1">Bu Ay</div>
+                    <div class="text-2xl font-extrabold font-display">₺24.5K</div>
+                    <div class="text-xs flex items-center gap-1 mt-1"><i data-lucide="trending-up" class="w-3 h-3"></i> +18%</div>
+                  </div>
+                </div>
+                <div class="glass rounded-2xl p-4">
+                  <div class="text-xs text-zinc-400 mb-1">Sipariş</div>
+                  <div class="text-2xl font-extrabold font-display text-white">142</div>
+                  <div class="text-xs text-emerald-400 mt-1">+12 bugün</div>
+                </div>
+                <div class="glass rounded-2xl p-4">
+                  <div class="text-xs text-zinc-400 mb-1">Bayi</div>
+                  <div class="text-2xl font-extrabold font-display text-white">38</div>
+                  <div class="text-xs text-emerald-400 mt-1">+3 yeni</div>
+                </div>
+              </div>
+              <div class="glass rounded-2xl p-4">
+                <div class="flex items-end justify-between gap-2 h-32">
+                  <div class="bg-gradient-to-t from-brand-600 to-brand-400 rounded-t-lg w-full transition-all hover:from-pink-600 hover:to-pink-400" style="height: 40%"></div>
+                  <div class="bg-gradient-to-t from-brand-600 to-brand-400 rounded-t-lg w-full transition-all hover:from-pink-600 hover:to-pink-400" style="height: 60%"></div>
+                  <div class="bg-gradient-to-t from-brand-600 to-brand-400 rounded-t-lg w-full transition-all hover:from-pink-600 hover:to-pink-400" style="height: 50%"></div>
+                  <div class="bg-gradient-to-t from-purple-600 to-purple-400 rounded-t-lg w-full transition-all hover:from-pink-600 hover:to-pink-400" style="height: 75%"></div>
+                  <div class="bg-gradient-to-t from-purple-600 to-purple-400 rounded-t-lg w-full transition-all hover:from-pink-600 hover:to-pink-400" style="height: 65%"></div>
+                  <div class="bg-gradient-to-t from-pink-600 to-pink-400 rounded-t-lg w-full transition-all hover:from-amber-600 hover:to-amber-400" style="height: 90%"></div>
+                  <div class="bg-gradient-to-t from-pink-600 to-pink-400 rounded-t-lg w-full transition-all hover:from-amber-600 hover:to-amber-400" style="height: 85%"></div>
+                </div>
+                <div class="flex justify-between mt-2 text-xs text-zinc-500"><span>Pzt</span><span>Sal</span><span>Çar</span><span>Per</span><span>Cum</span><span>Cmt</span><span>Paz</span></div>
+              </div>
+              <div class="space-y-2">
+                <div class="flex items-center justify-between p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl flex items-center justify-center"><i data-lucide="check" class="w-5 h-5 text-white"></i></div>
+                    <div><div class="text-sm font-semibold text-white">Yeni sipariş alındı</div><div class="text-xs text-zinc-400">3 dakika önce</div></div>
+                  </div>
+                  <div class="font-bold text-emerald-400">₺2.490</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating notification cards -->
+          <div class="absolute -top-8 -right-8 glass rounded-2xl p-4 animate-float" style="animation-delay: 1s;">
+            <div class="flex items-center gap-3">
+              <div class="relative">
+                <div class="absolute inset-0 bg-gradient-to-br from-brand-500 to-pink-500 rounded-xl blur-md"></div>
+                <div class="relative w-10 h-10 bg-gradient-to-br from-brand-500 to-pink-500 rounded-xl flex items-center justify-center"><i data-lucide="trending-up" class="w-5 h-5 text-white"></i></div>
+              </div>
+              <div>
+                <div class="text-xs text-zinc-400">Komisyon</div>
+                <div class="font-bold text-white text-lg">₺7.832</div>
+              </div>
+            </div>
+          </div>
+          <div class="absolute -bottom-8 -left-8 glass rounded-2xl p-4 animate-float" style="animation-delay: 2s;">
+            <div class="flex items-center gap-3">
+              <div class="flex -space-x-3">
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-brand-400 to-purple-500 border-2 border-[#0a0a0f] flex items-center justify-center text-xs text-white font-bold">A</div>
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 border-2 border-[#0a0a0f] flex items-center justify-center text-xs text-white font-bold">M</div>
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 border-2 border-[#0a0a0f] flex items-center justify-center text-xs text-white font-bold">E</div>
+              </div>
+              <div class="text-sm text-white"><strong class="text-emerald-400">+12</strong> aktif bayi</div>
+            </div>
+          </div>
+          <div class="absolute top-1/2 -right-12 glass rounded-2xl p-3 animate-float" style="animation-delay: 3s;">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center"><i data-lucide="zap" class="w-4 h-4 text-white"></i></div>
+              <div class="text-xs">
+                <div class="text-zinc-400">Hız</div>
+                <div class="font-bold text-white">A+</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="mt-24 lg:mt-32 grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-4" data-aos="fade-up">
+      <div class="text-center">
+        <div class="font-display text-5xl lg:text-6xl font-extrabold stat-number">5.000<span class="text-brand-400">+</span></div>
+        <div class="text-zinc-400 mt-3 font-medium">Aktif Müşteri</div>
+      </div>
+      <div class="text-center">
+        <div class="font-display text-5xl lg:text-6xl font-extrabold stat-number">120<span class="text-pink-400">+</span></div>
+        <div class="text-zinc-400 mt-3 font-medium">Yetkili Bayi</div>
+      </div>
+      <div class="text-center">
+        <div class="font-display text-5xl lg:text-6xl font-extrabold stat-number">99.9<span class="text-amber-400">%</span></div>
+        <div class="text-zinc-400 mt-3 font-medium">Uptime Garantisi</div>
+      </div>
+      <div class="text-center">
+        <div class="font-display text-5xl lg:text-6xl font-extrabold stat-number">7/24</div>
+        <div class="text-zinc-400 mt-3 font-medium">Canlı Destek</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS MARQUEE -->
+<section class="py-12 border-y border-white/5 bg-black/30">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <p class="text-center text-sm font-bold text-zinc-500 uppercase tracking-[0.2em] mb-8">5.000+ Marka Bize Güveniyor</p>
+    <div class="marquee">
+      <div class="marquee-track">
+        <div class="text-3xl font-display font-bold text-zinc-700">ACME Corp</div>
+        <div class="text-3xl font-display font-bold text-zinc-700">TechFlow</div>
+        <div class="text-3xl font-display font-bold text-zinc-700">DigiSoft</div>
+        <div class="text-3xl font-display font-bold text-zinc-700">Pixel Lab</div>
+        <div class="text-3xl font-display font-bold text-zinc-700">CloudNine</div>
+        <div class="text-3xl font-display font-bold text-zinc-700">NextGen</div>
+        <div class="text-3xl font-display font-bold text-zinc-700">DataFlux</div>
+        <div class="text-3xl font-display font-bold text-zinc-700">Zenith</div>
+        <div class="text-3xl font-display font-bold text-zinc-700">ACME Corp</div>
+        <div class="text-3xl font-display font-bold text-zinc-700">TechFlow</div>
+        <div class="text-3xl font-display font-bold text-zinc-700">DigiSoft</div>
+        <div class="text-3xl font-display font-bold text-zinc-700">Pixel Lab</div>
+        <div class="text-3xl font-display font-bold text-zinc-700">CloudNine</div>
+        <div class="text-3xl font-display font-bold text-zinc-700">NextGen</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="py-20 lg:py-32 relative overflow-hidden">
+  <div class="absolute top-0 left-1/2 w-[600px] h-[600px] bg-brand-600 rounded-full blur-[150px] opacity-20"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+      <div class="inline-block px-4 py-1.5 glass rounded-full text-sm font-semibold text-brand-300 mb-6">✨ Neden İş Ortağım?</div>
+      <h2 class="font-display text-4xl lg:text-6xl font-extrabold tracking-tight mb-6 text-white">Her şey <span class="gradient-text">tek panelde</span></h2>
+      <p class="text-lg text-zinc-400">Onlarca ayrı yazılım yerine tek bir merkezden — web sitenden domain'e, faturadan bayi yönetimine kadar.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="tilt-card glass rounded-3xl p-8 group" data-aos="fade-up" data-aos-delay="0">
+        <div class="relative mb-6">
+          <div class="absolute -inset-2 bg-gradient-to-br from-brand-500 to-purple-500 rounded-2xl blur opacity-50 group-hover:opacity-100 transition"></div>
+          <div class="relative w-14 h-14 bg-gradient-to-br from-brand-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg"><i data-lucide="layout-dashboard" class="w-7 h-7 text-white"></i></div>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3 font-display">Hepsi Bir Arada</h3>
+        <p class="text-zinc-400 leading-relaxed">Web sitesi, hosting, domain, fatura, CRM ve müşteri yönetimi — tek sezgisel arayüzde.</p>
+      </div>
+      <div class="tilt-card glass rounded-3xl p-8 group" data-aos="fade-up" data-aos-delay="100">
+        <div class="relative mb-6">
+          <div class="absolute -inset-2 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl blur opacity-50 group-hover:opacity-100 transition"></div>
+          <div class="relative w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg"><i data-lucide="zap" class="w-7 h-7 text-white"></i></div>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3 font-display">Şimşek Hızında</h3>
+        <p class="text-zinc-400 leading-relaxed">NVMe SSD, LiteSpeed, ücretsiz SSL, CDN ve günlük yedekleme — hepsi standart.</p>
+      </div>
+      <div class="tilt-card glass rounded-3xl p-8 group" data-aos="fade-up" data-aos-delay="200">
+        <div class="relative mb-6">
+          <div class="absolute -inset-2 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl blur opacity-50 group-hover:opacity-100 transition"></div>
+          <div class="relative w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg"><i data-lucide="users" class="w-7 h-7 text-white"></i></div>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3 font-display">Bayilik Sistemi</h3>
+        <p class="text-zinc-400 leading-relaxed">Sıfır yatırımla bayi ol, %35'e varan komisyonlar kazan, kendi panelinden yönet.</p>
+      </div>
+      <div class="tilt-card glass rounded-3xl p-8 group" data-aos="fade-up" data-aos-delay="0">
+        <div class="relative mb-6">
+          <div class="absolute -inset-2 bg-gradient-to-br from-pink-500 to-rose-500 rounded-2xl blur opacity-50 group-hover:opacity-100 transition"></div>
+          <div class="relative w-14 h-14 bg-gradient-to-br from-pink-500 to-rose-500 rounded-2xl flex items-center justify-center shadow-lg"><i data-lucide="shield-check" class="w-7 h-7 text-white"></i></div>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3 font-display">SSL & Güvenlik</h3>
+        <p class="text-zinc-400 leading-relaxed">Ücretsiz SSL, DDoS koruması, haftalık güvenlik taraması ve Web Firewall.</p>
+      </div>
+      <div class="tilt-card glass rounded-3xl p-8 group" data-aos="fade-up" data-aos-delay="100">
+        <div class="relative mb-6">
+          <div class="absolute -inset-2 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl blur opacity-50 group-hover:opacity-100 transition"></div>
+          <div class="relative w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-2xl flex items-center justify-center shadow-lg"><i data-lucide="headphones" class="w-7 h-7 text-white"></i></div>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3 font-display">7/24 Türkçe Destek</h3>
+        <p class="text-zinc-400 leading-relaxed">WhatsApp, telefon, ticket, canlı sohbet — ortalama 5 dakikada dönüş.</p>
+      </div>
+      <div class="tilt-card glass rounded-3xl p-8 group" data-aos="fade-up" data-aos-delay="200">
+        <div class="relative mb-6">
+          <div class="absolute -inset-2 bg-gradient-to-br from-violet-500 to-purple-500 rounded-2xl blur opacity-50 group-hover:opacity-100 transition"></div>
+          <div class="relative w-14 h-14 bg-gradient-to-br from-violet-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg"><i data-lucide="bar-chart-3" class="w-7 h-7 text-white"></i></div>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3 font-display">Analitik & Rapor</h3>
+        <p class="text-zinc-400 leading-relaxed">Satış, gelir, müşteri performansı — gerçek zamanlı interaktif dashboardlar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="paketler" class="py-20 lg:py-32 relative overflow-hidden">
+  <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-pink-600 rounded-full blur-[150px] opacity-15"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+      <div class="inline-block px-4 py-1.5 glass rounded-full text-sm font-semibold text-amber-300 mb-6">💎 Web Paketleri</div>
+      <h2 class="font-display text-4xl lg:text-6xl font-extrabold tracking-tight mb-6 text-white">Her bütçeye <span class="gradient-text">uygun fiyat</span></h2>
+      <p class="text-lg text-zinc-400">Vitrin sitesinden tam donanımlı e-ticarete kadar — ihtiyacına göre seç, anında başla.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+      <!-- Başlangıç -->
+      <div class="tilt-card glass rounded-3xl p-8 flex flex-col" data-aos="fade-up">
+        <div class="mb-6">
+          <h3 class="text-2xl font-bold text-white font-display mb-2">Başlangıç</h3>
+          <p class="text-zinc-400 text-sm">Küçük işletmeler için ideal</p>
+        </div>
+        <div class="mb-6 pb-6 border-b border-white/10">
+          <div class="flex items-baseline gap-1">
+            <span class="font-display text-5xl font-extrabold text-white">₺899</span>
+            <span class="text-zinc-400">/ay</span>
+          </div>
+          <div class="text-sm text-zinc-500 mt-1">Yıllık ödemede ₺7.990</div>
+        </div>
+        <ul class="space-y-3 mb-8 flex-1">
+          <li class="flex items-start gap-3 text-zinc-300"><i data-lucide="check" class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"></i><span>5 sayfaya kadar tasarım</span></li>
+          <li class="flex items-start gap-3 text-zinc-300"><i data-lucide="check" class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"></i><span>1 GB hosting + SSL</span></li>
+          <li class="flex items-start gap-3 text-zinc-300"><i data-lucide="check" class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"></i><span>Mobil uyumlu tasarım</span></li>
+          <li class="flex items-start gap-3 text-zinc-300"><i data-lucide="check" class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"></i><span>Temel SEO optimizasyonu</span></li>
+          <li class="flex items-start gap-3 text-zinc-300"><i data-lucide="check" class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"></i><span>5 e-posta hesabı</span></li>
+        </ul>
+        <a href="#" class="block text-center glass hover:bg-white/10 text-white font-semibold py-3.5 rounded-2xl transition">Hemen Seç</a>
+      </div>
+
+      <!-- Profesyonel - POPULAR -->
+      <div class="pricing-popular relative bg-gradient-to-br from-brand-700 via-purple-700 to-pink-700 rounded-3xl p-8 text-white shadow-2xl flex flex-col lg:scale-110 lg:my-[-10px] z-10" data-aos="fade-up" data-aos-delay="100">
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-extrabold px-5 py-2 rounded-full uppercase tracking-wider shadow-2xl flex items-center gap-1.5">
+          <i data-lucide="crown" class="w-3.5 h-3.5"></i> En Popüler
+        </div>
+        <div class="mb-6">
+          <h3 class="text-2xl font-bold font-display mb-2">Profesyonel</h3>
+          <p class="text-brand-200 text-sm">Büyüyen işletmeler için</p>
+        </div>
+        <div class="mb-6 pb-6 border-b border-white/20">
+          <div class="flex items-baseline gap-1">
+            <span class="font-display text-5xl font-extrabold">₺1.999</span>
+            <span class="text-brand-200">/ay</span>
+          </div>
+          <div class="text-sm text-brand-200 mt-1">Yıllık ödemede ₺17.990</div>
+        </div>
+        <ul class="space-y-3 mb-8 flex-1">
+          <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-emerald-300 flex-shrink-0 mt-0.5"></i><span>Sınırsız sayfa</span></li>
+          <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-emerald-300 flex-shrink-0 mt-0.5"></i><span>10 GB hosting + SSL</span></li>
+          <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-emerald-300 flex-shrink-0 mt-0.5"></i><span>Blog + içerik yönetimi</span></li>
+          <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-emerald-300 flex-shrink-0 mt-0.5"></i><span>Gelişmiş SEO + sitemap</span></li>
+          <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-emerald-300 flex-shrink-0 mt-0.5"></i><span>WhatsApp & sosyal medya</span></li>
+          <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-emerald-300 flex-shrink-0 mt-0.5"></i><span>Google Analytics entegre</span></li>
+          <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-emerald-300 flex-shrink-0 mt-0.5"></i><span>Öncelikli destek</span></li>
+        </ul>
+        <a href="#" class="block text-center bg-white text-brand-700 hover:bg-zinc-100 font-bold py-3.5 rounded-2xl transition shadow-xl">Hemen Başla 🚀</a>
+      </div>
+
+      <!-- Kurumsal -->
+      <div class="tilt-card glass rounded-3xl p-8 flex flex-col" data-aos="fade-up" data-aos-delay="200">
+        <div class="mb-6">
+          <h3 class="text-2xl font-bold text-white font-display mb-2">Kurumsal</h3>
+          <p class="text-zinc-400 text-sm">E-ticaret + tam çözüm</p>
+        </div>
+        <div class="mb-6 pb-6 border-b border-white/10">
+          <div class="flex items-baseline gap-1">
+            <span class="font-display text-5xl font-extrabold text-white">₺3.999</span>
+            <span class="text-zinc-400">/ay</span>
+          </div>
+          <div class="text-sm text-zinc-500 mt-1">Yıllık ödemede ₺35.990</div>
+        </div>
+        <ul class="space-y-3 mb-8 flex-1">
+          <li class="flex items-start gap-3 text-zinc-300"><i data-lucide="check" class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"></i><span>Profesyonel paket dahil</span></li>
+          <li class="flex items-start gap-3 text-zinc-300"><i data-lucide="check" class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"></i><span>50 GB hosting + SSL</span></li>
+          <li class="flex items-start gap-3 text-zinc-300"><i data-lucide="check" class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"></i><span>E-ticaret modülü</span></li>
+          <li class="flex items-start gap-3 text-zinc-300"><i data-lucide="check" class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"></i><span>Sanal POS entegrasyonu</span></li>
+          <li class="flex items-start gap-3 text-zinc-300"><i data-lucide="check" class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"></i><span>Çok dilli site (TR/EN/DE)</span></li>
+          <li class="flex items-start gap-3 text-zinc-300"><i data-lucide="check" class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"></i><span>API entegrasyonları</span></li>
+          <li class="flex items-start gap-3 text-zinc-300"><i data-lucide="check" class="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5"></i><span>Özel hesap yöneticisi</span></li>
+        </ul>
+        <a href="#" class="block text-center glass hover:bg-white/10 text-white font-semibold py-3.5 rounded-2xl transition">İletişime Geç</a>
+      </div>
+    </div>
+
+    <p class="text-center text-zinc-500 mt-12 flex items-center justify-center gap-2">
+      <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i>
+      Tüm paketlerde <strong class="text-white">7 gün koşulsuz iade garantisi</strong>
+    </p>
+  </div>
+</section>
+
+<!-- DOMAIN SEARCH -->
+<section class="py-20 lg:py-32">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="relative bg-gradient-to-br from-brand-600 via-purple-600 to-pink-600 rounded-[2.5rem] p-10 lg:p-16 text-white shadow-2xl overflow-hidden animate-glow" data-aos="zoom-in">
+      <div class="absolute -top-20 -right-20 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-blob"></div>
+      <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-amber-400/20 rounded-full blur-3xl animate-blob" style="animation-delay: 4s;"></div>
+      <div class="relative">
+        <div class="text-center mb-10">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-white/20 backdrop-blur rounded-full text-sm font-semibold mb-6">
+            <i data-lucide="globe" class="w-4 h-4 animate-spin-slow"></i> Domain Arama
+          </div>
+          <h2 class="font-display text-4xl lg:text-6xl font-extrabold mb-4">Markanın evi <span class="text-amber-300">ne olsun?</span></h2>
+          <p class="text-brand-100 text-lg">Anında müsaitliği kontrol et, saniyeler içinde domain'in olsun.</p>
+        </div>
+        <div class="bg-white/95 backdrop-blur rounded-2xl p-2 flex flex-col sm:flex-row gap-2 max-w-2xl mx-auto shadow-2xl">
+          <div class="flex-1 flex items-center gap-2 px-4">
+            <i data-lucide="search" class="w-5 h-5 text-zinc-400"></i>
+            <input type="text" placeholder="markaadiniz" class="flex-1 py-4 text-zinc-900 placeholder-zinc-400 focus:outline-none">
+            <select class="bg-zinc-100 rounded-xl px-3 py-2 text-zinc-700 font-semibold focus:outline-none">
+              <option>.com</option><option>.com.tr</option><option>.net</option><option>.org</option><option>.io</option>
+            </select>
+          </div>
+          <button class="btn-magic text-white font-semibold px-8 py-4 rounded-xl flex items-center justify-center gap-2 whitespace-nowrap">
+            Sorgula <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 lg:gap-6 mt-8 text-sm text-brand-100">
+          <span class="glass-dark px-3 py-1.5 rounded-full bg-white/10">.com — ₺249/yıl</span>
+          <span class="glass-dark px-3 py-1.5 rounded-full bg-white/10">.com.tr — ₺149/yıl</span>
+          <span class="glass-dark px-3 py-1.5 rounded-full bg-white/10">.net — ₺299/yıl</span>
+          <span class="glass-dark px-3 py-1.5 rounded-full bg-white/10">.io — ₺899/yıl</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="py-20 lg:py-32 relative">
+  <div class="absolute top-1/2 left-0 w-[500px] h-[500px] bg-emerald-500 rounded-full blur-[150px] opacity-10"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up">
+      <div class="inline-block px-4 py-1.5 glass rounded-full text-sm font-semibold text-emerald-300 mb-6">⭐ Müşteri Yorumları</div>
+      <h2 class="font-display text-4xl lg:text-6xl font-extrabold tracking-tight mb-6 text-white">İşini büyütenlerin <span class="gradient-text">tercihi</span></h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="tilt-card glass rounded-3xl p-8" data-aos="fade-up">
+        <div class="flex gap-1 mb-4">
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        </div>
+        <p class="text-zinc-300 leading-relaxed mb-6 italic">"3 yıldır kullanıyorum. Hosting hızı ve destek kalitesi gerçekten muhteşem. Bayilik komisyonları sayesinde aylık ek ₺15K kazanıyorum."</p>
+        <div class="flex items-center gap-3 pt-6 border-t border-white/10">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-brand-400 to-purple-500 flex items-center justify-center text-white font-bold">A</div>
+          <div>
+            <div class="font-bold text-white">Ahmet Yılmaz</div>
+            <div class="text-sm text-zinc-400">Yılmaz Tekstil — İstanbul</div>
+          </div>
+        </div>
+      </div>
+      <div class="tilt-card glass rounded-3xl p-8" data-aos="fade-up" data-aos-delay="100">
+        <div class="flex gap-1 mb-4">
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        </div>
+        <p class="text-zinc-300 leading-relaxed mb-6 italic">"Sıfırdan e-ticaret sitemi 2 günde kurdular. Sanal POS entegrasyonu sorunsuz, müşteri panelleri çok pratik. 10/10 tavsiye ederim."</p>
+        <div class="flex items-center gap-3 pt-6 border-t border-white/10">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center text-white font-bold">E</div>
+          <div>
+            <div class="font-bold text-white">Elif Demir</div>
+            <div class="text-sm text-zinc-400">Demir Butik — Ankara</div>
+          </div>
+        </div>
+      </div>
+      <div class="tilt-card glass rounded-3xl p-8" data-aos="fade-up" data-aos-delay="200">
+        <div class="flex gap-1 mb-4">
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+          <i data-lucide="star" class="w-5 h-5 fill-amber-400 text-amber-400"></i>
+        </div>
+        <p class="text-zinc-300 leading-relaxed mb-6 italic">"Ajansım için tam çözüm. 40+ müşterimi tek panelden yönetiyorum, faturalama otomatik. Hayatımı resmen kolaylaştırdı."</p>
+        <div class="flex items-center gap-3 pt-6 border-t border-white/10">
+          <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold">M</div>
+          <div>
+            <div class="font-bold text-white">Mehmet Kaya</div>
+            <div class="text-sm text-zinc-400">Kaya Dijital Ajans — İzmir</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BAYI CTA -->
+<section id="bayilik" class="py-20 lg:py-32">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="relative bg-gradient-to-br from-zinc-900 to-black rounded-[2.5rem] p-10 lg:p-16 overflow-hidden border border-white/10" data-aos="fade-up">
+      <div class="absolute inset-0 grid-bg opacity-50"></div>
+      <div class="absolute top-0 right-0 w-96 h-96 bg-brand-600 rounded-full blur-[120px] opacity-30 animate-blob"></div>
+      <div class="absolute bottom-0 left-0 w-96 h-96 bg-pink-600 rounded-full blur-[120px] opacity-30 animate-blob" style="animation-delay: 4s;"></div>
+      <div class="relative grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 glass rounded-full text-sm font-semibold mb-6 text-amber-300">
+            <span class="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></span> Bayi Programı
+          </div>
+          <h2 class="font-display text-4xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight text-white">
+            <span class="gradient-text">%35</span> komisyonla<br>
+            kendi işini kur.
+          </h2>
+          <p class="text-lg text-zinc-300 leading-relaxed mb-8">Sıfır yatırım, sıfır risk. Bayi ol, müşteri yönet, her satıştan komisyon kazan. <strong class="text-white">120+ aktif bayimiz</strong> aylık ortalama <strong class="text-emerald-400">₺18.500</strong> kazanıyor.</p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="#" class="btn-magic text-white font-semibold px-8 py-4 rounded-2xl flex items-center justify-center gap-2 shadow-xl">
+              Hemen Bayi Ol <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </a>
+            <a href="#" class="glass hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-2xl flex items-center justify-center gap-2 transition">
+              <i data-lucide="message-circle" class="w-5 h-5"></i> Bilgi İste
+            </a>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="tilt-card glass rounded-2xl p-6">
+            <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center mb-4 shadow-lg"><i data-lucide="banknote" class="w-6 h-6 text-white"></i></div>
+            <div class="font-display text-4xl font-extrabold mb-1 text-white">%35</div>
+            <div class="text-sm text-zinc-400">Komisyon oranı</div>
+          </div>
+          <div class="tilt-card glass rounded-2xl p-6 mt-8">
+            <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center mb-4 shadow-lg"><i data-lucide="users" class="w-6 h-6 text-white"></i></div>
+            <div class="font-display text-4xl font-extrabold mb-1 text-white">120+</div>
+            <div class="text-sm text-zinc-400">Aktif bayi</div>
+          </div>
+          <div class="tilt-card glass rounded-2xl p-6">
+            <div class="w-12 h-12 bg-gradient-to-br from-brand-500 to-purple-500 rounded-xl flex items-center justify-center mb-4 shadow-lg"><i data-lucide="trending-up" class="w-6 h-6 text-white"></i></div>
+            <div class="font-display text-4xl font-extrabold mb-1 text-white">₺18.5K</div>
+            <div class="text-sm text-zinc-400">Aylık ort. gelir</div>
+          </div>
+          <div class="tilt-card glass rounded-2xl p-6 mt-8">
+            <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center mb-4 shadow-lg"><i data-lucide="rocket" class="w-6 h-6 text-white"></i></div>
+            <div class="font-display text-4xl font-extrabold mb-1 text-white">24sa</div>
+            <div class="text-sm text-zinc-400">Onay süresi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="iletisim" class="bg-black border-t border-white/5 pt-20 pb-8 relative overflow-hidden">
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-brand-600 rounded-full blur-[150px] opacity-10"></div>
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-12 gap-12 mb-12">
+      <div class="lg:col-span-4">
+        <a href="#" class="flex items-center gap-3 mb-6">
+          <div class="relative">
+            <div class="absolute inset-0 bg-gradient-to-br from-brand-500 to-pink-500 rounded-xl blur-md"></div>
+            <div class="relative w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-extrabold text-xl">İ</div>
+          </div>
+          <span class="text-xl font-bold text-white font-display">İş Ortağım</span>
+        </a>
+        <p class="text-zinc-400 leading-relaxed mb-6 max-w-sm">KOBI ve girişimciler için web tasarım, hosting, domain ve bayilik yönetim platformu.</p>
+        <div class="flex gap-3">
+          <a href="#" class="w-10 h-10 glass hover:bg-gradient-to-br hover:from-brand-500 hover:to-pink-500 rounded-xl flex items-center justify-center transition"><i data-lucide="instagram" class="w-5 h-5 text-zinc-300"></i></a>
+          <a href="#" class="w-10 h-10 glass hover:bg-gradient-to-br hover:from-brand-500 hover:to-pink-500 rounded-xl flex items-center justify-center transition"><i data-lucide="twitter" class="w-5 h-5 text-zinc-300"></i></a>
+          <a href="#" class="w-10 h-10 glass hover:bg-gradient-to-br hover:from-brand-500 hover:to-pink-500 rounded-xl flex items-center justify-center transition"><i data-lucide="linkedin" class="w-5 h-5 text-zinc-300"></i></a>
+          <a href="#" class="w-10 h-10 glass hover:bg-gradient-to-br hover:from-brand-500 hover:to-pink-500 rounded-xl flex items-center justify-center transition"><i data-lucide="youtube" class="w-5 h-5 text-zinc-300"></i></a>
+        </div>
+      </div>
+      <div class="lg:col-span-2">
+        <h4 class="font-bold text-white mb-4 font-display">Hizmetler</h4>
+        <ul class="space-y-3 text-zinc-400">
+          <li><a href="#" class="hover:text-white transition">Web Tasarım</a></li>
+          <li><a href="#" class="hover:text-white transition">E-Ticaret</a></li>
+          <li><a href="#" class="hover:text-white transition">Hosting</a></li>
+          <li><a href="#" class="hover:text-white transition">Domain</a></li>
+          <li><a href="#" class="hover:text-white transition">SEO</a></li>
+        </ul>
+      </div>
+      <div class="lg:col-span-2">
+        <h4 class="font-bold text-white mb-4 font-display">Şirket</h4>
+        <ul class="space-y-3 text-zinc-400">
+          <li><a href="#" class="hover:text-white transition">Hakkımızda</a></li>
+          <li><a href="#" class="hover:text-white transition">Bayilik</a></li>
+          <li><a href="#" class="hover:text-white transition">Blog</a></li>
+          <li><a href="#" class="hover:text-white transition">Kariyer</a></li>
+          <li><a href="#" class="hover:text-white transition">Referanslar</a></li>
+        </ul>
+      </div>
+      <div class="lg:col-span-4">
+        <h4 class="font-bold text-white mb-4 font-display">Bültenimize katıl</h4>
+        <p class="text-zinc-400 mb-4">Yeni özellikler, kampanyalar ve kullanışlı ipuçları için.</p>
+        <form class="flex gap-2">
+          <input type="email" placeholder="E-posta adresiniz" class="flex-1 glass focus:bg-white/10 rounded-xl px-4 py-3 text-white placeholder-zinc-500 focus:outline-none transition">
+          <button class="btn-magic text-white font-semibold px-5 rounded-xl"><i data-lucide="send" class="w-5 h-5"></i></button>
+        </form>
+        <div class="mt-6 space-y-2 text-sm text-zinc-400">
+          <div class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-brand-400"></i> 0850 123 45 67</div>
+          <div class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-brand-400"></i> info@isortagim.com</div>
+        </div>
+      </div>
+    </div>
+    <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-zinc-500">
+      <p>© 2026 İş Ortağım. Tüm hakları saklıdır. <span class="text-zinc-600">Made with 💜 in Türkiye</span></p>
+      <div class="flex gap-6">
+        <a href="#" class="hover:text-white transition">KVKK</a>
+        <a href="#" class="hover:text-white transition">Gizlilik</a>
+        <a href="#" class="hover:text-white transition">Kullanım Şartları</a>
+        <a href="#" class="hover:text-white transition">Çerez Politikası</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scroll to top -->
+<button id="scrollTop" class="fixed bottom-8 right-8 w-14 h-14 btn-magic text-white rounded-full shadow-2xl items-center justify-center transition-all z-40 hidden hover:scale-110 group">
+  <i data-lucide="arrow-up" class="w-5 h-5 mx-auto"></i>
+</button>
+
+<script>
+  lucide.createIcons();
+  AOS.init({ once: true, offset: 100 });
+
+  // Header scroll effect
+  const header = document.getElementById('header');
+  const scrollTopBtn = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) header.classList.add('shadow-2xl', 'border-b', 'border-white/10');
+    else header.classList.remove('shadow-2xl', 'border-b', 'border-white/10');
+    if (window.scrollY > 500) { scrollTopBtn.classList.remove('hidden'); scrollTopBtn.classList.add('flex'); }
+    else { scrollTopBtn.classList.add('hidden'); scrollTopBtn.classList.remove('flex'); }
+  });
+  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // Mobile menu
+  document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.toggle('hidden');
+  });
+
+  // Cursor blob (mouse follow)
+  const blob = document.getElementById('cursorBlob');
+  document.addEventListener('mousemove', (e) => {
+    blob.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+  });
+
+  // Floating particles
+  const particlesContainer = document.getElementById('particles');
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 6 + 2;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (Math.random() * 20 + 15) + 's';
+    p.style.animationDelay = (Math.random() * 20) + 's';
+    particlesContainer.appendChild(p);
+  }
+</script>
+</body>
+</html>

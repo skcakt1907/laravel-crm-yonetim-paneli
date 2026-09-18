@@ -1,0 +1,90 @@
+# ── Bağımlılıklar (composer/npm ile geri kurulur) ──
+/vendor
+/node_modules
+
+# ── Ortam / gizli bilgiler — ASLA commit etme ──
+.env
+.env.backup
+.env.production
+.env.*.local
+auth.json
+
+# ── Laravel çalışma zamanı ──
+/storage/*.key
+/storage/pail
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/framework/testing/*
+/storage/logs/*
+!/storage/framework/cache/.gitignore
+!/storage/framework/sessions/.gitignore
+!/storage/framework/views/.gitignore
+!/storage/logs/.gitignore
+
+# storage/app: yüklenen gerçek dosyalar (fatura, teklif, hosting belgesi...)
+# Bunlar müşteri verisi — git'e girmez, ayrı yedeklenir.
+/storage/app/public/*
+!/storage/app/public/.gitignore
+
+# public/storage: storage/app/public'e giden sembolik link
+/public/storage
+
+# ── Kullanıcı yüklemeleri (406MB — müşteri verisi, git'e girmez) ──
+/public/tema/uploads
+/public/uploads
+/public/yonetim/uploads
+
+# ── Derlenmiş varlıklar ──
+/public/build
+/public/hot
+/public/js/*.map
+/public/css/*.map
+
+# ── Yedek / geçici dosyalar ──
+*.yedek
+*.yedek2
+*.bak
+*.orig
+*.tmp
+*_eski_*
+/public/storage_eski_*
+
+# ── Veritabanı dökümleri (büyük + hassas) ──
+*.sql
+*.sql.gz
+*.sql.zip
+
+# ── Tek kullanımlık bakım/teşhis scriptleri ──
+/public/*-duzelt.php
+/public/*-teshis.php
+/public/_test-*.php
+/public/cache-clear.php
+
+# ── IDE / editör ──
+/.idea
+/.vscode
+/.fleet
+/.nova
+/.zed
+*.sublime-project
+*.sublime-workspace
+
+# ── İşletim sistemi ──
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Test / araç çıktıları ──
+/.phpunit.cache
+.phpunit.result.cache
+/coverage
+npm-debug.log
+yarn-error.log
+/playwright-report
+/test-results
+
+# Syncthing artiklari (canliya gitmemeli)
+.stfolder/
+.stignore
+.stversions/

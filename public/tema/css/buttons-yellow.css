@@ -1,0 +1,748 @@
+/* =============================================================
+   ANASAYFA + ÖN YÜZ SAYFALARI — TÜM BUTONLAR SARI
+   Renk paleti:
+     - Arkaplan: #d4d25b (proje accent sarısı)
+     - Hover  : #c4c051
+     - Active : #b8b54a
+     - Text   : #0f172a (koyu lacivert — sarı üzerinde max kontrast)
+   Bu dosya sadece master.blade.php (public layout) ile yüklenir,
+   admin paneli etkilenmez.
+   ============================================================= */
+
+:root {
+    --yt-bg: #d4d25b;
+    --yt-bg-hover: #c4c051;
+    --yt-bg-active: #b8b54a;
+    --yt-text: #0f172a;
+    --yt-shadow: 0 6px 18px rgba(212, 210, 91, 0.30);
+    --yt-shadow-hover: 0 10px 28px rgba(212, 210, 91, 0.50);
+
+    /* white-theme.css değişkenlerini ezerek tüm siteyi sarıya çevir */
+    --wt-accent: #d4d25b !important;
+    --wt-accent-dark: #c4c051 !important;
+    --wt-accent-light: #e0de78 !important;
+    --wt-accent-bg: rgba(212, 210, 91, 0.08) !important;
+    --wt-accent-bg-strong: rgba(212, 210, 91, 0.15) !important;
+    --wt-primary: #d4d25b !important;
+    --site-accent: #d4d25b !important;
+    --site-accent-2: #c4c051 !important;
+    --modern-accent: #d4d25b !important;
+    --accent: #d4d25b !important;
+    --bs-primary: #d4d25b !important;
+    --bs-primary-rgb: 212, 210, 91 !important;
+}
+
+/* ---------- 1) Bootstrap & jenerik buton sınıfları ---------- */
+/* SADECE açık class taşıyan buton'ları sarıya çevir.
+   Inline-styled kırmızı/yeşil sil/iptal butonları korunsun.
+   .btn-modern zaten orijinalinde sarı, ona dokunmuyoruz. */
+.btn,
+.btn-primary,
+.btn-info,
+.btn-success,
+.btn-warning,
+.btn-danger:not([style*="rgba(239"]):not([style*="#ef4444"]):not([style*="#dc2626"]),
+.btn-secondary,
+.btn-default,
+.btn-light,
+.btn-dark,
+.bttn,
+.bttn.btn-fill {
+    background: var(--yt-bg) !important;
+    background-color: var(--yt-bg) !important;
+    background-image: none !important;
+    color: var(--yt-text) !important;
+    border-color: var(--yt-bg) !important;
+    box-shadow: var(--yt-shadow) !important;
+    transition: all 0.25s ease !important;
+}
+
+.btn:hover, .btn:focus, .btn:active,
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active,
+.btn-info:hover, .btn-info:focus, .btn-info:active,
+.btn-success:hover, .btn-success:focus, .btn-success:active,
+.btn-warning:hover, .btn-warning:focus, .btn-warning:active,
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active,
+.btn-default:hover, .btn-default:focus, .btn-default:active,
+.bttn:hover, .bttn:focus, .bttn:active,
+.bttn.btn-fill:hover, .bttn.btn-fill:focus, .bttn.btn-fill:active {
+    background: var(--yt-bg-hover) !important;
+    background-color: var(--yt-bg-hover) !important;
+    color: var(--yt-text) !important;
+    border-color: var(--yt-bg-hover) !important;
+    box-shadow: var(--yt-shadow-hover) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* .btn-modern-outline = outline / ikincil buton (koyu arkaplanlarda görünür) */
+.btn-modern-outline,
+a.btn-modern-outline {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: var(--yt-bg) !important;
+    border: 2px solid var(--yt-bg) !important;
+    padding: 10px 22px !important;
+    border-radius: 12px !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-weight: 600 !important;
+    transition: all 0.25s ease !important;
+    box-shadow: none !important;
+}
+.btn-modern-outline:hover,
+a.btn-modern-outline:hover {
+    background: var(--yt-bg) !important;
+    color: var(--yt-text) !important;
+    border-color: var(--yt-bg) !important;
+    box-shadow: 0 6px 18px rgba(212, 210, 91, 0.35) !important;
+    transform: translateY(-2px) !important;
+    text-decoration: none !important;
+}
+.btn-modern-outline i,
+a.btn-modern-outline i {
+    color: var(--yt-bg) !important;
+    transition: color 0.25s ease !important;
+}
+.btn-modern-outline:hover i,
+a.btn-modern-outline:hover i {
+    color: var(--yt-text) !important;
+}
+
+/* Buton içindeki ikonlar da koyu olsun (ama renkli action butonları hariç) */
+.btn i, .btn span:not(.badge),
+.bttn i, .bttn span {
+    color: var(--yt-text) !important;
+}
+
+/* İSTİSNA: Kırmızı sil/kapat/iptal butonları sarıya dönmesin
+   (inline rgba(239,68,68) / #ef4444 / #dc2626 olanlar) */
+button[style*="rgba(239, 68, 68"],
+button[style*="rgba(239,68,68"],
+button[style*="#ef4444"],
+button[style*="#dc2626"],
+a[style*="#ef4444"],
+a[style*="#dc2626"] {
+    background: rgba(239, 68, 68, 0.2) !important;
+    background-color: rgba(239, 68, 68, 0.2) !important;
+    color: #ef4444 !important;
+    border-color: rgba(239, 68, 68, 0.4) !important;
+    box-shadow: none !important;
+}
+button[style*="rgba(239, 68, 68"]:hover,
+button[style*="#ef4444"]:hover,
+a[style*="#ef4444"]:hover {
+    background: rgba(239, 68, 68, 0.3) !important;
+    color: #ef4444 !important;
+}
+
+/* İSTİSNA: Yeşil onay/başarı butonları sarıya dönmesin */
+button[style*="#22c55e"],
+button[style*="#16a34a"],
+button[style*="#10b981"],
+a[style*="#22c55e"],
+a[style*="#16a34a"],
+a[style*="#10b981"] {
+    /* original linear-gradient ile çakışırsa zaten override eder */
+    color: inherit !important;
+}
+/* Ama yeşil gradient butonlar (sepet bayi kodu butonu vb.) yeşil kalsın */
+button[style*="linear-gradient"][style*="#22c55e"],
+button[style*="linear-gradient"][style*="#16a34a"],
+a[style*="linear-gradient"][style*="#22c55e"],
+a[style*="linear-gradient"][style*="#16a34a"] {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+    background-image: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+    color: #fff !important;
+    box-shadow: 0 6px 18px rgba(34, 197, 94, 0.3) !important;
+}
+
+/* Outline butonlar */
+.btn-outline-primary,
+.btn-outline-info,
+.btn-outline-success,
+.btn-outline-warning,
+.btn-outline-danger,
+.btn-outline-secondary {
+    background: transparent !important;
+    color: var(--yt-bg) !important;
+    border: 2px solid var(--yt-bg) !important;
+    box-shadow: none !important;
+}
+.btn-outline-primary:hover,
+.btn-outline-info:hover,
+.btn-outline-success:hover,
+.btn-outline-warning:hover,
+.btn-outline-danger:hover,
+.btn-outline-secondary:hover {
+    background: var(--yt-bg) !important;
+    color: var(--yt-text) !important;
+}
+
+/* ---------- 2) Tema'ya özel buton sınıfları ---------- */
+.btn.btn-2,
+.btn-2,
+.btn-default-pink-fill,
+.btn-default-gray-fill,
+.btn-default-blue-fill,
+.btn-default-yellow-fill,
+.btn-default-green-fill,
+.btn-default-red-fill,
+.btn-fill,
+.btn-cart,
+.btn-order,
+.btn-buy,
+a.bttn,
+a.button {
+    background: var(--yt-bg) !important;
+    background-color: var(--yt-bg) !important;
+    background-image: none !important;
+    color: var(--yt-text) !important;
+    border-color: var(--yt-bg) !important;
+    box-shadow: var(--yt-shadow) !important;
+}
+.btn.btn-2:hover, .btn-2:hover,
+.btn-default-pink-fill:hover,
+.btn-default-gray-fill:hover,
+.btn-default-blue-fill:hover,
+.btn-default-yellow-fill:hover,
+.btn-default-green-fill:hover,
+.btn-default-red-fill:hover,
+.btn-fill:hover,
+a.bttn:hover, a.button:hover {
+    background: var(--yt-bg-hover) !important;
+    background-color: var(--yt-bg-hover) !important;
+    color: var(--yt-text) !important;
+    border-color: var(--yt-bg-hover) !important;
+    box-shadow: var(--yt-shadow-hover) !important;
+}
+
+/* ---------- 3) Inline-styled buton/link override ---------- */
+/* Mor (#4f46e5) inline arkaplan kullanan tüm buton ve linkler */
+a[style*="background: #4f46e5"],
+a[style*="background:#4f46e5"],
+a[style*="background-color: #4f46e5"],
+a[style*="background-color:#4f46e5"],
+button[style*="background: #4f46e5"],
+button[style*="background:#4f46e5"],
+button[style*="background-color: #4f46e5"],
+button[style*="background-color:#4f46e5"] {
+    background: var(--yt-bg) !important;
+    background-color: var(--yt-bg) !important;
+    color: var(--yt-text) !important;
+    box-shadow: var(--yt-shadow) !important;
+}
+a[style*="background: #4f46e5"]:hover,
+a[style*="background:#4f46e5"]:hover,
+a[style*="background-color: #4f46e5"]:hover,
+a[style*="background-color:#4f46e5"]:hover,
+button[style*="background: #4f46e5"]:hover,
+button[style*="background:#4f46e5"]:hover {
+    background: var(--yt-bg-hover) !important;
+    background-color: var(--yt-bg-hover) !important;
+    color: var(--yt-text) !important;
+    box-shadow: var(--yt-shadow-hover) !important;
+}
+
+/* Diğer mor/mavi tonları (gradient'ler, #6366f1, #818cf8, #3b82f6, #2563eb, #a855f7, #9333ea) */
+a[style*="#6366f1"],
+button[style*="#6366f1"],
+a[style*="#818cf8"],
+button[style*="#818cf8"],
+a[style*="#3b82f6"],
+button[style*="#3b82f6"],
+a[style*="#2563eb"],
+button[style*="#2563eb"],
+a[style*="#a855f7"],
+button[style*="#a855f7"],
+a[style*="#9333ea"],
+button[style*="#9333ea"],
+a[style*="#1d4ed8"],
+button[style*="#1d4ed8"],
+a[style*="#4338ca"],
+button[style*="#4338ca"] {
+    background: var(--yt-bg) !important;
+    background-color: var(--yt-bg) !important;
+    background-image: none !important;
+    color: var(--yt-text) !important;
+    box-shadow: var(--yt-shadow) !important;
+}
+a[style*="#6366f1"]:hover,
+button[style*="#6366f1"]:hover,
+a[style*="#818cf8"]:hover,
+button[style*="#818cf8"]:hover,
+a[style*="#3b82f6"]:hover,
+button[style*="#3b82f6"]:hover,
+a[style*="#2563eb"]:hover,
+button[style*="#2563eb"]:hover,
+a[style*="#a855f7"]:hover,
+button[style*="#a855f7"]:hover,
+a[style*="#9333ea"]:hover,
+button[style*="#9333ea"]:hover,
+a[style*="#1d4ed8"]:hover,
+button[style*="#1d4ed8"]:hover,
+a[style*="#4338ca"]:hover,
+button[style*="#4338ca"]:hover {
+    background: var(--yt-bg-hover) !important;
+    background-color: var(--yt-bg-hover) !important;
+    background-image: none !important;
+    color: var(--yt-text) !important;
+    box-shadow: var(--yt-shadow-hover) !important;
+}
+
+/* Mor/mavi gradient'leri olan buton & div'ler */
+[style*="linear-gradient"][style*="#4f46e5"],
+[style*="linear-gradient"][style*="#6366f1"],
+[style*="linear-gradient"][style*="#3b82f6"],
+[style*="linear-gradient"][style*="#2563eb"],
+[style*="linear-gradient"][style*="#a855f7"],
+[style*="linear-gradient"][style*="#9333ea"] {
+    /* Sadece a, button, .btn elementlerini yakala — div'leri etkileme */
+}
+a[style*="linear-gradient"][style*="#4f46e5"],
+a[style*="linear-gradient"][style*="#6366f1"],
+a[style*="linear-gradient"][style*="#3b82f6"],
+a[style*="linear-gradient"][style*="#2563eb"],
+a[style*="linear-gradient"][style*="#a855f7"],
+a[style*="linear-gradient"][style*="#9333ea"],
+button[style*="linear-gradient"][style*="#4f46e5"],
+button[style*="linear-gradient"][style*="#6366f1"],
+button[style*="linear-gradient"][style*="#3b82f6"],
+button[style*="linear-gradient"][style*="#2563eb"],
+button[style*="linear-gradient"][style*="#a855f7"],
+button[style*="linear-gradient"][style*="#9333ea"] {
+    background: linear-gradient(135deg, var(--yt-bg) 0%, var(--yt-bg-hover) 100%) !important;
+    background-image: linear-gradient(135deg, var(--yt-bg) 0%, var(--yt-bg-hover) 100%) !important;
+    color: var(--yt-text) !important;
+    box-shadow: var(--yt-shadow) !important;
+}
+
+/* CSS variable kullanan butonlar (--wt-accent, --wt-primary) */
+a[style*="var(--wt-accent"],
+button[style*="var(--wt-accent"],
+a[style*="var(--wt-primary"],
+button[style*="var(--wt-primary"] {
+    background: var(--yt-bg) !important;
+    color: var(--yt-text) !important;
+}
+
+/* ---------- 3b) Paket kartı butonları (paket-karti.blade.php) ---------- */
+/* Detay & Sepete Ekle = ikincil (outline), Satın Al = birincil (dolu sarı) */
+.btn-detay,
+.btn-sepete-ekle,
+a.btn-detay,
+a.btn-sepete-ekle {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: var(--yt-text) !important;
+    border: 2px solid var(--yt-bg) !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.25s ease !important;
+}
+.btn-detay:hover,
+.btn-sepete-ekle:hover,
+a.btn-detay:hover,
+a.btn-sepete-ekle:hover {
+    background: rgba(212, 210, 91, 0.12) !important;
+    background-color: rgba(212, 210, 91, 0.12) !important;
+    color: var(--yt-text) !important;
+    border-color: var(--yt-bg) !important;
+    box-shadow: 0 4px 12px rgba(212, 210, 91, 0.25) !important;
+}
+
+/* Satın Al = birincil aksiyon, dolu sarı */
+.btn-satin-al,
+a.btn-satin-al {
+    background: var(--yt-bg) !important;
+    background-color: var(--yt-bg) !important;
+    color: var(--yt-text) !important;
+    border: 2px solid var(--yt-bg) !important;
+    box-shadow: var(--yt-shadow) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+.btn-satin-al:hover,
+a.btn-satin-al:hover {
+    background: linear-gradient(135deg, var(--yt-bg) 0%, var(--yt-bg-hover) 100%) !important;
+    background-color: var(--yt-bg-hover) !important;
+    color: var(--yt-text) !important;
+    border-color: var(--yt-bg-hover) !important;
+    box-shadow: var(--yt-shadow-hover) !important;
+}
+
+/* Pakete (kart) HOVER edildiğinde Satın Al butonu öne çıksın */
+.paket-karti:hover .btn-satin-al,
+.paket-karti:hover a.btn-satin-al {
+    background: linear-gradient(135deg, var(--yt-bg) 0%, var(--yt-bg-active) 100%) !important;
+    background-color: var(--yt-bg-active) !important;
+    color: var(--yt-text) !important;
+    border-color: var(--yt-bg-active) !important;
+    box-shadow: 0 12px 32px rgba(212, 210, 91, 0.65), 0 0 0 3px rgba(212, 210, 91, 0.18) !important;
+    transform: translateY(-3px) scale(1.06) !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.4px !important;
+}
+
+/* Pakete hover edilince Detay & Sepete Ekle hafif soluklaşsın (Satın Al daha öne çıksın) */
+.paket-karti:hover .btn-detay,
+.paket-karti:hover .btn-sepete-ekle {
+    opacity: 0.85 !important;
+    transform: translateY(0) !important;
+}
+
+/* Fiyat / kategori badge — yazı koyu olsun */
+.paket-fiyat,
+span.paket-fiyat,
+.paket-kategori-badge,
+span.paket-kategori-badge {
+    color: var(--yt-text) !important;
+}
+.paket-fiyat {
+    background: var(--yt-bg) !important;
+    background-color: var(--yt-bg) !important;
+}
+
+/* ---------- 4) Sepet / Sipariş / Ödeme butonları ---------- */
+.cart-btn, .checkout-btn, .order-btn, .add-to-cart,
+button.sepet-ekle, a.sepet-ekle,
+button.satin-al, a.satin-al,
+.btn-sepete-ekle, .btn-satin-al,
+.btn-odeme, .btn-siparis {
+    background: var(--yt-bg) !important;
+    background-color: var(--yt-bg) !important;
+    color: var(--yt-text) !important;
+    border-color: var(--yt-bg) !important;
+}
+.cart-btn:hover, .checkout-btn:hover, .order-btn:hover, .add-to-cart:hover,
+button.sepet-ekle:hover, a.sepet-ekle:hover,
+button.satin-al:hover, a.satin-al:hover,
+.btn-sepete-ekle:hover, .btn-satin-al:hover,
+.btn-odeme:hover, .btn-siparis:hover {
+    background: var(--yt-bg-hover) !important;
+    color: var(--yt-text) !important;
+}
+
+/* ---------- 5) İstisnalar (sarı yapılmayacak) ---------- */
+/* Kapat / iptal / sil butonları kırmızı kalmalı */
+.btn-close, .close, .btn[aria-label="Close"],
+.btn-cancel, .btn-iptal, .btn-sil, .btn-delete,
+.alert .close, .modal .close {
+    background: transparent !important;
+    color: inherit !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+.btn-cancel, .btn-iptal {
+    background: #6b7280 !important;
+    color: #fff !important;
+    border-color: #6b7280 !important;
+}
+.btn-sil, .btn-delete, .btn-danger.confirm-delete {
+    background: #ef4444 !important;
+    color: #fff !important;
+    border-color: #ef4444 !important;
+}
+
+/* Navbar / sidebar / sosyal medya / dil butonları korunsun */
+.navbar .btn, .navbar button,
+.sidebar .btn, .sidebar button,
+.social-icons .btn, .social-icons a,
+.lang-switcher .btn, .currency-switcher .btn {
+    background: inherit !important;
+    color: inherit !important;
+    border-color: inherit !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Disabled butonlar */
+.btn:disabled, .btn.disabled,
+button:disabled, button.disabled {
+    background: #d1d5db !important;
+    color: #6b7280 !important;
+    border-color: #d1d5db !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+/* ---------- 5b) White-theme.css yüksek özgüllüklü kuralları ezmek için ---------- */
+/* SADECE sınıf adıyla tanımlı butonları yüksek özgüllükle ez.
+   Inline-styled (kırmızı/yeşil) buton'ları ETKILEME. */
+body .btn:not([style*="rgba(239"]):not([style*="#ef4444"]):not([style*="#22c55e"]),
+body button.btn:not([style*="rgba(239"]):not([style*="#ef4444"]):not([style*="#22c55e"]),
+body a.btn:not([style*="rgba(239"]):not([style*="#ef4444"]):not([style*="#22c55e"]),
+html body .btn-primary:not([style*="rgba(239"]),
+html body .btn-info:not([style*="rgba(239"]),
+html body .btn-success:not([style*="rgba(239"]),
+html body .btn-warning:not([style*="rgba(239"]),
+html body .bttn:not([style*="rgba(239"]),
+html body .btn-fill:not([style*="rgba(239"]),
+html body .btn-2:not([style*="rgba(239"]),
+html body .btn-default-pink-fill,
+html body .btn-default-gray-fill {
+    background: var(--yt-bg) !important;
+    background-color: var(--yt-bg) !important;
+    background-image: none !important;
+    color: var(--yt-text) !important;
+    border-color: var(--yt-bg) !important;
+}
+
+/* ---------- 5c) Beyaz/açık arkaplandaki sarı YAZILARI koyulaştır ---------- */
+/* --wt-accent sarıya dönünce tüm yazılar da sarı oldu — okunmuyor. */
+/* Bu yazıları koyu laciverde çevir. */
+
+/* Domain bölümü */
+.single-domain-type span,
+.single-domain-type h3 small,
+.single-domain-type p,
+.single-domain-type .price,
+.single-domain-type .domain-price {
+    color: var(--yt-text) !important;
+}
+
+/* Hosting/paket fiyatları */
+.plan-container .top-content .price,
+.plan-container .price,
+.paket-karti .paket-fiyat,
+.paket-karti .price,
+.product-price,
+.fiyat {
+    color: var(--yt-text) !important;
+}
+
+/* Sadece beyaz/açık ARKA PLANLI kartlardaki sarı yazıları koyulaştır */
+/* DİKKAT: Sepet/panel gibi koyu arkaplanlı sayfalardaki yazıları etkileme. */
+
+/* Hosting/paket kart fiyatları (beyaz kart) */
+.plan-container.text-center .price,
+.paket-karti .read-more,
+.paket-karti .news-title a,
+.paket-karti .paket-baslik a:hover,
+.product-name a:hover {
+    color: var(--yt-text) !important;
+}
+
+/* Beyaz kartlı yardım/iletişim kartları */
+.help-card-modern .help-card-arrow i,
+.contact-link-item i {
+    color: var(--yt-text) !important;
+}
+
+/* Eyebrow & badge'lerde sarı bg + koyu yazı (beyaz arkaplanda) */
+.paket-kategori-badge {
+    background: rgba(212, 210, 91, 0.18) !important;
+    color: var(--yt-text) !important;
+}
+
+/* Inline #4f46e5 / #6366f1 yazı rengi → sadece BEYAZ arkaplanda koyulaştır.
+   .top-header, .modern-section, .panel gibi koyu container'larda sarı kalsın. */
+.modern-card [style*="color: #4f46e5"],
+.modern-card [style*="color:#4f46e5"],
+.modern-card [style*="color: #6366f1"],
+.modern-card [style*="color:#6366f1"],
+.top-header [style*="color: #4f46e5"],
+.top-header [style*="color:#4f46e5"],
+.panel-content [style*="color: #4f46e5"],
+.modern-section [style*="color: #4f46e5"] {
+    color: var(--yt-bg) !important;  /* koyu arkaplanda sarı kullan */
+}
+/* Beyaz arkaplanlı section'lardaki #4f46e5 yazıları koyu yap */
+section.sec-normal [style*="color: #4f46e5"]:not([style*="background"]),
+section.sec-normal [style*="color:#4f46e5"]:not([style*="background"]),
+section.help-section [style*="color: #4f46e5"]:not([style*="background"]),
+section.search-domain [style*="color: #4f46e5"]:not([style*="background"]) {
+    color: var(--yt-text) !important;
+}
+
+/* ---------- 5d) Sepet sayfası: white-theme'de modern-card BEYAZ olduğu için
+   içerideki tüm beyaz yazıları KOYU laciverde çevir ---------- */
+
+.modern-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: #0f172a;
+    margin: 0;
+}
+.modern-table thead th {
+    color: #475569 !important;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 14px 16px;
+    border-bottom: 2px solid rgba(15, 23, 42, 0.08);
+    background: rgba(15, 23, 42, 0.02);
+    text-align: left;
+}
+.modern-table thead th.text-center {
+    text-align: center;
+}
+.modern-table tbody td {
+    color: #0f172a !important;
+    padding: 16px;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+    font-size: 14px;
+    vertical-align: middle;
+}
+.modern-table tbody tr:hover td {
+    background: rgba(212, 210, 91, 0.06);
+}
+.modern-table tbody tr:last-child td {
+    border-bottom: none;
+}
+.modern-table tbody td strong {
+    color: #0f172a !important;
+}
+
+/* .modern-card içindeki tüm yazıları KOYU yap (white-theme bg beyaz olduğu için) */
+.modern-card {
+    color: #334155 !important;
+}
+.modern-card p,
+.modern-card span,
+.modern-card td,
+.modern-card th,
+.modern-card label,
+.modern-card .form-label-modern,
+.modern-card small,
+.modern-card div {
+    /* sadece açık (white) renkleri ezme — kendi renkli olanları korumak için aşağıda spesifik kural var */
+}
+.modern-card h1,
+.modern-card h2,
+.modern-card h3,
+.modern-card h4,
+.modern-card h5,
+.modern-card h6,
+.modern-card .title,
+.modern-card strong {
+    color: #0f172a !important;
+}
+
+/* Inline beyaz/yarı-beyaz yazıları .modern-card içinde KOYU lacivert yap */
+.modern-card [style*="color: #fff"],
+.modern-card [style*="color:#fff"],
+.modern-card [style*="color: #ffffff"],
+.modern-card [style*="color:#ffffff"],
+.modern-card [style*="color: rgba(255, 255, 255"],
+.modern-card [style*="color:rgba(255,255,255"],
+.modern-card [style*="color:rgba(255, 255, 255"] {
+    color: #0f172a !important;
+}
+
+/* Inline yarı-saydam beyaz placeholder/label rengi → orta gri */
+.modern-card [style*="color: rgba(255, 255, 255, 0.6"],
+.modern-card [style*="color: rgba(255, 255, 255, 0.7"],
+.modern-card [style*="color: rgba(255, 255, 255, 0.8"],
+.modern-card [style*="color: rgba(255, 255, 255, 0.9"],
+.modern-card [style*="color:rgba(255,255,255,0.6"],
+.modern-card [style*="color:rgba(255,255,255,0.7"],
+.modern-card [style*="color:rgba(255,255,255,0.8"],
+.modern-card [style*="color:rgba(255,255,255,0.9"] {
+    color: #475569 !important;
+}
+
+/* Modern-card içindeki input alanları: beyaz arkaplan üstünde okunsun */
+.modern-card input,
+.modern-card textarea,
+.modern-card select,
+.modern-card .form-control,
+.modern-card .modern-input {
+    background: #f9fafb !important;
+    background-color: #f9fafb !important;
+    color: #0f172a !important;
+    border: 1px solid rgba(15, 23, 42, 0.12) !important;
+}
+.modern-card input::placeholder,
+.modern-card textarea::placeholder,
+.modern-card .form-control::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1 !important;
+}
+
+/* Sepet/panel sayfasındaki ikonlar için renk uyumu */
+.modern-card i.mdi {
+    color: inherit;
+}
+
+/* "Boş sepet" / placeholder vs. mesajları */
+.modern-card .empty-cart,
+.modern-card .text-center.text-muted {
+    color: #64748b !important;
+}
+
+/* ---------- 5e) İletişim ("Bize Ulaşın") form override ---------- */
+/* iletisim.css koyu tema için tasarlanmış (beyaz yazı + transparent bg).
+   White theme'de bu görünmez. Beyaz arkaplana göre düzelt. */
+.contact-form-wrapper {
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08) !important;
+}
+
+.contact-form-wrapper .form-title {
+    color: #0f172a !important;
+}
+.contact-form-wrapper .form-title i {
+    color: var(--yt-bg) !important;
+}
+
+.contact-form-wrapper .form-label-modern {
+    color: #334155 !important;
+}
+.contact-form-wrapper .form-label-modern i {
+    color: var(--yt-bg) !important;
+}
+
+.contact-form-wrapper .form-input-modern,
+.contact-form-wrapper .form-textarea-modern,
+.contact-form-wrapper select.form-input-modern {
+    background: #f9fafb !important;
+    background-color: #f9fafb !important;
+    border: 2px solid rgba(15, 23, 42, 0.12) !important;
+    color: #0f172a !important;
+}
+.contact-form-wrapper .form-input-modern:focus,
+.contact-form-wrapper .form-textarea-modern:focus {
+    background: #ffffff !important;
+    border-color: var(--yt-bg) !important;
+    box-shadow: 0 0 0 3px rgba(212, 210, 91, 0.15) !important;
+}
+.contact-form-wrapper .form-input-modern::placeholder,
+.contact-form-wrapper .form-textarea-modern::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1 !important;
+}
+.contact-form-wrapper .form-input-modern::-webkit-input-placeholder,
+.contact-form-wrapper .form-textarea-modern::-webkit-input-placeholder {
+    color: #94a3b8 !important;
+}
+.contact-form-wrapper .form-input-modern::-moz-placeholder,
+.contact-form-wrapper .form-textarea-modern::-moz-placeholder {
+    color: #94a3b8 !important;
+}
+
+/* Form altındaki açıklama yazısı (color: #9ca3af zaten OK ama netleştir) */
+.contact-form-wrapper .form-header p {
+    color: #64748b !important;
+}
+
+/* ---------- 6) Sarı butonlardaki ikon/text rengi garantisi ---------- */
+/* SADECE sarıya dönüştürülen butonların içeriğini etkile.
+   Renkli (kırmızı, yeşil) action butonlarını ETKILEME. */
+.btn:not([style*="rgba(239"]):not([style*="#ef4444"]):not([style*="#dc2626"]):not([style*="#22c55e"]):not([style*="#16a34a"]) i,
+.btn:not([style*="rgba(239"]):not([style*="#ef4444"]):not([style*="#dc2626"]):not([style*="#22c55e"]):not([style*="#16a34a"]) span:not(.badge),
+.bttn i, .bttn span,
+.btn-2 i, .btn-2 span,
+.btn-default-pink-fill i, .btn-default-pink-fill span,
+.btn-default-gray-fill i, .btn-default-gray-fill span,
+.btn-modern:not([style*="#22c55e"]):not([style*="#16a34a"]) i,
+.btn-modern:not([style*="#22c55e"]):not([style*="#16a34a"]) span {
+    color: var(--yt-text) !important;
+}

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İş Ortağım — Admin V2 (Neon Cyber)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['Outfit','sans-serif'], mono: ['JetBrains Mono','monospace'] },
+  colors: {
+    cyber: {
+      bg: '#050510',
+      surface: '#0a0a18',
+      border: '#1a1a2e',
+      neon1: '#00f5ff',  // cyan
+      neon2: '#ff006e',  // magenta
+      neon3: '#39ff14',  // green
+      neon4: '#bf00ff',  // purple
+    }
+  },
+  animation: {
+    'pulse-neon': 'pulseNeon 2s ease-in-out infinite',
+    'scan-line': 'scanLine 4s linear infinite',
+    'glitch': 'glitch 0.5s ease infinite',
+  },
+  keyframes: {
+    pulseNeon: { '0%,100%': { 'box-shadow':'0 0 20px currentColor, 0 0 40px currentColor' }, '50%': { 'box-shadow':'0 0 30px currentColor, 0 0 60px currentColor' } },
+    scanLine: { '0%': { transform: 'translateY(-100%)' }, '100%': { transform: 'translateY(100vh)' } },
+    glitch: { '0%,100%': { transform: 'translate(0)' }, '20%': { transform: 'translate(-2px, 2px)' }, '40%': { transform: 'translate(-2px, -2px)' }, '60%': { transform: 'translate(2px, 2px)' }, '80%': { transform: 'translate(2px, -2px)' } },
+  }
+}}}
+</script>
+<style>
+* { -webkit-font-smoothing: antialiased; }
+body { font-family: 'Outfit', sans-serif; background: #050510; color: #e2e8f0; min-height: 100vh; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+
+/* Cyberpunk grid background */
+.cyber-bg {
+  background: #050510;
+  background-image:
+    linear-gradient(rgba(0,245,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,255,0.06) 1px, transparent 1px),
+    radial-gradient(ellipse at top, rgba(191,0,255,0.15), transparent 50%),
+    radial-gradient(ellipse at bottom, rgba(255,0,110,0.1), transparent 50%);
+  background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%;
+}
+
+/* Surface card */
+.cyber-card {
+  background: linear-gradient(135deg, rgba(10,10,24,0.95) 0%, rgba(15,15,35,0.95) 100%);
+  border: 1px solid rgba(0,245,255,0.2);
+  position: relative;
+  overflow: hidden;
+}
+.cyber-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00f5ff 50%, transparent);
+}
+.cyber-card:hover {
+  border-color: rgba(0,245,255,0.5);
+  box-shadow: 0 0 30px rgba(0,245,255,0.15), inset 0 0 30px rgba(0,245,255,0.05);
+}
+
+/* Neon text */
+.neon-cyan { color: #00f5ff; text-shadow: 0 0 10px #00f5ff, 0 0 20px #00f5ff; }
+.neon-pink { color: #ff006e; text-shadow: 0 0 10px #ff006e, 0 0 20px #ff006e; }
+.neon-green { color: #39ff14; text-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14; }
+.neon-purple { color: #bf00ff; text-shadow: 0 0 10px #bf00ff, 0 0 20px #bf00ff; }
+
+/* Gradient cyber text */
+.cyber-text {
+  background: linear-gradient(90deg, #00f5ff, #bf00ff, #ff006e);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+@keyframes shimmer { to { background-position: 200% center; } }
+
+/* Hex frame */
+.hex-frame {
+  position: relative;
+}
+.hex-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid;
+  border-image: linear-gradient(135deg, #00f5ff, #ff006e) 1;
+  pointer-events: none;
+  clip-path: polygon(0 10px, 10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+/* Stat card glow */
+.stat-glow:hover {
+  transform: translateY(-4px);
+  transition: all 0.3s;
+}
+
+/* Sidebar nav active */
+.nav-link {
+  position: relative;
+  transition: all 0.3s;
+}
+.nav-link.active {
+  background: linear-gradient(90deg, rgba(0,245,255,0.15), transparent);
+  color: #00f5ff;
+}
+.nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 4px; height: 24px;
+  background: #00f5ff;
+  box-shadow: 0 0 15px #00f5ff;
+  border-radius: 0 2px 2px 0;
+}
+.nav-link:hover {
+  background: rgba(0,245,255,0.05);
+  color: #00f5ff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #0a0a18; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #00f5ff, #bf00ff); border-radius: 0; }
+
+/* Scan line effect */
+.scan-line {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00f5ff 50%, transparent);
+  box-shadow: 0 0 20px #00f5ff;
+  pointer-events: none;
+  z-index: 1000;
+  animation: scanLine 6s linear infinite;
+  opacity: 0.6;
+}
+
+/* Button cyber */
+.btn-cyber {
+  position: relative;
+  background: linear-gradient(135deg, #00f5ff, #bf00ff);
+  color: #050510;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: none;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+.btn-cyber::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #ff006e, #00f5ff);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.btn-cyber:hover::before { opacity: 1; }
+.btn-cyber:hover {
+  box-shadow: 0 0 30px rgba(0,245,255,0.6), 0 0 60px rgba(191,0,255,0.4);
+  transform: translateY(-2px);
+}
+.btn-cyber span { position: relative; z-index: 1; }
+
+/* Status dot */
+.status-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+.status-online { background: #39ff14; box-shadow: 0 0 8px #39ff14; animation: pulseNeon 2s infinite; }
+.status-warning { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; }
+.status-error { background: #ff006e; box-shadow: 0 0 8px #ff006e; }
+
+/* Brackets */
+.bracket-text::before { content: '['; color: #00f5ff; margin-right: 4px; }
+.bracket-text::after { content: ']'; color: #00f5ff; margin-left: 4px; }
+
+/* Table */
+.cyber-table th {
+  background: rgba(0,245,255,0.05);
+  color: #00f5ff;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid rgba(0,245,255,0.2);
+}
+.cyber-table tr:hover { background: rgba(0,245,255,0.05); }
+.cyber-table td { border-bottom: 1px solid rgba(0,245,255,0.05); }
+
+/* Badge */
+.badge-cyber {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 1px solid currentColor;
+}
+</style>
+</head>
+<body class="cyber-bg min-h-screen">
+
+<div class="scan-line"></div>
+
+<div class="flex min-h-screen relative z-10">
+
+  <!-- SIDEBAR -->
+  <aside class="hidden lg:flex flex-col w-72 bg-cyber-surface border-r border-cyber-border sticky top-0 h-screen overflow-y-auto z-30">
+    <!-- Logo -->
+    <div class="p-6 border-b border-cyber-border">
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="relative w-12 h-12">
+          <div class="absolute inset-0 bg-gradient-to-br from-cyan-400 to-purple-600 blur-lg opacity-60 group-hover:opacity-100 transition"></div>
+          <div class="relative w-full h-full bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 flex items-center justify-center text-black font-extrabold text-2xl" style="clip-path: polygon(15% 0, 85% 0, 100% 50%, 85% 100%, 15% 100%, 0 50%);">İ</div>
+        </div>
+        <div>
+          <div class="font-mono font-bold text-white text-lg tracking-tight">ISORTAGIM</div>
+          <div class="text-[10px] font-mono uppercase tracking-widest neon-cyan">// admin.sys</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- System status -->
+    <div class="px-6 py-4 border-b border-cyber-border">
+      <div class="flex items-center justify-between text-xs font-mono">
+        <span class="text-zinc-500 uppercase">System</span>
+        <span class="flex items-center"><span class="status-dot status-online"></span><span class="neon-green">ONLINE</span></span>
+      </div>
+      <div class="mt-2 h-1 bg-cyber-border rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-cyan-400 to-purple-500" style="width: 87%"></div>
+      </div>
+      <div class="text-[10px] text-zinc-500 mt-1 font-mono">CPU 87% | RAM 4.2/8GB</div>
+    </div>
+
+    <nav class="flex-1 p-4 space-y-1">
+      <div class="text-[10px] font-mono font-bold text-zinc-600 uppercase tracking-widest px-3 mb-2">// MAIN</div>
+
+      <a href="#" class="nav-link active flex items-center gap-3 px-4 py-3 text-zinc-400 group">
+        <span class="text-xl w-6">📊</span>
+        <span class="font-mono text-sm tracking-wide">DASHBOARD</span>
+      </a>
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">🛒</span>
+        <span class="font-mono text-sm tracking-wide flex-1">ORDERS</span>
+        <span class="badge-cyber neon-pink">12</span>
+      </a>
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">👥</span>
+        <span class="font-mono text-sm tracking-wide">USERS</span>
+      </a>
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">📦</span>
+        <span class="font-mono text-sm tracking-wide">PACKAGES</span>
+      </a>
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">🖥️</span>
+        <span class="font-mono text-sm tracking-wide">HOSTING</span>
+      </a>
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">🌐</span>
+        <span class="font-mono text-sm tracking-wide">DOMAINS</span>
+      </a>
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">🧾</span>
+        <span class="font-mono text-sm tracking-wide">INVOICES</span>
+      </a>
+
+      <div class="text-[10px] font-mono font-bold text-zinc-600 uppercase tracking-widest px-3 mt-6 mb-2">// RESELLER</div>
+
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">🏪</span>
+        <span class="font-mono text-sm tracking-wide flex-1">DEALERS</span>
+        <span class="badge-cyber neon-cyan">120</span>
+      </a>
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">🎟️</span>
+        <span class="font-mono text-sm tracking-wide">PROMO_CODES</span>
+      </a>
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">💰</span>
+        <span class="font-mono text-sm tracking-wide">COMMISSIONS</span>
+      </a>
+
+      <div class="text-[10px] font-mono font-bold text-zinc-600 uppercase tracking-widest px-3 mt-6 mb-2">// CRM</div>
+
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">📋</span>
+        <span class="font-mono text-sm tracking-wide">KANBAN</span>
+      </a>
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">📈</span>
+        <span class="font-mono text-sm tracking-wide">LEADS</span>
+      </a>
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">✅</span>
+        <span class="font-mono text-sm tracking-wide">TASKS</span>
+      </a>
+
+      <div class="text-[10px] font-mono font-bold text-zinc-600 uppercase tracking-widest px-3 mt-6 mb-2">// SYSTEM</div>
+
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">⚙️</span>
+        <span class="font-mono text-sm tracking-wide">CONFIG</span>
+      </a>
+      <a href="#" class="nav-link flex items-center gap-3 px-4 py-3 text-zinc-400">
+        <span class="text-xl w-6">🔐</span>
+        <span class="font-mono text-sm tracking-wide">ADMINS</span>
+      </a>
+    </nav>
+
+    <!-- Bottom: Pro upgrade -->
+    <div class="p-4 border-t border-cyber-border">
+      <div class="cyber-card p-4 relative">
+        <div class="text-[10px] font-mono uppercase tracking-widest neon-pink mb-2">▲ UPGRADE</div>
+        <div class="text-white font-bold text-sm mb-2">PRO_VERSION.exe</div>
+        <div class="text-xs text-zinc-500 mb-3 font-mono">Unlock all features +<br>priority support</div>
+        <button class="btn-cyber w-full text-xs py-2"><span>EXECUTE →</span></button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="flex-1 flex flex-col min-w-0">
+
+    <!-- TOPBAR -->
+    <header class="bg-cyber-surface/80 backdrop-blur border-b border-cyber-border sticky top-0 z-20">
+      <div class="flex items-center justify-between gap-4 px-4 lg:px-8 h-16">
+        <div class="flex items-center gap-3">
+          <button class="p-2 hover:bg-cyan-500/10 rounded text-zinc-400 hover:neon-cyan transition">≡</button>
+          <div class="hidden md:flex items-center gap-2 bg-cyber-surface border border-cyber-border focus-within:border-cyan-500/50 transition px-4 py-2 w-96 font-mono">
+            <span class="neon-cyan text-sm">$</span>
+            <input type="text" placeholder="search.exe ..." class="bg-transparent flex-1 text-sm text-white placeholder-zinc-600 focus:outline-none">
+            <kbd class="text-[10px] bg-cyber-border px-2 py-0.5 text-zinc-400 font-mono">CTRL+K</kbd>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button class="hidden md:flex items-center gap-2 btn-cyber px-4 py-2 text-xs">
+            <span>+ NEW_RECORD</span>
+          </button>
+          <button class="p-2.5 hover:bg-cyan-500/10 rounded text-zinc-400 hover:neon-cyan transition relative text-xl">
+            ◔
+            <span class="absolute -top-1 -right-1 w-4 h-4 bg-pink-500 text-[9px] font-bold flex items-center justify-center text-white" style="clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);">3</span>
+          </button>
+          <button class="p-2.5 hover:bg-cyan-500/10 rounded text-zinc-400 hover:neon-cyan transition text-xl">✉</button>
+          <div class="flex items-center gap-3 ml-2 pl-3 border-l border-cyber-border">
+            <div class="hidden lg:block text-right">
+              <div class="text-sm font-bold text-white font-mono">@nesimi_ates</div>
+              <div class="text-[10px] font-mono uppercase tracking-widest neon-cyan">// SUPER_ADMIN</div>
+            </div>
+            <div class="relative">
+              <div class="w-10 h-10 bg-gradient-to-br from-cyan-400 via-purple-500 to-pink-500 flex items-center justify-center text-black font-extrabold" style="clip-path: polygon(15% 0, 85% 0, 100% 50%, 85% 100%, 15% 100%, 0 50%);">N</div>
+              <span class="status-dot status-online absolute -bottom-1 -right-1"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="flex-1 p-4 lg:p-8 space-y-6">
+      <!-- Header -->
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <div class="text-xs font-mono text-zinc-500 mb-2 tracking-widest uppercase">// SYSTEM > ADMIN > <span class="neon-cyan">DASHBOARD</span></div>
+          <h1 class="font-mono text-3xl lg:text-4xl font-extrabold text-white">
+            <span class="text-zinc-500">$</span> WELCOME_BACK <span class="cyber-text">@nesimi</span><span class="animate-pulse neon-cyan">_</span>
+          </h1>
+          <p class="text-zinc-400 mt-2 font-mono text-sm">// 3 NEW_ORDERS | <span class="neon-green">+₺4.250</span> TODAY</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="cyber-card px-4 py-2.5 text-xs font-mono uppercase tracking-widest hover:neon-cyan flex items-center gap-2">
+            ▼ LAST_30_DAYS
+          </button>
+          <button class="btn-cyber px-4 py-2.5 text-xs"><span>↓ EXPORT</span></button>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div class="cyber-card stat-glow p-5">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <div class="text-zinc-500 text-xs mb-2 font-mono uppercase tracking-widest">// REVENUE</div>
+              <div class="font-mono text-3xl font-extrabold neon-cyan">₺124.580</div>
+            </div>
+            <div class="text-4xl">💸</div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono">
+            <span class="neon-green">▲ +18.2%</span>
+            <span class="text-zinc-600">vs LAST_MONTH</span>
+          </div>
+        </div>
+
+        <div class="cyber-card stat-glow p-5">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <div class="text-zinc-500 text-xs mb-2 font-mono uppercase tracking-widest">// ORDERS</div>
+              <div class="font-mono text-3xl font-extrabold neon-pink">847</div>
+            </div>
+            <div class="text-4xl">🛍️</div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono">
+            <span class="neon-green">▲ +12.5%</span>
+            <span class="text-zinc-600">vs LAST_MONTH</span>
+          </div>
+        </div>
+
+        <div class="cyber-card stat-glow p-5">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <div class="text-zinc-500 text-xs mb-2 font-mono uppercase tracking-widest">// USERS</div>
+              <div class="font-mono text-3xl font-extrabold neon-green">5.247</div>
+            </div>
+            <div class="text-4xl">👤</div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono">
+            <span class="neon-green">▲ +5.8%</span>
+            <span class="text-zinc-600">vs LAST_MONTH</span>
+          </div>
+        </div>
+
+        <div class="cyber-card stat-glow p-5">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <div class="text-zinc-500 text-xs mb-2 font-mono uppercase tracking-widest">// COMMISSION</div>
+              <div class="font-mono text-3xl font-extrabold neon-purple">₺18.450</div>
+            </div>
+            <div class="text-4xl">🎁</div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-mono">
+            <span class="neon-pink">▼ -2.1%</span>
+            <span class="text-zinc-600">vs LAST_MONTH</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts row -->
+      <div class="grid lg:grid-cols-3 gap-4">
+        <div class="lg:col-span-2 cyber-card p-6">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h3 class="font-mono text-lg font-bold text-white">// REVENUE_ANALYSIS.log</h3>
+              <p class="text-xs text-zinc-500 mt-1 font-mono">SALES PERFORMANCE — LAST_7_DAYS</p>
+            </div>
+            <div class="flex gap-1 border border-cyan-500/30 p-1">
+              <button class="text-xs px-3 py-1.5 bg-cyan-500/20 neon-cyan font-mono">7D</button>
+              <button class="text-xs px-3 py-1.5 text-zinc-500 hover:neon-cyan transition font-mono">30D</button>
+              <button class="text-xs px-3 py-1.5 text-zinc-500 hover:neon-cyan transition font-mono">90D</button>
+            </div>
+          </div>
+          <div id="revenueChart"></div>
+        </div>
+
+        <div class="cyber-card p-6">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h3 class="font-mono text-lg font-bold text-white">// TRAFFIC.io</h3>
+              <p class="text-xs text-zinc-500 mt-1 font-mono">MONTHLY DISTRIBUTION</p>
+            </div>
+          </div>
+          <div id="donutChart"></div>
+          <div class="space-y-2 mt-4 font-mono text-xs">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2"><span class="w-3 h-3 bg-cyan-400" style="box-shadow: 0 0 8px #00f5ff;"></span> <span class="text-zinc-400">DIRECT</span></div>
+              <span class="neon-cyan font-bold">42%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2"><span class="w-3 h-3 bg-pink-500" style="box-shadow: 0 0 8px #ff006e;"></span> <span class="text-zinc-400">SOCIAL</span></div>
+              <span class="neon-pink font-bold">28%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2"><span class="w-3 h-3 bg-green-400" style="box-shadow: 0 0 8px #39ff14;"></span> <span class="text-zinc-400">SEARCH</span></div>
+              <span class="neon-green font-bold">22%</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2"><span class="w-3 h-3 bg-purple-500" style="box-shadow: 0 0 8px #bf00ff;"></span> <span class="text-zinc-400">REFERRAL</span></div>
+              <span class="neon-purple font-bold">8%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tables row -->
+      <div class="grid lg:grid-cols-3 gap-4">
+        <div class="lg:col-span-2 cyber-card overflow-hidden">
+          <div class="p-6 flex items-center justify-between">
+            <div>
+              <h3 class="font-mono text-lg font-bold text-white">// RECENT_ORDERS.db</h3>
+              <p class="text-xs text-zinc-500 mt-1 font-mono">12 ORDERS_TODAY</p>
+            </div>
+            <a href="#" class="text-xs neon-cyan font-mono uppercase tracking-widest hover:underline">[VIEW_ALL →]</a>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="cyber-table w-full">
+              <thead>
+                <tr>
+                  <th class="text-left font-mono px-6 py-3">CUSTOMER</th>
+                  <th class="text-left font-mono px-6 py-3">PACKAGE</th>
+                  <th class="text-left font-mono px-6 py-3">AMOUNT</th>
+                  <th class="text-left font-mono px-6 py-3">STATUS</th>
+                </tr>
+              </thead>
+              <tbody class="text-sm font-mono">
+                <tr>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center text-black font-bold text-xs" style="clip-path: polygon(15% 0, 85% 0, 100% 50%, 85% 100%, 15% 100%, 0 50%);">A</div>
+                      <div>
+                        <div class="font-bold text-white">@ahmet_yilmaz</div>
+                        <div class="text-[10px] text-zinc-500">UID_001</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-zinc-300">PROFESYONEL</td>
+                  <td class="px-6 py-4 neon-cyan font-bold">₺1.999</td>
+                  <td class="px-6 py-4">
+                    <span class="badge-cyber neon-green">▲ COMPLETED</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center text-black font-bold text-xs" style="clip-path: polygon(15% 0, 85% 0, 100% 50%, 85% 100%, 15% 100%, 0 50%);">E</div>
+                      <div>
+                        <div class="font-bold text-white">@elif_demir</div>
+                        <div class="text-[10px] text-zinc-500">UID_002</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-zinc-300">KURUMSAL</td>
+                  <td class="px-6 py-4 neon-cyan font-bold">₺3.999</td>
+                  <td class="px-6 py-4">
+                    <span class="badge-cyber" style="color: #fbbf24;">⏵ PENDING</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-black font-bold text-xs" style="clip-path: polygon(15% 0, 85% 0, 100% 50%, 85% 100%, 15% 100%, 0 50%);">M</div>
+                      <div>
+                        <div class="font-bold text-white">@mehmet_kaya</div>
+                        <div class="text-[10px] text-zinc-500">UID_003</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-zinc-300">BAŞLANGIÇ</td>
+                  <td class="px-6 py-4 neon-cyan font-bold">₺899</td>
+                  <td class="px-6 py-4">
+                    <span class="badge-cyber neon-green">▲ COMPLETED</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-black font-bold text-xs" style="clip-path: polygon(15% 0, 85% 0, 100% 50%, 85% 100%, 15% 100%, 0 50%);">Z</div>
+                      <div>
+                        <div class="font-bold text-white">@zeynep_sahin</div>
+                        <div class="text-[10px] text-zinc-500">UID_004</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-zinc-300">PROFESYONEL</td>
+                  <td class="px-6 py-4 neon-cyan font-bold">₺1.999</td>
+                  <td class="px-6 py-4">
+                    <span class="badge-cyber neon-pink">▼ CANCELLED</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-8 h-8 bg-gradient-to-br from-violet-400 to-purple-500 flex items-center justify-center text-black font-bold text-xs" style="clip-path: polygon(15% 0, 85% 0, 100% 50%, 85% 100%, 15% 100%, 0 50%);">B</div>
+                      <div>
+                        <div class="font-bold text-white">@burak_aydin</div>
+                        <div class="text-[10px] text-zinc-500">UID_005</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-zinc-300">KURUMSAL</td>
+                  <td class="px-6 py-4 neon-cyan font-bold">₺3.999</td>
+                  <td class="px-6 py-4">
+                    <span class="badge-cyber neon-green">▲ COMPLETED</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Top Bayiler -->
+        <div class="cyber-card p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="font-mono text-lg font-bold text-white">// TOP_DEALERS.list</h3>
+          </div>
+          <div class="space-y-3 font-mono">
+            <div class="flex items-center gap-3 p-3 hover:bg-cyan-500/5 transition cursor-pointer">
+              <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-black font-bold" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">01</div>
+              <div class="flex-1 min-w-0">
+                <div class="font-bold text-white text-sm">@mert_celik</div>
+                <div class="text-[10px] text-zinc-500">42 SALES // ₺28.500</div>
+              </div>
+              <span class="badge-cyber neon-green">+24%</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 hover:bg-cyan-500/5 transition cursor-pointer">
+              <div class="w-10 h-10 bg-gradient-to-br from-zinc-400 to-zinc-500 flex items-center justify-center text-black font-bold" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">02</div>
+              <div class="flex-1 min-w-0">
+                <div class="font-bold text-white text-sm">@aylin_dogan</div>
+                <div class="text-[10px] text-zinc-500">38 SALES // ₺22.100</div>
+              </div>
+              <span class="badge-cyber neon-green">+18%</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 hover:bg-cyan-500/5 transition cursor-pointer">
+              <div class="w-10 h-10 bg-gradient-to-br from-orange-700 to-orange-800 flex items-center justify-center text-black font-bold" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">03</div>
+              <div class="flex-1 min-w-0">
+                <div class="font-bold text-white text-sm">@cem_yildirim</div>
+                <div class="text-[10px] text-zinc-500">31 SALES // ₺19.800</div>
+              </div>
+              <span class="badge-cyber neon-green">+12%</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 hover:bg-cyan-500/5 transition cursor-pointer">
+              <div class="w-10 h-10 border border-cyber-border flex items-center justify-center text-zinc-400 font-bold" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">04</div>
+              <div class="flex-1 min-w-0">
+                <div class="font-bold text-white text-sm">@selin_arslan</div>
+                <div class="text-[10px] text-zinc-500">28 SALES // ₺17.200</div>
+              </div>
+              <span class="badge-cyber neon-green">+8%</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 hover:bg-cyan-500/5 transition cursor-pointer">
+              <div class="w-10 h-10 border border-cyber-border flex items-center justify-center text-zinc-400 font-bold" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">05</div>
+              <div class="flex-1 min-w-0">
+                <div class="font-bold text-white text-sm">@kemal_avci</div>
+                <div class="text-[10px] text-zinc-500">25 SALES // ₺15.900</div>
+              </div>
+              <span class="badge-cyber neon-pink">-3%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity & Tasks -->
+      <div class="grid lg:grid-cols-2 gap-4">
+        <div class="cyber-card p-6">
+          <h3 class="font-mono text-lg font-bold text-white mb-6">// ACTIVITY.stream</h3>
+          <div class="space-y-4 font-mono text-sm">
+            <div class="flex gap-3 items-start">
+              <span class="neon-green text-lg">▶</span>
+              <div class="flex-1">
+                <div class="text-white"><span class="neon-cyan">@ahmet_yilmaz</span> purchased PROFESYONEL</div>
+                <div class="text-[10px] text-zinc-500 mt-1">[03_MIN_AGO] // ₺1.999</div>
+              </div>
+            </div>
+            <div class="flex gap-3 items-start">
+              <span class="neon-cyan text-lg">+</span>
+              <div class="flex-1">
+                <div class="text-white">New dealer application: <span class="neon-cyan">@murat_tekin</span></div>
+                <div class="text-[10px] text-zinc-500 mt-1">[12_MIN_AGO] // PENDING_APPROVAL</div>
+              </div>
+            </div>
+            <div class="flex gap-3 items-start">
+              <span class="neon-pink text-lg">!</span>
+              <div class="flex-1">
+                <div class="text-white">New ticket: <span class="neon-pink">"SSL_INSTALL"</span></div>
+                <div class="text-[10px] text-zinc-500 mt-1">[28_MIN_AGO] // PRIORITY: HIGH</div>
+              </div>
+            </div>
+            <div class="flex gap-3 items-start">
+              <span class="neon-purple text-lg">$</span>
+              <div class="flex-1">
+                <div class="text-white"><span class="neon-purple">@mert_celik</span> commission approved</div>
+                <div class="text-[10px] text-zinc-500 mt-1">[01_HR_AGO] // ₺2.450</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cyber-card p-6">
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="font-mono text-lg font-bold text-white">// TODAYS_TASKS.queue</h3>
+            <button class="text-xs neon-cyan font-mono uppercase tracking-widest border border-cyan-500/30 px-3 py-1.5 hover:bg-cyan-500/10">+ ADD</button>
+          </div>
+          <div class="space-y-2 font-mono">
+            <label class="flex items-center gap-3 p-3 hover:bg-cyan-500/5 transition cursor-pointer border border-transparent hover:border-cyan-500/20">
+              <input type="checkbox" class="w-5 h-5 bg-transparent border-2 border-cyan-500 text-cyan-500 focus:ring-0 rounded-none">
+              <div class="flex-1">
+                <div class="text-sm text-white">REVIEW_DEALER_APPLICATIONS [5]</div>
+                <div class="text-[10px] text-zinc-500">14:00 → 14:30</div>
+              </div>
+              <span class="badge-cyber neon-pink">URGENT</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 hover:bg-cyan-500/5 transition cursor-pointer border border-transparent">
+              <input type="checkbox" checked class="w-5 h-5 bg-cyan-500 border-2 border-cyan-500 text-cyan-500 focus:ring-0 rounded-none">
+              <div class="flex-1">
+                <div class="text-sm text-zinc-500 line-through">PREPARE_MONTHLY_REPORT</div>
+                <div class="text-[10px] text-zinc-600">[DONE]</div>
+              </div>
+            </label>
+            <label class="flex items-center gap-3 p-3 hover:bg-cyan-500/5 transition cursor-pointer border border-transparent">
+              <input type="checkbox" class="w-5 h-5 bg-transparent border-2 border-cyan-500 text-cyan-500 focus:ring-0 rounded-none">
+              <div class="flex-1">
+                <div class="text-sm text-white">TEAM_MEETING</div>
+                <div class="text-[10px] text-zinc-500">15:00 → 16:00</div>
+              </div>
+              <span class="badge-cyber" style="color: #fbbf24;">MID</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 hover:bg-cyan-500/5 transition cursor-pointer border border-transparent">
+              <input type="checkbox" class="w-5 h-5 bg-transparent border-2 border-cyan-500 text-cyan-500 focus:ring-0 rounded-none">
+              <div class="flex-1">
+                <div class="text-sm text-white">PUBLISH_SEO_BLOG</div>
+                <div class="text-[10px] text-zinc-500">17:00</div>
+              </div>
+              <span class="badge-cyber neon-green">LOW</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 hover:bg-cyan-500/5 transition cursor-pointer border border-transparent">
+              <input type="checkbox" class="w-5 h-5 bg-transparent border-2 border-cyan-500 text-cyan-500 focus:ring-0 rounded-none">
+              <div class="flex-1">
+                <div class="text-sm text-white">APPROVE_COMMISSIONS</div>
+                <div class="text-[10px] text-zinc-500">18:00</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  // Revenue chart
+  new ApexCharts(document.querySelector("#revenueChart"), {
+    series: [
+      { name: 'REVENUE', data: [3200, 4100, 3800, 5200, 4900, 6800, 7400] },
+      { name: 'COMMISSION', data: [800, 1200, 950, 1400, 1300, 1900, 2200] }
+    ],
+    chart: { type: 'area', height: 280, background: 'transparent', toolbar: { show: false }, fontFamily: 'JetBrains Mono' },
+    theme: { mode: 'dark' },
+    colors: ['#00f5ff', '#ff006e'],
+    fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.5, opacityTo: 0, stops: [0, 90, 100] } },
+    stroke: { curve: 'straight', width: 2 },
+    grid: { borderColor: 'rgba(0,245,255,0.1)', strokeDashArray: 4 },
+    xaxis: { categories: ['MON','TUE','WED','THU','FRI','SAT','SUN'], axisBorder: { color: '#1a1a2e' }, axisTicks: { color: '#1a1a2e' }, labels: { style: { colors: '#71717a', fontFamily: 'JetBrains Mono' } } },
+    yaxis: { labels: { style: { colors: '#71717a', fontFamily: 'JetBrains Mono' }, formatter: (v) => '₺' + v } },
+    tooltip: { theme: 'dark', y: { formatter: (v) => '₺' + v.toLocaleString('tr-TR') } },
+    legend: { labels: { colors: '#a1a1aa' }, markers: { width: 10, height: 10 } },
+    markers: { size: 5, strokeWidth: 0, hover: { size: 7 } }
+  }).render();
+
+  // Donut
+  new ApexCharts(document.querySelector("#donutChart"), {
+    series: [42, 28, 22, 8],
+    chart: { type: 'donut', height: 220, background: 'transparent', fontFamily: 'JetBrains Mono' },
+    theme: { mode: 'dark' },
+    colors: ['#00f5ff', '#ff006e', '#39ff14', '#bf00ff'],
+    labels: ['DIRECT', 'SOCIAL', 'SEARCH', 'REFERRAL'],
+    stroke: { colors: ['#0a0a18'], width: 2 },
+    plotOptions: { pie: { donut: { size: '75%', labels: { show: true, total: { show: true, label: 'TOTAL', color: '#71717a', fontFamily: 'JetBrains Mono', formatter: () => '5.247' }, value: { color: '#00f5ff', fontSize: '24px', fontWeight: 700, fontFamily: 'JetBrains Mono' } } } } },
+    legend: { show: false },
+    dataLabels: { enabled: false },
+    tooltip: { theme: 'dark' }
+  }).render();
+</script>
+</body>
+</html>

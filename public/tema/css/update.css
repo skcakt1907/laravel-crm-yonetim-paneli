@@ -1,0 +1,14 @@
+div.dataTables_wrapper div.dataTables_info{
+    white-space: inherit !important;
+}
+.filtrecategory {display: none;}
+@media only screen and (max-width: 1024px) and (min-width: 320px){
+    #alan_adlarim td:before,#hostinglerim td:before,#web_paketlerim td:before {
+        font-size:10px;
+    }
+    .filtrecategoryhidden{display: none}
+    .filtrecategory{
+        display: block;
+        margin-top: 20px;
+    }
+}

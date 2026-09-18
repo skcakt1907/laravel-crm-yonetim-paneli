@@ -1,0 +1,709 @@
+/* İletişim Sayfası Özel Stiller */
+
+/* Modern İletişim Bilgi Kartları */
+.contact-info-section {
+    position: relative;
+}
+
+.contact-info-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    min-height: 200px;
+    height: 100%;
+}
+
+.contact-info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+    border-color: rgba(212, 210, 91, 0.3);
+}
+
+.contact-info-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #d4d25b 0%, #c4c24b 100%);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 8px 20px rgba(212, 210, 91, 0.3);
+}
+
+.contact-info-icon i {
+    font-size: 32px !important;
+    color: #000 !important;
+    display: block !important;
+}
+
+.contact-info-content {
+    flex: 1;
+}
+
+.contact-info-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(212, 210, 91, 0.2);
+    color: #d4d25b;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.contact-info-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+.contact-info-text {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.8;
+    margin: 0;
+}
+
+.contact-info-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-link-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    padding: 8px 0;
+}
+
+.contact-link-item i {
+    width: 20px;
+    color: #d4d25b;
+    font-size: 16px;
+}
+
+.contact-link-item:hover {
+    color: #d4d25b;
+    transform: translateX(5px);
+}
+
+.contact-link-item:hover i {
+    color: #e4e26b;
+}
+
+/* Modern Destek Kartları */
+.help-section {
+    position: relative;
+}
+
+.help-card-modern {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    min-height: 280px;
+}
+
+.help-card-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #d4d25b 0%, #c4c24b 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.help-card-modern:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+    border-color: rgba(212, 210, 91, 0.3);
+}
+
+.help-card-modern:hover::before {
+    transform: scaleX(1);
+}
+
+.help-card-icon {
+    width: 90px;
+    height: 90px;
+    background: rgba(212, 210, 91, 0.15);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.help-card-modern:hover .help-card-icon {
+    background: rgba(212, 210, 91, 0.25);
+    transform: scale(1.1) rotate(5deg);
+}
+
+.help-card-icon img {
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+}
+
+.help-card-modern:hover .help-card-icon img {
+    opacity: 1;
+    filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(212, 210, 91, 0.5));
+}
+
+.help-card-content {
+    flex: 1;
+}
+
+.help-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+.help-card-description {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.help-card-arrow {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(212, 210, 91, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.help-card-modern:hover .help-card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+    background: rgba(212, 210, 91, 0.3);
+}
+
+.help-card-arrow i {
+    color: #d4d25b;
+    font-size: 16px;
+}
+
+.help-container {
+    margin-bottom: 30px;
+    position: relative;
+    height: auto !important;
+}
+
+.help .help-container {
+    height: auto !important;
+    margin-top: 0 !important;
+    position: relative !important;
+    border-radius: 15px;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.help .help-container {
+    height: auto !important;
+    margin-top: 0 !important;
+}
+
+.help-item {
+    display: flex !important;
+    align-items: center !important;
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    text-decoration: none !important;
+    border: 1px solid #f0f0f0;
+    min-height: 140px;
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    font-size: inherit !important;
+    overflow: visible !important;
+}
+
+.help-item:before {
+    display: none !important;
+    content: none !important;
+}
+
+.help .help-item {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    display: flex !important;
+    border: 1px solid #f0f0f0 !important;
+    font-size: inherit !important;
+    padding: 25px !important;
+    overflow: visible !important;
+    align-items: center !important;
+}
+
+.help .help-item:before {
+    display: none !important;
+    content: none !important;
+}
+
+.help-item:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
+    text-decoration: none !important;
+}
+
+.help-item .img {
+    flex-shrink: 0 !important;
+    margin-right: 20px !important;
+    width: 80px !important;
+    height: 80px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+}
+
+.help .help-item .img {
+    position: relative !important;
+    width: 80px !important;
+    height: 80px !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin-right: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+}
+
+.help-item .img .svg,
+.help-item .img .ico {
+    width: 65px !important;
+    height: 65px !important;
+    object-fit: contain;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+}
+
+.help .help-item .ico {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 65px !important;
+    height: 65px !important;
+    transform: none !important;
+    margin: 0 !important;
+}
+
+.help .help-item .img .svg,
+.help .help-item .img .ico {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+}
+
+/* SVG ikonları için pembe kenarlık efekti */
+.help-item .img svg,
+.help-item .img .svg {
+    filter: drop-shadow(0 0 0 rgba(255, 107, 157, 0.3));
+    transition: all 0.3s ease;
+}
+
+.help-item:hover .img svg,
+.help-item:hover .img .svg {
+    filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.5));
+    transform: scale(1.1);
+}
+
+.help-item .inform {
+    flex: 1 !important;
+    padding: 0 !important;
+    display: block !important;
+}
+
+.help .help-item .inform {
+    width: auto !important;
+    padding: 0 !important;
+    display: block !important;
+    flex: 1 !important;
+}
+
+.help .help-item .img,
+.help .help-item .inform {
+    display: flex !important;
+    vertical-align: top !important;
+}
+
+.help .help-item .inform .title {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    color: #2c3e50 !important;
+    margin-bottom: 8px !important;
+    line-height: 1.4 !important;
+    padding: 0 !important;
+    height: auto !important;
+}
+
+.help .help-item .inform .description {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    color: #6c757d !important;
+    margin-top: 5px !important;
+    margin: 0 !important;
+}
+
+.help-item .inform .title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.help-item .inform .description {
+    font-size: 14px;
+    color: #6c757d;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.help-item:hover .inform .title {
+    color: #ff6b9d;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contact-info-card {
+        padding: 25px;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .contact-info-icon {
+        margin: 0 auto 20px auto;
+    }
+    
+    .contact-info-content {
+        text-align: center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .contact-info-badge {
+        margin: 0 auto 15px auto;
+    }
+    
+    .contact-info-title {
+        text-align: center;
+    }
+    
+    .contact-info-text {
+        text-align: center;
+    }
+    
+    .contact-info-links {
+        align-items: center;
+        width: 100%;
+    }
+    
+    .contact-link-item {
+        justify-content: center;
+    }
+    
+    .help-card-modern {
+        padding: 30px 20px;
+        min-height: 250px;
+    }
+    
+    .help-card-icon {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 20px;
+    }
+    
+    .help-card-title {
+        font-size: 18px;
+    }
+    
+    .help-card-description {
+        font-size: 13px;
+    }
+}
+
+/* Modern İletişim Formu */
+.contact-form-wrapper {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-form-modern {
+    margin-top: 30px;
+}
+
+.form-group-modern {
+    margin-bottom: 0;
+}
+
+.form-label-modern {
+    display: block;
+    color: #d4d25b;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-label-modern i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.form-input-modern {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 15px 20px;
+    font-size: 15px;
+    color: #fff;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.form-input-modern::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    opacity: 1 !important;
+}
+
+.form-input-modern::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    opacity: 1 !important;
+}
+
+.form-input-modern::-moz-placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    opacity: 1 !important;
+}
+
+.form-input-modern:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    opacity: 1 !important;
+}
+
+.form-input-modern:-moz-placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    opacity: 1 !important;
+}
+
+.form-textarea-modern::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    opacity: 1 !important;
+}
+
+.form-textarea-modern::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    opacity: 1 !important;
+}
+
+.form-textarea-modern::-moz-placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    opacity: 1 !important;
+}
+
+.form-textarea-modern:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    opacity: 1 !important;
+}
+
+.form-textarea-modern:-moz-placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+    opacity: 1 !important;
+}
+
+.form-input-modern:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #d4d25b;
+    box-shadow: 0 0 0 4px rgba(212, 210, 91, 0.2);
+    transform: translateY(-2px);
+}
+
+.form-input-modern.is-invalid {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.form-textarea-modern {
+    resize: vertical;
+    min-height: 150px;
+    font-family: inherit;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 13px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    animation: slideDown 0.3s ease;
+}
+
+.error-message i {
+    margin-right: 6px;
+    font-size: 14px;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-submit-modern {
+    background: linear-gradient(135deg, #d4d25b 0%, #c4c24b 100%);
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(212, 210, 91, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-submit-modern:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(212, 210, 91, 0.4);
+    background: linear-gradient(135deg, #e4e26b 0%, #d4d25b 100%);
+    color: #000;
+}
+
+.btn-submit-modern:active {
+    transform: translateY(-1px);
+}
+
+.btn-reset-modern {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 15px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-reset-modern:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .contact-form-wrapper {
+        padding: 30px 20px;
+        border-radius: 15px;
+    }
+    
+    .form-title {
+        font-size: 28px !important;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn-submit-modern,
+    .btn-reset-modern {
+        width: 100%;
+        padding: 15px 30px;
+    }
+}
+

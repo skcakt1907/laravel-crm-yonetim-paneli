@@ -1,0 +1,293 @@
+/* ==============================================
+   PAKET KARTI - Tutarlı Stil Dosyası
+   Hem anasayfa hem paketler sayfasında kullanılır
+   ============================================== */
+/* Ana Kart Container */
+.paket-karti {
+    background: rgba(30, 40, 60, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 20px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    min-height: 450px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7) !important;
+    border: 3px solid rgba(212, 210, 91, 0.5) !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: relative !important;
+}
+.paket-karti:hover {
+    transform: none !important;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9) !important;
+    border-color: rgba(212, 210, 91, 0.8) !important;
+}
+/* Resim Container - kare oran, görsel kırpılmadan ortalanır */
+.paket-resim-container {
+    position: relative !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    overflow: hidden !important;
+    background: #f4f4ef !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.paket-resim {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    padding: 8px !important;
+    display: block !important;
+    background: #f4f4ef !important;
+    transition: transform 0.3s ease !important;
+}
+.paket-karti:hover .paket-resim {
+    transform: scale(1.05) !important;
+}
+.paket-resim-placeholder {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #f4f4ef !important;
+}
+.paket-resim-placeholder i {
+    font-size: 48px !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+/* İçerik Alanı */
+.paket-icerik {
+    padding: 20px;
+    background: rgba(20, 30, 50, 0.8);
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(212, 210, 91, 0.3);
+    flex: 1;
+}
+.paket-bilgi {
+    flex: 1;
+}
+/* Başlık */
+.paket-baslik {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.3;
+    margin-top: 0;
+}
+.paket-baslik a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    transition: color 0.3s ease;
+}
+.paket-baslik a:hover {
+    color: #d4d25b;
+}
+/* Kategoriler */
+.paket-kategoriler {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+.paket-kategori-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    background: rgba(212, 210, 91, 0.2);
+    color: #d4d25b;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.paket-kategori-badge i {
+    margin-right: 4px;
+}
+/* Butonlar */
+.paket-butonlar {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+.btn-detay,
+.btn-satin-al {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 13px;
+    text-align: center;
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    gap: 6px;
+}
+.btn-detay {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+.btn-detay:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    text-decoration: none;
+}
+.btn-satin-al {
+    background: linear-gradient(135deg, #d4d25b 0%, #c4c24b 100%) !important;
+    color: #000 !important;
+    border: none !important;
+    font-weight: 700;
+}
+.btn-satin-al:hover {
+    background: linear-gradient(135deg, #e4e26b 0%, #d4d25b 100%);
+    color: #000;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(212, 210, 91, 0.4);
+}
+/* Footer */
+.paket-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 15px;
+    gap: 10px;
+}
+.paket-goruntulenme {
+    display: inline-block;
+    padding: 5px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.paket-goruntulenme i {
+    margin-right: 4px;
+}
+.paket-fiyat {
+    background: rgba(212, 210, 91, 0.95) !important;
+    background-color: rgba(212, 210, 91, 0.95) !important;
+    color: #000 !important;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-left: auto;
+}
+/* RTL (Arapça) için özel stiller */
+[dir='rtl'] .btn-satin-al,
+html[lang='ar'] .btn-satin-al,
+body[lang='ar'] .btn-satin-al {
+    background: linear-gradient(135deg, #d4d25b 0%, #c4c24b 100%) !important;
+    color: #000 !important;
+    border: none !important;
+}
+[dir='rtl'] .paket-fiyat,
+html[lang='ar'] .paket-fiyat,
+body[lang='ar'] .paket-fiyat {
+    background: rgba(212, 210, 91, 0.95) !important;
+    background-color: rgba(212, 210, 91, 0.95) !important;
+    color: #000 !important;
+}
+/* ============================
+   RESPONSIVE DÜZENLEMELER
+   ============================ */
+/* Tablet */
+@media (max-width: 991px) {
+    .paket-karti {
+        min-height: 460px;
+    }
+    .paket-baslik {
+        font-size: 17px;
+    }
+    .paket-butonlar {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .btn-detay,
+    .btn-satin-al {
+        padding: 12px 15px;
+    }
+}
+/* Mobil */
+@media (max-width: 767px) {
+    .paket-karti {
+        min-height: 440px;
+    }
+    .paket-icerik {
+        padding: 18px;
+    }
+    .paket-baslik {
+        font-size: 16px;
+    }
+    .paket-butonlar {
+        flex-direction: row;
+    }
+    .btn-detay,
+    .btn-satin-al {
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+    .paket-fiyat {
+        font-size: 13px;
+        padding: 5px 12px;
+    }
+}
+/* Küçük Mobil */
+@media (max-width: 480px) {
+    .paket-karti {
+        min-height: 400px;
+    }
+}
+/* ============================
+   GRID DÜZENLEMELER
+   ============================ */
+/* Paket Grid Container */
+.paket-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 30px;
+}
+@media (max-width: 991px) {
+    .paket-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+@media (max-width: 575px) {
+    .paket-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+/* Col kullanıldığında */
+.paket-col {
+    padding: 0 12px;
+    margin-bottom: 25px;
+}
+@media (max-width: 767px) {
+    .paket-col {
+        padding: 0 10px;
+        margin-bottom: 20px;
+    }
+}

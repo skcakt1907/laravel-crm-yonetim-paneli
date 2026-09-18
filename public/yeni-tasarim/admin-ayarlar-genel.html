@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Genel Ayarlar — İş Ortağım Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+*{transition:background-color .4s,color .4s;-webkit-font-smoothing:antialiased}body{font-family:'Inter',sans-serif;background:#000;color:#fff}.font-display{font-family:'Space Grotesk',sans-serif}.glass{background:rgba(20,20,20,.85);backdrop-filter:blur(20px);border:1px solid rgba(250,204,21,.25)}body.light{background:#fff;color:#000}body.light .glass{background:rgba(255,255,255,.95);border:1px solid rgba(0,0,0,.08);box-shadow:0 4px 20px rgba(0,0,0,.04)}body.light .text-white{color:#000!important}body.light .text-white\/70{color:rgba(0,0,0,.7)!important}body.light .text-white\/60{color:rgba(0,0,0,.6)!important}body.light .text-white\/50{color:rgba(0,0,0,.5)!important}body.light .border-yellow-500\/20{border-color:rgba(0,0,0,.1)!important}body.light .nav-link,body.light .ayar-link{color:#000!important}body.light input,body.light select,body.light textarea{background:rgba(0,0,0,.04)!important;color:#000!important;border-color:rgba(0,0,0,.1)!important}.gradient-text{background:linear-gradient(135deg,#fde047,#facc15,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#facc15,#f59e0b);border-radius:8px}.nav-link{color:#fff;transition:all .3s;text-decoration:none;display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px}.nav-link.active{background:linear-gradient(135deg,rgba(250,204,21,.2),rgba(250,204,21,.05));color:#fde047!important;border-left:3px solid #facc15}.nav-link:hover{background:rgba(255,255,255,.05)}.emoji-icon{font-size:22px;line-height:1;display:inline-flex;width:36px;height:36px;align-items:center;justify-content:center}.sidebar-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(250,204,21,.5),transparent);margin:1rem 0}.theme-toggle{position:fixed;top:20px;right:24px;z-index:100;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#facc15,#f59e0b);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 30px rgba(250,204,21,.4);font-size:20px;border:none}.theme-toggle:hover{transform:scale(1.1) rotate(15deg)}.theme-toggle .icon-sun{display:none}body.light .theme-toggle .icon-sun{display:block}body.light .theme-toggle .icon-moon{display:none}.btn-y{background:linear-gradient(135deg,#facc15,#f59e0b);color:#000;font-weight:700;padding:10px 20px;border-radius:12px;transition:all .3s;box-shadow:0 8px 20px rgba(250,204,21,.3)}.btn-y:hover{transform:translateY(-2px)}.btn-o{background:rgba(255,255,255,.05);border:1px solid rgba(250,204,21,.3);color:#fff;padding:10px 20px;border-radius:12px;transition:all .3s}.btn-o:hover{background:rgba(250,204,21,.1)}body.light .btn-o{background:rgba(0,0,0,.03);color:#000}input,select,textarea{background:rgba(255,255,255,.05);border:1px solid rgba(250,204,21,.25);color:#fff;padding:12px 16px;border-radius:12px;width:100%;font-family:inherit}input:focus,select:focus,textarea:focus{border-color:#facc15;outline:none;box-shadow:0 0 0 3px rgba(250,204,21,.15)}input::placeholder,textarea::placeholder{color:rgba(255,255,255,.3)}body.light input::placeholder,body.light textarea::placeholder{color:rgba(0,0,0,.3)}.field-label{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;margin-bottom:8px}.help-text{font-size:12px;color:rgba(255,255,255,.5);margin-top:6px}body.light .help-text{color:rgba(0,0,0,.5)}.section-title{font-size:12px;text-transform:uppercase;letter-spacing:2px;color:#facc15;font-weight:700;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(250,204,21,.2);display:flex;align-items:center;gap:8px}.ayar-link{color:#fff;text-decoration:none;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;transition:all .3s;font-size:14px}.ayar-link:hover{background:rgba(250,204,21,.05);color:#facc15}.ayar-link.active{background:linear-gradient(135deg,rgba(250,204,21,.2),rgba(250,204,21,.05));color:#fde047;border-left:3px solid #facc15}.sidebar-collapsed{width:80px!important}.sidebar-collapsed .nav-text,.sidebar-collapsed .nav-section,.sidebar-collapsed .logo-text{display:none}
+</style>
+</head>
+<body>
+<button id="themeToggle" class="theme-toggle"><span class="icon-moon">🌙</span><span class="icon-sun">☀️</span></button>
+<div class="flex min-h-screen">
+<aside id="sidebar" class="hidden lg:flex flex-col w-72 glass border-r border-yellow-500/25 sticky top-0 h-screen overflow-y-auto z-30">
+<div class="p-6 border-b border-yellow-500/20"><a href="#" class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-black font-extrabold text-xl">İ</div><div class="logo-text"><div class="font-display font-bold text-lg">İş Ortağım</div><div class="text-xs text-yellow-400">Admin Panel</div></div></a></div>
+<nav class="flex-1 p-4 space-y-1">
+<div class="nav-section text-[10px] font-bold text-yellow-400 uppercase tracking-widest px-3 mb-2">Ana Menü</div>
+<a href="#" class="nav-link"><span class="emoji-icon">📊</span><span class="nav-text font-medium">Dashboard</span></a>
+<a href="admin-liste.html" class="nav-link"><span class="emoji-icon">👥</span><span class="nav-text font-medium">Üyeler</span></a>
+<a href="#" class="nav-link"><span class="emoji-icon">🧾</span><span class="nav-text font-medium">Faturalar</span></a>
+<div class="sidebar-divider"></div>
+<div class="nav-section text-[10px] font-bold text-yellow-400 uppercase tracking-widest px-3 mb-2">Sistem</div>
+<a href="admin-ayarlar-genel.html" class="nav-link active"><span class="emoji-icon">⚙️</span><span class="nav-text font-medium">Ayarlar</span></a>
+<a href="#" class="nav-link"><span class="emoji-icon">🔐</span><span class="nav-text font-medium">Yöneticiler</span></a>
+<a href="#" class="nav-link"><span class="emoji-icon">🚪</span><span class="nav-text font-medium">Çıkış</span></a>
+</nav>
+</aside>
+
+<div class="flex-1 flex flex-col min-w-0">
+<header class="glass border-b border-yellow-500/20 sticky top-0 z-20"><div class="flex items-center justify-between gap-4 px-4 lg:px-8 h-16"><div class="flex items-center gap-3"><button id="sidebarToggle" class="p-2 hover:bg-yellow-500/10 rounded-lg text-2xl">☰</button></div><div class="flex items-center gap-3 pl-3 border-l border-yellow-500/20"><div class="hidden lg:block text-right"><div class="text-sm font-semibold">Nesimi Ateş</div><div class="text-xs text-yellow-400">Süper Admin</div></div><div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-black font-bold">N</div></div></div></header>
+
+<main class="flex-1 p-4 lg:p-8">
+<div class="mb-6">
+  <div class="flex items-center gap-2 text-sm text-white/60 mb-2"><a href="#" class="hover:text-yellow-400">🏠 Anasayfa</a> <span>›</span> <a href="admin-ayarlar-genel.html" class="hover:text-yellow-400">⚙️ Ayarlar</a> <span>›</span> <span>Genel</span></div>
+  <h1 class="font-display text-3xl font-extrabold flex items-center gap-3">⚙️ Genel Ayarlar</h1>
+  <p class="text-white/60 mt-1">Site geneli temel ayarları</p>
+</div>
+
+<div class="grid lg:grid-cols-4 gap-6">
+  <!-- AYARLAR YAN MENÜ -->
+  <aside class="glass rounded-2xl p-3 h-fit lg:sticky lg:top-20">
+    <div class="px-3 py-2 text-[10px] font-bold text-yellow-400 uppercase tracking-widest">Ayar Sayfaları</div>
+    <div class="space-y-1 mt-2">
+      <a href="admin-ayarlar-genel.html" class="ayar-link active"><span class="text-lg">🏢</span> Genel</a>
+      <a href="admin-ayarlar-iletisim.html" class="ayar-link"><span class="text-lg">📞</span> İletişim</a>
+      <a href="admin-ayarlar-mail.html" class="ayar-link"><span class="text-lg">📧</span> Mail (SMTP)</a>
+      <a href="admin-ayarlar-sms.html" class="ayar-link"><span class="text-lg">📱</span> SMS</a>
+      <a href="admin-ayarlar-pos.html" class="ayar-link"><span class="text-lg">💳</span> Sanal POS</a>
+      <a href="admin-ayarlar-sosyal.html" class="ayar-link"><span class="text-lg">🌐</span> Sosyal Medya</a>
+      <a href="admin-ayarlar-bakim.html" class="ayar-link"><span class="text-lg">🔧</span> Bakım Modu</a>
+      <a href="admin-ayarlar-sayfa-bakim.html" class="ayar-link"><span class="text-lg">📄</span> Sayfa Bakımı</a>
+      <a href="admin-ayarlar-fatura.html" class="ayar-link"><span class="text-lg">🧾</span> Fatura</a>
+      <a href="admin-ayarlar-api.html" class="ayar-link"><span class="text-lg">🔌</span> API</a>
+      <a href="admin-ayarlar-modul.html" class="ayar-link"><span class="text-lg">🧩</span> Modüller</a>
+      <a href="admin-ayarlar-limit.html" class="ayar-link"><span class="text-lg">⚖️</span> Limitler</a>
+      <a href="admin-ayarlar-arkaplan.html" class="ayar-link"><span class="text-lg">🎨</span> Arkaplan/Tema</a>
+    </div>
+  </aside>
+
+  <div class="lg:col-span-3 space-y-6">
+    <!-- TEMEL -->
+    <div class="glass rounded-2xl p-6">
+      <div class="section-title">🏢 Site Bilgileri</div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div><label class="field-label">🌐 Site Adı</label><input type="text" value="İş Ortağım"></div>
+        <div><label class="field-label">📝 Site Sloganı</label><input type="text" value="Dijital işinizin tek adresi"></div>
+        <div class="md:col-span-2"><label class="field-label">📋 Site Açıklaması</label><textarea rows="3">KOBI ve girişimciler için web tasarım, hosting, domain ve bayilik yönetim platformu.</textarea></div>
+        <div><label class="field-label">© Copyright Metni</label><input type="text" value="© 2026 İş Ortağım"></div>
+        <div><label class="field-label">📧 Yönetici Email</label><input type="email" value="info@isortagim.com"></div>
+      </div>
+    </div>
+
+    <!-- BÖLGE -->
+    <div class="glass rounded-2xl p-6">
+      <div class="section-title">🌍 Bölge & Para</div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div><label class="field-label">🌐 Varsayılan Dil</label><select><option>🇹🇷 Türkçe</option><option>🇬🇧 English</option><option>🇸🇦 العربية</option></select></div>
+        <div><label class="field-label">💱 Para Birimi</label><select><option>₺ TRY</option><option>$ USD</option><option>€ EUR</option></select></div>
+        <div><label class="field-label">⏰ Saat Dilimi</label><select><option>Europe/Istanbul (UTC+3)</option></select></div>
+        <div><label class="field-label">📊 KDV Oranı (%)</label><input type="number" value="18"></div>
+        <div><label class="field-label">📅 Tarih Formatı</label><select><option>d.m.Y (15.05.2026)</option><option>Y-m-d (2026-05-15)</option></select></div>
+        <div><label class="field-label">🔢 Sayı Formatı</label><select><option>1.000,50 (TR)</option><option>1,000.50 (EN)</option></select></div>
+      </div>
+    </div>
+
+    <!-- LOGO/FAVICON -->
+    <div class="glass rounded-2xl p-6">
+      <div class="section-title">🎨 Görsel Ayarlar</div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="text-center">
+          <label class="field-label justify-center">🏞️ Site Logo</label>
+          <div class="w-full aspect-square bg-yellow-500/5 border-2 border-dashed border-yellow-500/30 rounded-xl flex items-center justify-center mb-2 text-5xl">🖼️</div>
+          <button class="btn-o text-sm w-full">📤 Yükle</button>
+          <div class="help-text">PNG önerilen, max 500KB</div>
+        </div>
+        <div class="text-center">
+          <label class="field-label justify-center">🦶 Footer Logo</label>
+          <div class="w-full aspect-square bg-yellow-500/5 border-2 border-dashed border-yellow-500/30 rounded-xl flex items-center justify-center mb-2 text-5xl">🖼️</div>
+          <button class="btn-o text-sm w-full">📤 Yükle</button>
+          <div class="help-text">Beyaz/şeffaf zemin</div>
+        </div>
+        <div class="text-center">
+          <label class="field-label justify-center">🎯 Favicon</label>
+          <div class="w-full aspect-square bg-yellow-500/5 border-2 border-dashed border-yellow-500/30 rounded-xl flex items-center justify-center mb-2 text-5xl">🌟</div>
+          <button class="btn-o text-sm w-full">📤 Yükle</button>
+          <div class="help-text">.ico — 32x32 px</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KAYDET -->
+    <div class="sticky bottom-4 glass rounded-2xl p-4 flex items-center justify-between">
+      <div class="text-sm text-white/60">⚡ Değişiklikleri kaydetmeyi unutma</div>
+      <div class="flex items-center gap-3"><button class="btn-o">↩️ Sıfırla</button><button class="btn-y">💾 Kaydet</button></div>
+    </div>
+  </div>
+</div>
+</main></div></div>
+
+<script>const t=document.getElementById('themeToggle');if(localStorage.getItem('admin_theme')==='light')document.body.classList.add('light');t.addEventListener('click',()=>{document.body.classList.toggle('light');localStorage.setItem('admin_theme',document.body.classList.contains('light')?'light':'dark')});document.getElementById('sidebarToggle').addEventListener('click',()=>document.getElementById('sidebar').classList.toggle('sidebar-collapsed'));</script>
+</body></html>

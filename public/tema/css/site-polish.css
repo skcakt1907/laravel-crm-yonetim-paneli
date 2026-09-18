@@ -1,0 +1,324 @@
+/* ======================================================
+   Frontend — Site Polish (Home & Common)
+   Mevcut dark tema (#1a2332 / #d4d25b) bozulmadan uygulanir.
+   Hicbir HTML/JS degistirilmeden, sadece gorsel rafinasyon.
+   ====================================================== */
+
+:root {
+    --site-accent: #d4d25b;
+    --site-accent-2: #c4c24b;
+    --site-dark-1: #0f172a;
+    --site-dark-2: #1a2332;
+    --site-dark-3: #2d3e52;
+    --site-text: #e2e8f0;
+    --site-text-soft: rgba(226, 232, 240, 0.7);
+    --site-radius: 16px;
+    --site-radius-sm: 10px;
+    --site-ease: cubic-bezier(.4, 0, .2, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* ===== Selection & focus ===== */
+::selection { background: var(--site-accent); color: #000; }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--site-accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+/* ===== Typography polish ===== */
+.section-heading {
+    font-weight: 800 !important;
+    font-size: clamp(1.6rem, 3vw, 2.4rem) !important;
+    letter-spacing: -0.01em !important;
+    margin-bottom: 10px !important;
+    line-height: 1.2;
+    position: relative;
+    display: inline-block;
+}
+.section-heading::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--site-accent) 0%, transparent 100%);
+    border-radius: 2px;
+    margin: 12px auto 0;
+}
+.section-subheading {
+    font-size: clamp(0.95rem, 1.3vw, 1.05rem) !important;
+    opacity: 0.85;
+    font-weight: 400 !important;
+    max-width: 680px;
+    margin: 0 auto 2rem !important;
+    line-height: 1.6;
+}
+
+/* ===== Sections: consistent rhythm ===== */
+.sec-normal,
+section.sec-normal {
+    padding-top: clamp(50px, 8vw, 90px) !important;
+    padding-bottom: clamp(50px, 8vw, 90px) !important;
+}
+
+/* ===== Images ===== */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    max-width: 100%;
+    height: auto;
+}
+
+/* ===== Buttons: unified feel ===== */
+.btn,
+.btn-default-pink-fill,
+.btn-default-gray-fill,
+.btn-2 {
+    transition: all .3s var(--site-ease) !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em;
+}
+.btn:hover,
+.btn-default-pink-fill:hover,
+.btn-default-gray-fill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+.btn:active { transform: translateY(0); }
+
+/* Primary accent buttons */
+.btn-default-pink-fill {
+    background: linear-gradient(135deg, var(--site-accent) 0%, var(--site-accent-2) 100%) !important;
+    color: #0f172a !important;
+    border: none !important;
+    padding: 12px 28px !important;
+}
+
+/* ===== Paket karti refinements (hover lift + sharper border) ===== */
+.paket-karti {
+    transition: transform .35s var(--site-ease), box-shadow .35s var(--site-ease), border-color .35s var(--site-ease) !important;
+}
+.paket-karti:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 4px 12px rgba(212, 210, 91, 0.15) !important;
+    border-color: rgba(212, 210, 91, 0.75) !important;
+}
+.paket-karti .paket-baslik a {
+    transition: color .25s ease;
+}
+.paket-karti:hover .paket-baslik a {
+    color: var(--site-accent) !important;
+}
+.paket-karti .paket-fiyat {
+    box-shadow: 0 4px 12px rgba(212, 210, 91, 0.3);
+}
+
+/* ===== Plan (hosting) cards ===== */
+.plan-container .wrapper {
+    border-radius: var(--site-radius) !important;
+    overflow: hidden;
+    transition: transform .35s var(--site-ease), box-shadow .35s var(--site-ease);
+    background: rgba(26, 35, 50, 0.9);
+    border: 1px solid rgba(212, 210, 91, 0.2);
+}
+.plan-container .wrapper:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 55px rgba(0, 0, 0, 0.6);
+    border-color: rgba(212, 210, 91, 0.6);
+}
+.plan-container .top-content .title {
+    font-weight: 700 !important;
+    color: #fff !important;
+    font-size: 1.15rem !important;
+    margin-top: 8px;
+}
+.plan-container .top-content .price {
+    color: var(--site-accent) !important;
+    font-weight: 800 !important;
+    font-size: 1.75rem !important;
+    margin: 14px 0;
+}
+.plan-container .top-content .price .period {
+    color: var(--site-text-soft) !important;
+    font-size: 0.72em;
+    font-weight: 500;
+}
+.plan-container .list-info {
+    background: rgba(15, 23, 42, 0.55) !important;
+    border-top: 1px solid rgba(212, 210, 91, 0.15);
+}
+.plan-container .list-info li {
+    color: var(--site-text-soft);
+    font-size: 13px;
+    padding: 6px 0 !important;
+}
+.plan-container .list-info li .mdi-check-circle {
+    color: var(--site-accent);
+}
+
+/* ===== Hosting category headings ===== */
+.slick .section-heading,
+section .section-heading {
+    display: block;
+}
+
+/* ===== Blog / reference cards (generic) ===== */
+[class*="wow"] .service-wrap .col-md-4,
+.blog-item,
+.ref-item {
+    transition: transform .3s var(--site-ease);
+}
+[class*="wow"]:hover .service-wrap .col-md-4 {
+    transform: translateY(-2px);
+}
+
+/* ===== Navbar polish ===== */
+.menu-wrap {
+    backdrop-filter: blur(8px);
+}
+.nav-menu .main-menu > .menu-item > a {
+    transition: color .25s ease;
+}
+.nav-menu .main-menu > .menu-item > a:hover {
+    color: var(--site-accent) !important;
+}
+
+/* ===== Footer polish ===== */
+.footer,
+footer {
+    border-top: 1px solid rgba(212, 210, 91, 0.15);
+}
+
+/* ===== Form inputs on site ===== */
+.form-control,
+input[type="text"]:not(.no-polish),
+input[type="email"]:not(.no-polish),
+input[type="tel"]:not(.no-polish),
+input[type="password"]:not(.no-polish),
+input[type="search"]:not(.no-polish),
+textarea:not(.no-polish),
+select:not(.no-polish) {
+    border-radius: var(--site-radius-sm);
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+.form-control:focus {
+    border-color: var(--site-accent) !important;
+    box-shadow: 0 0 0 4px rgba(212, 210, 91, 0.15) !important;
+}
+
+/* ===== Links in body ===== */
+p a,
+article a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    color: var(--site-accent);
+    transition: color .2s ease;
+}
+p a:hover,
+article a:hover {
+    color: var(--site-accent-2);
+}
+
+/* ===== Scrollbar (dark theme) ===== */
+@media (pointer: fine) {
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: var(--site-dark-1); }
+    ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 6px;
+        border: 2px solid var(--site-dark-1);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--site-accent); }
+}
+
+/* ===== Lazy image placeholder ===== */
+img[loading="lazy"] {
+    min-height: 1px;
+    background: linear-gradient(110deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%);
+    background-size: 200% 100%;
+    animation: skeleton 1.5s infinite;
+}
+img[loading="lazy"].loaded,
+img[loading="lazy"][src]:not([src=""]) {
+    animation: none;
+    background: transparent;
+}
+@keyframes skeleton {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ===== WOW.js conflict fix: do not hide things forever ===== */
+.wow:not(.animated) {
+    visibility: visible !important;
+}
+
+/* ===== Container max width tweak on very large screens ===== */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1280px;
+    }
+}
+
+/* ===== Mobile tweaks ===== */
+@media (max-width: 767.98px) {
+    .sec-normal,
+    section.sec-normal {
+        padding-top: 50px !important;
+        padding-bottom: 50px !important;
+    }
+    .section-heading {
+        font-size: 1.5rem !important;
+    }
+    .section-subheading {
+        font-size: 0.9rem !important;
+        padding: 0 15px;
+    }
+    .paket-karti {
+        min-height: auto !important;
+    }
+    .plan-container {
+        margin-bottom: 20px;
+    }
+    .btn-default-pink-fill {
+        padding: 10px 22px !important;
+        font-size: 13px !important;
+    }
+    /* Hero/slider taller on mobile */
+    .slider-item,
+    .hero-section {
+        min-height: 320px;
+    }
+}
+
+/* ===== Small phones ===== */
+@media (max-width: 480px) {
+    .section-heading { font-size: 1.3rem !important; }
+    .container { padding-left: 12px; padding-right: 12px; }
+    .col-md-4, .col-md-6, .col-sm-6 {
+        margin-bottom: 20px;
+    }
+}
+
+/* ===== High contrast / reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

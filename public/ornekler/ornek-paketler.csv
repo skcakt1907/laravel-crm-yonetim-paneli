@@ -1,0 +1,12 @@
+adi,kategori,fiyat,aciklama,durum
+Başlangıç Paketi,Web Hosting,99.00,"Küçük işletmeler için ideal",1
+Profesyonel Paket,Web Hosting,199.00,"Orta ölçekli işletmeler için",1
+Kurumsal Paket,Web Hosting,399.00,"Büyük şirketler için",1
+WordPress Hosting,CMS Hosting,149.00,"WordPress optimizasyonlu hosting",1
+E-Ticaret Paketi,Web Hosting,299.00,"Online mağazalar için özel",1
+Reseller Hosting,Reseller,499.00,"Bayiler için toplu hosting",1
+VPS Sunucu,VPS,599.00,"Sanal özel sunucu",1
+Dedicated Server,Sunucu,1999.00,"Fiziksel sunucu kiralama",1
+Domain Paketi,Domain,49.00,".com domain + DNS yönetimi",1
+SSL Sertifikası,Güvenlik,199.00,"256-bit SSL sertifikası",1
+

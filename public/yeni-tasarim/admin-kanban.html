@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM Kanban — İş Ortağım Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+* { transition: background-color .4s, color .4s; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Inter', sans-serif; background: #000; color: #fff; }
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+.glass { background: rgba(20,20,20,.85); backdrop-filter: blur(20px); border: 1px solid rgba(250,204,21,.25); }
+body.light { background: #fff; color: #000; }
+body.light .glass { background: rgba(255,255,255,.95); border: 1px solid rgba(0,0,0,.08); box-shadow: 0 4px 20px rgba(0,0,0,.04); }
+body.light .text-white { color: #000 !important; } body.light .text-white\/70 { color: rgba(0,0,0,.7) !important; } body.light .text-white\/60 { color: rgba(0,0,0,.6) !important; } body.light .text-white\/50 { color: rgba(0,0,0,.5) !important; }
+body.light .border-yellow-500\/20 { border-color: rgba(0,0,0,.1) !important; }
+body.light .nav-link { color: #000 !important; }
+body.light input { background: rgba(0,0,0,.04) !important; color: #000 !important; border-color: rgba(0,0,0,.1) !important; }
+.gradient-text { background: linear-gradient(135deg, #fde047, #facc15, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; } ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #facc15, #f59e0b); border-radius: 8px; }
+.nav-link { color: #fff; transition: all .3s; text-decoration: none; display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; }
+.nav-link.active { background: linear-gradient(135deg, rgba(250,204,21,.2), rgba(250,204,21,.05)); color: #fde047 !important; border-left: 3px solid #facc15; }
+.nav-link:hover { background: rgba(255,255,255,.05); }
+.emoji-icon { transition: all .3s; font-size: 22px; line-height: 1; display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; }
+.sidebar-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(250,204,21,.5), transparent); margin: 1rem 0; }
+.theme-toggle { position: fixed; top: 20px; right: 24px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #facc15, #f59e0b); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 30px rgba(250,204,21,.4); font-size: 20px; border: none; }
+.theme-toggle:hover { transform: scale(1.1) rotate(15deg); } .theme-toggle .icon-sun { display: none; } body.light .theme-toggle .icon-sun { display: block; } body.light .theme-toggle .icon-moon { display: none; }
+.btn-y { background: linear-gradient(135deg, #facc15, #f59e0b); color: #000; font-weight: 700; padding: 10px 20px; border-radius: 12px; transition: all .3s; box-shadow: 0 8px 20px rgba(250,204,21,.3); }
+.btn-y:hover { transform: translateY(-2px); }
+.btn-o { background: rgba(255,255,255,.05); border: 1px solid rgba(250,204,21,.3); color: #fff; padding: 10px 20px; border-radius: 12px; transition: all .3s; }
+body.light .btn-o { background: rgba(0,0,0,.03); color: #000; }
+
+.kanban-col { min-width: 320px; max-width: 320px; background: rgba(20,20,20,.6); border: 1px solid rgba(250,204,21,.15); border-radius: 16px; padding: 16px; max-height: calc(100vh - 200px); display: flex; flex-direction: column; }
+body.light .kanban-col { background: rgba(0,0,0,.02); border-color: rgba(0,0,0,.08); }
+.kanban-header { display: flex; align-items: center; justify-content: between; gap: 8px; padding-bottom: 12px; border-bottom: 1px solid rgba(250,204,21,.15); margin-bottom: 12px; }
+.kanban-cards { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 4px; }
+.card-item { background: rgba(255,255,255,.05); border: 1px solid rgba(250,204,21,.15); border-radius: 12px; padding: 14px; cursor: grab; transition: all .3s; }
+body.light .card-item { background: #fff; border-color: rgba(0,0,0,.08); box-shadow: 0 2px 8px rgba(0,0,0,.04); }
+.card-item:hover { transform: translateY(-3px); border-color: rgba(250,204,21,.4); box-shadow: 0 10px 25px rgba(250,204,21,.15); }
+.card-item:active { cursor: grabbing; transform: rotate(2deg); }
+.label { font-size: 10px; padding: 2px 8px; border-radius: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.label-red { background: rgba(239,68,68,.2); color: #fca5a5; }
+.label-yellow { background: rgba(250,204,21,.2); color: #fde047; }
+.label-green { background: rgba(16,185,129,.2); color: #6ee7b7; }
+.label-blue { background: rgba(59,130,246,.2); color: #93c5fd; }
+.label-purple { background: rgba(168,85,247,.2); color: #d8b4fe; }
+.priority-high { background: linear-gradient(90deg, #f87171, #fb923c); color: #000; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+.priority-mid { background: linear-gradient(90deg, #facc15, #f59e0b); color: #000; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+.priority-low { background: rgba(16,185,129,.3); color: #6ee7b7; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+.add-card-btn { width: 100%; padding: 12px; border: 2px dashed rgba(250,204,21,.3); border-radius: 12px; color: rgba(255,255,255,.6); cursor: pointer; transition: all .3s; font-size: 14px; background: transparent; }
+body.light .add-card-btn { color: rgba(0,0,0,.6); }
+.add-card-btn:hover { border-color: #facc15; color: #facc15; background: rgba(250,204,21,.05); }
+.sidebar-collapsed { width: 80px !important; }
+.sidebar-collapsed .nav-text, .sidebar-collapsed .nav-section, .sidebar-collapsed .logo-text { display: none; }
+
+/* Modal */
+.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.7); backdrop-filter: blur(8px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 20px; }
+.modal-bg.show { display: flex; }
+.modal { max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto; }
+</style>
+</head>
+<body>
+<button id="themeToggle" class="theme-toggle"><span class="icon-moon">🌙</span><span class="icon-sun">☀️</span></button>
+
+<div class="flex min-h-screen">
+  <aside id="sidebar" class="hidden lg:flex flex-col w-72 glass border-r border-yellow-500/25 sticky top-0 h-screen overflow-y-auto z-30">
+    <div class="p-6 border-b border-yellow-500/20">
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-black font-extrabold text-xl">İ</div>
+        <div class="logo-text"><div class="font-display font-bold text-lg leading-tight">İş Ortağım</div><div class="text-xs text-yellow-400">Admin Panel</div></div>
+      </a>
+    </div>
+    <nav class="flex-1 p-4 space-y-1">
+      <div class="nav-section text-[10px] font-bold text-yellow-400 uppercase tracking-widest px-3 mb-2">Ana Menü</div>
+      <a href="#" class="nav-link"><span class="emoji-icon">📊</span><span class="nav-text font-medium">Dashboard</span></a>
+      <a href="admin-liste.html" class="nav-link"><span class="emoji-icon">👥</span><span class="nav-text font-medium">Üyeler</span></a>
+      <div class="sidebar-divider"></div>
+      <div class="nav-section text-[10px] font-bold text-yellow-400 uppercase tracking-widest px-3 mb-2">CRM</div>
+      <a href="#" class="nav-link active"><span class="emoji-icon">📋</span><span class="nav-text font-medium">Kanban</span></a>
+      <a href="#" class="nav-link"><span class="emoji-icon">📈</span><span class="nav-text font-medium">Fırsatlar</span></a>
+      <a href="#" class="nav-link"><span class="emoji-icon">✅</span><span class="nav-text font-medium">Görevler</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="#" class="nav-link"><span class="emoji-icon">⚙️</span><span class="nav-text font-medium">Ayarlar</span></a>
+      <a href="#" class="nav-link"><span class="emoji-icon">🚪</span><span class="nav-text font-medium">Çıkış</span></a>
+    </nav>
+  </aside>
+
+  <div class="flex-1 flex flex-col min-w-0">
+    <header class="glass border-b border-yellow-500/20 sticky top-0 z-20">
+      <div class="flex items-center justify-between gap-4 px-4 lg:px-8 h-16">
+        <div class="flex items-center gap-3">
+          <button id="sidebarToggle" class="p-2 hover:bg-yellow-500/10 rounded-lg text-2xl">☰</button>
+          <div>
+            <div class="font-bold flex items-center gap-2">📋 Satış Pipeline'ı</div>
+            <div class="text-xs text-white/60">12 kart • 4 sütun</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="flex -space-x-2">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 border-2 border-black flex items-center justify-center text-xs text-black font-bold">N</div>
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 border-2 border-black flex items-center justify-center text-xs text-black font-bold">A</div>
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 border-2 border-black flex items-center justify-center text-xs text-black font-bold">M</div>
+            <div class="w-8 h-8 rounded-full bg-white/10 border-2 border-black flex items-center justify-center text-xs text-yellow-400 font-bold">+5</div>
+          </div>
+          <button class="btn-o text-sm">👥 Üyeler</button>
+          <button class="btn-y text-sm flex items-center gap-2">➕ Pano</button>
+          <div class="flex items-center gap-3 pl-3 border-l border-yellow-500/20">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-black font-bold">N</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- KANBAN -->
+    <main class="flex-1 p-4 lg:p-8 overflow-x-auto">
+      <div class="flex gap-4" style="min-width: max-content;">
+
+        <!-- KOLON 1: Yeni -->
+        <div class="kanban-col">
+          <div class="kanban-header">
+            <div class="flex items-center gap-2 flex-1">
+              <span class="text-2xl">💡</span>
+              <div>
+                <div class="font-bold">Yeni Lead'ler</div>
+                <div class="text-xs text-white/50">3 kart</div>
+              </div>
+            </div>
+            <button class="text-xl text-white/50 hover:text-yellow-400">⋮</button>
+          </div>
+          <div class="kanban-cards">
+            <div class="card-item">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="label label-blue">🌐 Web</span>
+                <span class="priority-high">🔥 Yüksek</span>
+              </div>
+              <div class="font-semibold mb-2">Yılmaz Tekstil — Kurumsal Site</div>
+              <div class="text-sm text-white/60 mb-3">İstanbul merkezli tekstil firması, e-ticaret sitesi istiyor.</div>
+              <div class="text-xl font-bold gradient-text mb-3">₺25.000</div>
+              <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center gap-1 text-white/50">📅 25 Mayıs</div>
+                <div class="flex items-center gap-1">
+                  <span title="3 yorum">💬 3</span>
+                  <span title="2 ek dosya">📎 2</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between mt-3 pt-3 border-t border-yellow-500/10">
+                <div class="flex -space-x-2">
+                  <div class="w-7 h-7 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 border-2 border-black/50 flex items-center justify-center text-xs text-black font-bold">A</div>
+                </div>
+                <span class="text-xs text-white/50">2 saat önce</span>
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="label label-yellow">📦 Paket</span>
+                <span class="priority-mid">⚡ Orta</span>
+              </div>
+              <div class="font-semibold mb-2">Demir Butik — E-Ticaret</div>
+              <div class="text-sm text-white/60 mb-3">Profesyonel paket + sanal POS entegrasyonu istiyor.</div>
+              <div class="text-xl font-bold gradient-text mb-3">₺3.500</div>
+              <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center gap-1 text-white/50">📅 28 Mayıs</div>
+                <div class="flex items-center gap-1"><span>💬 1</span></div>
+              </div>
+              <div class="flex items-center justify-between mt-3 pt-3 border-t border-yellow-500/10">
+                <div class="flex -space-x-2">
+                  <div class="w-7 h-7 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 border-2 border-black/50 flex items-center justify-center text-xs text-black font-bold">E</div>
+                </div>
+                <span class="text-xs text-white/50">5 saat önce</span>
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="label label-purple">🖥️ Hosting</span>
+                <span class="priority-low">🟢 Düşük</span>
+              </div>
+              <div class="font-semibold mb-2">Kaya Ajans — Hosting Yenileme</div>
+              <div class="text-xl font-bold gradient-text mb-3">₺1.200</div>
+              <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center gap-1 text-white/50">📅 1 Haziran</div>
+              </div>
+            </div>
+
+            <button class="add-card-btn">➕ Kart Ekle</button>
+          </div>
+        </div>
+
+        <!-- KOLON 2: İletişim -->
+        <div class="kanban-col">
+          <div class="kanban-header">
+            <div class="flex items-center gap-2 flex-1">
+              <span class="text-2xl">📞</span>
+              <div><div class="font-bold">İletişim Kuruldu</div><div class="text-xs text-white/50">4 kart</div></div>
+            </div>
+            <button class="text-xl text-white/50 hover:text-yellow-400">⋮</button>
+          </div>
+          <div class="kanban-cards">
+            <div class="card-item">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="label label-green">💼 B2B</span>
+              </div>
+              <div class="font-semibold mb-2">Mehmet Kaya — Detay Görüşmesi</div>
+              <div class="text-sm text-white/60 mb-3">Salı saat 14:00 telefon görüşmesi planlandı.</div>
+              <div class="text-xl font-bold gradient-text mb-3">₺8.500</div>
+              <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center gap-1 text-white/50">📅 20 Mayıs</div>
+                <div class="flex items-center gap-1"><span>💬 5</span><span>📎 1</span></div>
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="label label-blue">🌐 Web</span>
+                <span class="priority-high">🔥 Yüksek</span>
+              </div>
+              <div class="font-semibold mb-2">Aslan Mühendislik — Demo İstendi</div>
+              <div class="text-sm text-white/60 mb-3">Demo siteyi inceleyip karar verecekler.</div>
+              <div class="text-xl font-bold gradient-text mb-3">₺18.000</div>
+              <div class="flex items-center justify-between mt-3 pt-3 border-t border-yellow-500/10">
+                <div class="flex -space-x-2">
+                  <div class="w-7 h-7 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 border-2 border-black/50 flex items-center justify-center text-xs text-black font-bold">M</div>
+                </div>
+                <span class="text-xs text-white/50">1 gün önce</span>
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="font-semibold mb-2">Çelik Otomotiv — Fiyat Sordu</div>
+              <div class="text-xl font-bold gradient-text mb-3">₺5.000</div>
+            </div>
+
+            <div class="card-item">
+              <div class="font-semibold mb-2">Demir Inşaat — Bilgi</div>
+              <div class="text-xl font-bold gradient-text mb-3">₺12.000</div>
+            </div>
+            <button class="add-card-btn">➕ Kart Ekle</button>
+          </div>
+        </div>
+
+        <!-- KOLON 3: Teklif -->
+        <div class="kanban-col">
+          <div class="kanban-header">
+            <div class="flex items-center gap-2 flex-1">
+              <span class="text-2xl">📄</span>
+              <div><div class="font-bold">Teklif Verildi</div><div class="text-xs text-white/50">3 kart</div></div>
+            </div>
+            <button class="text-xl text-white/50 hover:text-yellow-400">⋮</button>
+          </div>
+          <div class="kanban-cards">
+            <div class="card-item">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="label label-yellow">📋 Teklif</span>
+              </div>
+              <div class="font-semibold mb-2">Yıldız Tekstil — Profesyonel Paket</div>
+              <div class="text-sm text-white/60 mb-3">PDF teklif gönderildi, geri dönüş bekleniyor.</div>
+              <div class="text-xl font-bold gradient-text mb-3">₺22.500</div>
+              <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center gap-1 text-white/50">⏰ 3 gün kaldı</div>
+                <div class="flex items-center gap-1"><span>📎 3</span></div>
+              </div>
+            </div>
+
+            <div class="card-item">
+              <div class="font-semibold mb-2">Akar Hukuk — Kurumsal Web</div>
+              <div class="text-xl font-bold gradient-text mb-3">₺15.000</div>
+            </div>
+
+            <div class="card-item">
+              <div class="font-semibold mb-2">Yeşil Vadi — E-Ticaret + SEO</div>
+              <div class="text-xl font-bold gradient-text mb-3">₺35.000</div>
+            </div>
+
+            <button class="add-card-btn">➕ Kart Ekle</button>
+          </div>
+        </div>
+
+        <!-- KOLON 4: Kazanıldı -->
+        <div class="kanban-col" style="border-color: rgba(16,185,129,.3); background: rgba(16,185,129,.05);">
+          <div class="kanban-header" style="border-color: rgba(16,185,129,.3);">
+            <div class="flex items-center gap-2 flex-1">
+              <span class="text-2xl">🏆</span>
+              <div><div class="font-bold text-emerald-300">Kazanıldı! 🎉</div><div class="text-xs text-white/50">2 kart • ₺47.500</div></div>
+            </div>
+            <button class="text-xl text-white/50 hover:text-yellow-400">⋮</button>
+          </div>
+          <div class="kanban-cards">
+            <div class="card-item" style="border-color: rgba(16,185,129,.3);">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="label label-green">✅ Onaylandı</span>
+              </div>
+              <div class="font-semibold mb-2">Ahmet Yılmaz — Profesyonel</div>
+              <div class="text-sm text-white/60 mb-3">Sözleşme imzalandı, ödeme alındı. Proje başladı.</div>
+              <div class="text-xl font-bold text-emerald-400 mb-3">₺25.000 ✅</div>
+              <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center gap-1 text-emerald-300">🎯 12 Mayıs</div>
+              </div>
+            </div>
+
+            <div class="card-item" style="border-color: rgba(16,185,129,.3);">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="label label-green">✅ Onaylandı</span>
+              </div>
+              <div class="font-semibold mb-2">Elif Demir — E-Ticaret</div>
+              <div class="text-xl font-bold text-emerald-400 mb-3">₺22.500 ✅</div>
+            </div>
+
+            <button class="add-card-btn">➕ Kart Ekle</button>
+          </div>
+        </div>
+
+        <!-- + Yeni Sütun Ekle -->
+        <div style="min-width: 200px;">
+          <button class="w-full py-6 border-2 border-dashed border-yellow-500/30 rounded-2xl text-yellow-400 hover:bg-yellow-500/5 hover:border-yellow-400 transition flex flex-col items-center gap-2">
+            <span class="text-3xl">➕</span>
+            <span class="font-semibold">Yeni Sütun Ekle</span>
+          </button>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+const t = document.getElementById('themeToggle');
+if(localStorage.getItem('admin_theme') === 'light') document.body.classList.add('light');
+t.addEventListener('click', () => { document.body.classList.toggle('light'); localStorage.setItem('admin_theme', document.body.classList.contains('light') ? 'light' : 'dark'); });
+document.getElementById('sidebarToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('sidebar-collapsed'));
+</script>
+</body>
+</html>

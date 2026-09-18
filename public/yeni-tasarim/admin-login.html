@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giriş — İş Ortağım Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+* { transition: background-color .4s, color .4s; }
+body { font-family: 'Inter', sans-serif; background: #000; color: #fff; min-height: 100vh; overflow-x: hidden; }
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+.glass { background: rgba(20,20,20,.85); backdrop-filter: blur(20px); border: 1px solid rgba(250,204,21,.25); }
+body.light { background: #fff; color: #000; }
+body.light .glass { background: rgba(255,255,255,.9); border: 1px solid rgba(0,0,0,.08); box-shadow: 0 20px 60px rgba(0,0,0,.1); }
+body.light .text-white { color: #000 !important; }
+body.light .text-white\/70 { color: rgba(0,0,0,.7) !important; }
+body.light input { background: rgba(0,0,0,.04) !important; color: #000 !important; border-color: rgba(0,0,0,.1) !important; }
+.gradient-text { background: linear-gradient(135deg, #fde047, #facc15, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.theme-toggle { position: fixed; top: 20px; right: 24px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #facc15, #f59e0b); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 30px rgba(250,204,21,.4); font-size: 20px; border: none; }
+.theme-toggle:hover { transform: scale(1.1) rotate(15deg); }
+.theme-toggle .icon-sun { display: none; } body.light .theme-toggle .icon-sun { display: block; } body.light .theme-toggle .icon-moon { display: none; }
+@keyframes blob { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(40px,-30px) scale(1.1); } }
+.blob { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; animation: blob 12s ease-in-out infinite; }
+.btn-yellow { background: linear-gradient(135deg, #facc15, #f59e0b); color: #000; font-weight: 700; transition: all .3s; box-shadow: 0 10px 30px rgba(250,204,21,.3); }
+.btn-yellow:hover { transform: translateY(-3px); box-shadow: 0 20px 50px rgba(250,204,21,.6); }
+input { background: rgba(255,255,255,.05); border: 1px solid rgba(250,204,21,.25); color: #fff; transition: all .2s; }
+input:focus { border-color: #facc15; outline: none; box-shadow: 0 0 0 3px rgba(250,204,21,.15); }
+input::placeholder { color: rgba(255,255,255,.3); }
+body.light input::placeholder { color: rgba(0,0,0,.3); }
+</style>
+</head>
+<body class="flex items-center justify-center p-4 relative">
+<button id="themeToggle" class="theme-toggle" title="Gündüz/Gece"><span class="icon-moon">🌙</span><span class="icon-sun">☀️</span></button>
+
+<!-- Animated blobs -->
+<div class="blob bg-yellow-500/30 w-96 h-96 -top-20 -left-20"></div>
+<div class="blob bg-amber-500/20 w-96 h-96 -bottom-20 -right-20" style="animation-delay: 4s;"></div>
+
+<div class="w-full max-w-md relative z-10">
+  <!-- Logo -->
+  <div class="text-center mb-8">
+    <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-3xl shadow-2xl text-black font-extrabold text-4xl mb-4 relative">
+      <div class="absolute inset-0 bg-yellow-400 rounded-3xl blur-xl opacity-50"></div>
+      <span class="relative">İ</span>
+    </div>
+    <h1 class="font-display text-3xl font-extrabold mb-2">Hoş Geldin 👋</h1>
+    <p class="text-white/70">Admin paneline giriş yap</p>
+  </div>
+
+  <!-- Form -->
+  <div class="glass rounded-3xl p-8 shadow-2xl">
+    <form>
+      <div class="mb-5">
+        <label class="block text-sm font-semibold mb-2 flex items-center gap-2">📧 Kullanıcı Adı veya E-posta</label>
+        <input type="text" placeholder="ornek@email.com veya kullanıcıadın" class="w-full px-4 py-3 rounded-xl">
+      </div>
+
+      <div class="mb-5">
+        <label class="block text-sm font-semibold mb-2 flex items-center gap-2">🔐 Şifre</label>
+        <div class="relative">
+          <input type="password" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl pr-12">
+          <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-xl">👁️</button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between mb-6 text-sm">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" class="w-4 h-4 accent-yellow-500">
+          <span class="text-white/70">Beni hatırla</span>
+        </label>
+        <a href="#" class="text-yellow-400 hover:text-yellow-300 font-semibold">Şifremi unuttum</a>
+      </div>
+
+      <button type="submit" class="btn-yellow w-full py-3.5 rounded-xl text-lg flex items-center justify-center gap-2">
+        🚀 Giriş Yap →
+      </button>
+    </form>
+
+    <div class="my-6 flex items-center gap-3">
+      <div class="flex-1 h-px bg-yellow-500/20"></div>
+      <span class="text-xs text-white/50 uppercase tracking-widest">veya</span>
+      <div class="flex-1 h-px bg-yellow-500/20"></div>
+    </div>
+
+    <div class="text-center text-sm">
+      Hesabın yok mu? <a href="#" class="text-yellow-400 font-bold hover:text-yellow-300">Yönetici ile iletişime geç</a>
+    </div>
+  </div>
+
+  <p class="text-center text-xs text-white/50 mt-6">© 2026 İş Ortağım — DN Kreatif</p>
+</div>
+
+<script>
+const t = document.getElementById('themeToggle');
+if(localStorage.getItem('admin_theme') === 'light') document.body.classList.add('light');
+t.addEventListener('click', () => { document.body.classList.toggle('light'); localStorage.setItem('admin_theme', document.body.classList.contains('light') ? 'light' : 'dark'); });
+</script>
+</body>
+</html>

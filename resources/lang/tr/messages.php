@@ -1,0 +1,283 @@
+<?php
+
+return [
+    // Genel
+    'welcome' => 'Hoş Geldiniz',
+    'dn_isortagim_welcome' => 'DN İş ortağıma Hoş Geldiniz',
+    'home' => 'Anasayfa',
+    'about' => 'Hakkımızda',
+    'contact' => 'İletişim',
+    'login' => 'Giriş Yap',
+    'register' => 'Kayıt Ol',
+    'logout' => 'Çıkış Yap',
+    'welcome_back' => 'Tekrar hoş geldiniz',
+    'secure_login' => 'Güvenli Giriş',
+    
+    // Menü
+    'packages' => 'Paketler',
+    'domain' => 'Alan Adı',
+    'hosting' => 'Web Hosting',
+    'web_hosting' => 'Web Hosting',
+    'opportunities' => 'Fırsatlar',
+    'corporate' => 'Kurumsal',
+    'references' => 'Referanslarımız',
+    'blog' => 'Blog',
+    'dealership' => 'Bayilik',
+    
+    // Paketler
+    'web_packages' => 'Web Paketlerimiz',
+    'professional_packages' => 'Profesyonel web tasarım paketleri',
+    'view_details' => 'İncele',
+    'buy_now' => 'Satın Al',
+    'add_to_cart' => 'Sepete Ekle',
+    'view_all_packages' => 'Tüm paketleri görmek için',
+    'click_here' => 'tıklayınız',
+    
+    // Fiyat
+    'price' => 'Fiyat',
+    'one_time_payment' => 'Tek Seferlik Ödeme',
+    'monthly' => 'Aylık',
+    'yearly' => 'Yıllık',
+    'vat_included' => '+ KDV',
+    
+    // Referanslar
+    'our_references' => 'Referanslarımız',
+    'successful_projects' => 'Başarılı projelerimiz',
+    
+    // Blog
+    'latest_posts' => "Blog'tan Son Yazılar",
+    'read_more' => 'Devamını Oku',
+    
+    // İletişim
+    'contact_us' => 'Bize Ulaşın',
+    'phone' => 'Telefon',
+    'email' => 'E-posta',
+    'address' => 'Adres',
+    'contact_form' => 'İletişim Formu',
+    'your_name' => 'Adınız Soyadınız',
+    'your_email' => 'E-posta Adresiniz',
+    'your_phone' => 'Telefon Numaranız',
+    'subject' => 'Konu',
+    'your_message' => 'Mesajınız',
+    'send' => 'Gönder',
+    'reset' => 'Temizle',
+    'contact_info_text' => 'Bizimle iletişime geçmek için aşağıdaki formu doldurabilirsiniz.',
+    'message_sent_success' => 'Mesajınız başarıyla gönderildi. En kısa sürede size dönüş yapılacaktır.',
+    
+    // Kullanıcı Paneli
+    'my_account' => 'Hesabım',
+    'my_info' => 'Bilgilerim',
+    'my_invoices' => 'Faturalarım',
+    'my_hostings' => 'Hostinglerim',
+    'my_tickets' => 'Destek Taleplerim',
+    'shopping_cart' => 'Sepetim',
+    
+    // Butonlar
+    'submit' => 'Gönder',
+    'cancel' => 'İptal',
+    'save' => 'Kaydet',
+    'delete' => 'Sil',
+    'edit' => 'Düzenle',
+    'search' => 'Ara',
+    
+    // Ana Sayfa
+    'search_domain' => 'Domain Sorgula',
+    'enter_domain' => 'Domain adınızı girin',
+    'query' => 'Sorgula',
+    'continue_reading' => 'Devamını Gör',
+    'why_choose_us' => 'Neden Bizi Tercih Etmelisiniz?',
+    'our_advantages' => 'Avantajlarımız',
+    'view_all' => 'Tümünü Görüntüle',
+    'latest_blog_posts' => "Blog'tan Son Yazılar",
+    'our_web_packages' => 'Web Paketlerimiz',
+    'professional_web_design' => 'Profesyonel web tasarım paketleri',
+    'to_view_all_packages' => 'Tüm paketleri görmek için',
+    'click' => 'tıklayınız',
+    'our_references_title' => 'Referanslarımız',
+    'our_successful_projects' => 'Başarılı projelerimiz',
+    'view_project' => 'Projeyi İncele',
+    'latest_blog_title' => "Blog'tan Son Yazılar",
+    'read_article' => 'Yazıyı Oku',
+    'per_month' => 'Aylık',
+    'per_year' => 'Yıllık',
+    'one_time' => 'Tek Seferlik',
+    'starting_from' => 'başlayan fiyatlarla',
+    'about_us' => 'Hakkımızda',
+    'no_image' => 'Resim Yok',
+    
+    // Footer
+    'quick_links' => 'Hızlı Linkler',
+    'services' => 'Hizmetler',
+    'support' => 'Destek',
+    'domain_registration' => 'Domain Tescil',
+    'customer_login' => 'Müşteri Girişi',
+    'more' => 'Daha Fazla',
+    'all_rights_reserved' => 'Tüm hakları saklıdır',
+    
+    // Destek Bölümü
+    'live_support' => 'Canlı Destek',
+    'live_support_desc' => '7/24 canlı destek hizmeti',
+    'email_support' => 'E-posta Desteği',
+    'email_support_desc' => 'E-posta ile destek alın',
+    'knowledge_base' => 'Bilgi Bankası',
+    'knowledge_base_desc' => 'Detaylı dökümanlar',
+    
+    // Paketler Sayfası
+    'packages_description' => 'Çeşitli sektörden, birbirinden özel ve ekonomik web paketlerimizden, size uygun olanı seçin',
+    'categories' => 'KATEGORİLER',
+    'all_packages' => 'Tüm Paketler',
+    'category_filter_active' => 'Kategori filtresi aktif',
+    'clear_filter' => 'Filtreyi Temizle',
+    'search_product' => 'Ürün Aramak İçin Yazın...',
+    'sort_newest' => 'Tarihe göre (Önce en yeni)',
+    'sort_oldest' => 'Tarihe göre (Önce en eski)',
+    'info' => 'Bilgi',
+    'no_packages_found' => 'Henüz paket bulunmamaktadır',
+    
+    // Paket Detay
+    'views' => 'görüntülenme',
+    'features' => 'Özellikler',
+    'description' => 'Açıklama',
+    'installation_instructions' => 'Kurulum Talimatları',
+    'login_to_buy' => 'Satın Almak İçin Giriş Yapın',
+    'view_demo' => 'Demo Görüntüle',
+    'admin_demo' => 'Admin Demo',
+    
+    // Genel Butonlar ve Aksiyonlar
+    'learn_more' => 'Devamını Gör',
+    'get_started' => 'Hemen Başla',
+    'sign_up_now' => 'Hemen Kayıt Ol',
+    'contact_now' => 'İletişime Geç',
+    
+    // Ana Sayfa - Domain
+    'check_domain' => 'Domain Sorgula',
+    'enter_domain_name' => 'Domain adınızı girin',
+    'search' => 'Sorgula',
+    
+    // Footer
+    'company_info' => 'Kurumsal Bilgiler',
+    'terms_of_service' => 'Hizmet Şartları',
+    'privacy_policy' => 'Gizlilik Politikası',
+    'cookie_policy' => 'Çerez Politikası',
+    'sitemap' => 'Site Haritası',
+    
+    // Diğer
+    'powered_by' => 'Altyapı',
+    'loading' => 'Yükleniyor...',
+    'please_wait' => 'Lütfen bekleyin...',
+    'login_desc' => 'Hizmetlerinizi yönetin, faturalarınızı takip edin ve destek taleplerinizi tek panelden yönetin.',
+    'manage_services' => 'Satın aldığınız hizmetleri yönetin',
+    'track_invoices' => 'Faturalarınızı ve ödemelerinizi takip edin',
+    'get_support' => 'Destek taleplerinizi hızla oluşturun',
+    'need_help' => 'Yardıma mı ihtiyacınız var?',
+    'contact_support' => 'Destek ekibimizle iletişime geçin',
+    'login_account' => 'Hesabınıza giriş yapın',
+    'email_address' => 'E-posta Adresi',
+    'password' => 'Şifre',
+    'remember_me' => 'Beni hatırla',
+    'forgot_password' => 'Şifremi unuttum',
+    'login_now' => 'Giriş Yap',
+    'no_account' => 'Hesabınız yok mu?',
+    'register_now' => 'Hemen kayıt olun',
+    'security_notice' => 'Güvenlik nedeni ile açık alanlarda şifrenizi paylaşmayın.',
+    
+    // Domain
+    'domain_extension' => 'Uzantı',
+    'registration_price' => 'Kayıt Fiyatı',
+    'renewal_price' => 'Yenileme Fiyatı',
+    'currency_symbol' => 'TL',
+    'domain_registration_description' => 'Alan adınızı sorgulayın ve hemen tescil edin',
+    'domain_features_title' => 'Alan Adı Özellikleri',
+    'domain_features_description' => 'Alan adınızı güvenle tescil edin ve profesyonel DNS yönetimi ile yönetin.',
+    'domain_support_title' => '7/24 Destek',
+    'domain_support_description' => 'Alan adınızla ilgili tüm sorularınız için 7/24 teknik destek hizmetimizden yararlanabilirsiniz.',
+    'no_items_found' => 'Kriterlere uygun öğe bulunamadı',
+    
+    // Hosting
+    'web_hosting_description' => 'Hızlı ve güvenilir web hosting çözümleri',
+    'no_hosting_packages' => 'Henüz hosting paketi bulunmamaktadır',
+    'hosting_packages_will_be_added_soon' => 'Hosting paketleri yakında eklenecektir',
+    'no_hosting_packages_in_category' => 'Bu kategoride henüz hosting paketi bulunmamaktadır',
+    'quarterly' => '3 Aylık',
+    'our_web_packages' => 'Web Paketlerimiz',
+
+    // Panel Dashboard
+    'panel_title' => 'Müşteri Paneli',
+    'panel_web_packages' => 'Web Paketlerim',
+    'panel_domains' => 'Alan Adlarım',
+    'panel_unpaid_invoices' => 'Ödenmemiş Faturalar',
+    'panel_support_requests' => 'Destek Taleplerim',
+    'panel_balance' => 'Bakiyem',
+    'panel_support_recent' => 'Son Destek Taleplerim',
+    'panel_new_ticket' => '+ Yeni Talep Oluştur',
+    'panel_invoices_recent' => 'Son Faturalarım',
+    'panel_view_all' => 'Tümünü Görüntüle',
+    'panel_warning_title' => 'Uyarı!',
+    'panel_unpaid_warning' => 'Toplam :count adet ödenmemiş faturanız bulunmaktadır. Toplam tutar: :amount',
+    'panel_view_invoices' => 'Faturalarımı Görüntüle',
+    'table_subject' => 'Konu',
+    'table_status' => 'Durum',
+    'table_date' => 'Tarih',
+    'table_amount' => 'Tutar',
+    'table_invoice_no' => 'Fatura No',
+    'status_pending' => 'Beklemede',
+    'status_answered' => 'Yanıtlandı',
+    'status_customer_reply' => 'Müşteri Yanıtı',
+    'status_closed' => 'Kapalı',
+    'status_unpaid' => 'Ödenmedi',
+    'status_paid' => 'Ödendi',
+    'empty_support' => 'Henüz destek talebiniz bulunmuyor.',
+    'empty_invoices' => 'Henüz faturanız bulunmuyor.',
+
+    // Panel Menü ve Üst Bilgi
+    'panel_menu' => 'Menü',
+    'panel_profile' => 'Bilgilerim',
+    'panel_hostings' => 'Hostinglerim',
+    'panel_invoices' => 'Faturalarım',
+    'panel_cart' => 'Sepetim',
+    'panel_logout' => 'Çıkış',
+    'panel_last_login' => 'Son Giriş',
+    'panel_ip' => 'IP',
+    'panel_welcome_user' => 'Hoşgeldiniz :name.',
+
+    // Bilgilerim
+    'profile_title' => 'Bilgilerim',
+    'profile_breadcrumb' => 'Müşteri Paneli / Bilgilerim',
+    'profile_tab_summary' => 'Özet',
+    'profile_tab_billing' => 'Fatura Bilgilerim',
+    'profile_tab_preferences' => 'Tercihler',
+    'profile_tab_password' => 'Şifre Değiştir',
+    'profile_section_account' => 'Hesap Bilgileri',
+    'profile_section_account_type' => 'Hesap Türü',
+    'profile_account_individual' => 'Bireysel',
+    'profile_account_corporate' => 'Kurumsal',
+    'profile_first_name' => 'Ad',
+    'profile_last_name' => 'Soyad',
+    'profile_email' => 'E-posta',
+    'profile_phone' => 'Telefon',
+    'profile_address_section' => 'Adres Bilgileri',
+    'profile_country' => 'Ülke',
+    'profile_city' => 'Şehir',
+    'profile_address' => 'Adres',
+    'profile_update' => 'Güncelle',
+    'profile_billing_title' => 'Fatura Bilgileri',
+    'profile_invoice_title' => 'Fatura Ünvanı',
+    'profile_invoice_tax' => 'TC Kimlik No / Vergi No',
+    'profile_invoice_address' => 'Fatura Adresi',
+    'profile_invoice_city' => 'Şehir',
+    'profile_invoice_country' => 'Ülke',
+    'profile_prefs_info' => 'Bildirim tercihlerinizi buradan yönetebilirsiniz.',
+    'profile_prefs_email' => 'E-posta bildirimleri gönderilsin',
+    'profile_prefs_sms' => 'SMS bildirimleri gönderilsin',
+    'profile_password_title' => 'Şifre Değiştir',
+    'profile_password_info' => 'Güçlü bir şifre seçin. En az 6 karakter kullanın.',
+    'profile_current_password' => 'Mevcut Şifre',
+    'profile_new_password' => 'Yeni Şifre',
+    'profile_new_password_confirm' => 'Yeni Şifre (Tekrar)',
+];
+
+
+
+
+
+

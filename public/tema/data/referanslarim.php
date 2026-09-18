@@ -1,0 +1,59 @@
+<?php
+if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+{
+    ob_start();
+    session_start();
+
+    require_once('../../../_class/baglan.php');
+    require_once('../../../_class/fonksiyon.php');
+    require_once('../../../language/dil_'.$_SESSION['k_dil'].".php");
+
+    $request=$_REQUEST;
+    $col =array(
+        0   =>  'baslik',
+    );
+
+    //Search
+    $sql ="SELECT * FROM musteri_referanslar WHERE uyeid= '".$_SESSION['site_uyeid']."'";
+    if(!empty($request['search']['value'])){
+        $sql.=" AND (id LIKE '".$request['search']['value']."%' ";
+        $sql.=" OR baslik LIKE '".$request['search']['value']."%' ";
+        $sql.=" OR tutar LIKE '".$request['search']['value']."%' ";
+        $sql.=" OR durum LIKE '".$request['search']['value']."%' )";
+    }
+    $totalFilter = $db->query($sql)->rowCount();
+    $totalData = $db->query($sql)->rowCount();
+
+    //Order
+    $sql.=" ORDER BY ".$col[$request['order'][0]['column']]."   ".$request['order'][0]['dir']."  LIMIT ".$request['start']."  ,".$request['length']."  ";
+    $query 	= $db->prepare($sql);
+    $query->execute();
+    $islem 	= $query->fetchALL(PDO::FETCH_ASSOC);
+    $data	= array();
+    $say 	= $request['start']+1;
+    foreach($islem as $row)
+    {
+        $durumlar	= explode("\n",$row['durum']);
+        $i		= 0;
+        $kc		= count($durumlar);
+        $durum 	= "";
+
+        $baslik = '<strong>'.$row['baslik'].'</strong>';
+
+        $subdata=array();
+        $subdata[]=$baslik;
+        $data[]=$subdata;
+    }
+    $json_data=array(
+        "draw"              		=>  intval($request['draw']),
+        "recordsTotal"      	=>  intval($totalData),
+        "recordsFiltered"   	=>  intval($totalFilter),
+        "data"              		=>  $data
+    );
+    echo json_encode($json_data);
+}
+else
+{
+    die("Erişim engellendi");
+}
+?>

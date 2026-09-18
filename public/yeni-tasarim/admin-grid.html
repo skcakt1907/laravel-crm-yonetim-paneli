@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paketler — İş Ortağım Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+* { transition: background-color .4s, color .4s; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Inter', sans-serif; background: #000; color: #fff; }
+.font-display { font-family: 'Space Grotesk', sans-serif; }
+.glass { background: rgba(20,20,20,.85); backdrop-filter: blur(20px); border: 1px solid rgba(250,204,21,.25); }
+body.light { background: #fff; color: #000; }
+body.light .glass { background: rgba(255,255,255,.95); border: 1px solid rgba(0,0,0,.08); box-shadow: 0 4px 20px rgba(0,0,0,.04); }
+body.light .text-white { color: #000 !important; } body.light .text-white\/70 { color: rgba(0,0,0,.7) !important; } body.light .text-white\/60 { color: rgba(0,0,0,.6) !important; } body.light .text-white\/50 { color: rgba(0,0,0,.5) !important; }
+body.light .border-yellow-500\/20 { border-color: rgba(0,0,0,.1) !important; }
+body.light .nav-link { color: #000 !important; }
+body.light input, body.light select { background: rgba(0,0,0,.04) !important; color: #000 !important; border-color: rgba(0,0,0,.1) !important; }
+.gradient-text { background: linear-gradient(135deg, #fde047, #facc15, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #facc15, #f59e0b); border-radius: 8px; }
+.nav-link { color: #fff; transition: all .3s; text-decoration: none; display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; }
+.nav-link.active { background: linear-gradient(135deg, rgba(250,204,21,.2), rgba(250,204,21,.05)); color: #fde047 !important; border-left: 3px solid #facc15; }
+.nav-link:hover { background: rgba(255,255,255,.05); }
+.emoji-icon { transition: all .3s; font-size: 22px; line-height: 1; display: inline-flex; width: 36px; height: 36px; align-items: center; justify-content: center; }
+.sidebar-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(250,204,21,.5), transparent); margin: 1rem 0; }
+.theme-toggle { position: fixed; top: 20px; right: 24px; z-index: 100; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #facc15, #f59e0b); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 10px 30px rgba(250,204,21,.4); font-size: 20px; border: none; }
+.theme-toggle:hover { transform: scale(1.1) rotate(15deg); } .theme-toggle .icon-sun { display: none; } body.light .theme-toggle .icon-sun { display: block; } body.light .theme-toggle .icon-moon { display: none; }
+.btn-y { background: linear-gradient(135deg, #facc15, #f59e0b); color: #000; font-weight: 700; padding: 10px 20px; border-radius: 12px; transition: all .3s; box-shadow: 0 8px 20px rgba(250,204,21,.3); }
+.btn-y:hover { transform: translateY(-2px); }
+.btn-o { background: rgba(255,255,255,.05); border: 1px solid rgba(250,204,21,.3); color: #fff; padding: 10px 20px; border-radius: 12px; transition: all .3s; }
+body.light .btn-o { background: rgba(0,0,0,.03); color: #000; }
+input, select { background: rgba(255,255,255,.05); border: 1px solid rgba(250,204,21,.25); color: #fff; padding: 10px 14px; border-radius: 10px; }
+input:focus { border-color: #facc15; outline: none; }
+.badge { padding: 4px 10px; border-radius: 8px; font-weight: 600; font-size: 11px; display: inline-flex; align-items: center; gap: 4px; }
+.badge-success { background: rgba(16,185,129,.2); color: #6ee7b7; border: 1px solid rgba(16,185,129,.3); }
+.badge-warning { background: rgba(251,146,60,.2); color: #fdba74; border: 1px solid rgba(251,146,60,.3); }
+.badge-yellow { background: rgba(250,204,21,.2); color: #fde047; border: 1px solid rgba(250,204,21,.3); }
+.product-card { transition: all .4s; }
+.product-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(250,204,21,.2); border-color: rgba(250,204,21,.5); }
+.sidebar-collapsed { width: 80px !important; }
+.sidebar-collapsed .nav-text, .sidebar-collapsed .nav-section, .sidebar-collapsed .logo-text { display: none; }
+</style>
+</head>
+<body>
+<button id="themeToggle" class="theme-toggle"><span class="icon-moon">🌙</span><span class="icon-sun">☀️</span></button>
+
+<div class="flex min-h-screen">
+  <aside id="sidebar" class="hidden lg:flex flex-col w-72 glass border-r border-yellow-500/25 sticky top-0 h-screen overflow-y-auto z-30">
+    <div class="p-6 border-b border-yellow-500/20">
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-black font-extrabold text-xl">İ</div>
+        <div class="logo-text"><div class="font-display font-bold text-lg leading-tight">İş Ortağım</div><div class="text-xs text-yellow-400">Admin Panel</div></div>
+      </a>
+    </div>
+    <nav class="flex-1 p-4 space-y-1">
+      <div class="nav-section text-[10px] font-bold text-yellow-400 uppercase tracking-widest px-3 mb-2">Ana Menü</div>
+      <a href="#" class="nav-link"><span class="emoji-icon">📊</span><span class="nav-text font-medium">Dashboard</span></a>
+      <a href="admin-liste.html" class="nav-link"><span class="emoji-icon">👥</span><span class="nav-text font-medium">Üyeler</span></a>
+      <a href="#" class="nav-link active"><span class="emoji-icon">📦</span><span class="nav-text font-medium">Paketler</span></a>
+      <a href="#" class="nav-link"><span class="emoji-icon">🧾</span><span class="nav-text font-medium">Faturalar</span></a>
+      <div class="sidebar-divider"></div>
+      <a href="#" class="nav-link"><span class="emoji-icon">⚙️</span><span class="nav-text font-medium">Ayarlar</span></a>
+      <a href="#" class="nav-link"><span class="emoji-icon">🚪</span><span class="nav-text font-medium">Çıkış</span></a>
+    </nav>
+  </aside>
+
+  <div class="flex-1 flex flex-col min-w-0">
+    <header class="glass border-b border-yellow-500/20 sticky top-0 z-20">
+      <div class="flex items-center justify-between gap-4 px-4 lg:px-8 h-16">
+        <div class="flex items-center gap-3">
+          <button id="sidebarToggle" class="p-2 hover:bg-yellow-500/10 rounded-lg text-2xl">☰</button>
+        </div>
+        <div class="flex items-center gap-3 pl-3 border-l border-yellow-500/20">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-black font-bold">N</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 p-4 lg:p-8 space-y-6">
+      <!-- Header -->
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <div class="flex items-center gap-2 text-sm text-white/60 mb-2">
+            <a href="#" class="hover:text-yellow-400">🏠 Anasayfa</a> <span>›</span> <span>Paketler</span>
+          </div>
+          <h1 class="font-display text-3xl font-extrabold flex items-center gap-3">📦 Web Paketleri <span class="badge badge-yellow text-base">12</span></h1>
+        </div>
+        <div class="flex gap-2">
+          <div class="flex bg-white/5 border border-yellow-500/20 rounded-xl p-1">
+            <button class="px-3 py-1.5 rounded-lg bg-yellow-500/20 text-yellow-400 text-sm font-semibold">⊞ Grid</button>
+            <button class="px-3 py-1.5 rounded-lg text-white/60 hover:text-white text-sm font-semibold">☰ Liste</button>
+          </div>
+          <a href="admin-form.html" class="btn-y flex items-center gap-2">➕ Yeni Paket</a>
+        </div>
+      </div>
+
+      <!-- FILTERS -->
+      <div class="glass rounded-2xl p-5">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+          <input type="text" placeholder="🔍 Paket ara..." class="md:col-span-2">
+          <select><option>Tüm Kategoriler</option><option>🌐 Web Tasarım</option><option>🛒 E-Ticaret</option><option>🔍 SEO</option></select>
+          <select><option>Sırala: Fiyat ↓</option><option>Fiyat ↑</option><option>En Yeni</option><option>En Popüler</option></select>
+        </div>
+      </div>
+
+      <!-- GRID -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+
+        <!-- Card 1 -->
+        <div class="product-card glass rounded-2xl overflow-hidden">
+          <div class="aspect-video bg-gradient-to-br from-yellow-500/20 to-amber-500/10 flex items-center justify-center text-7xl">🌱</div>
+          <div class="p-5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="badge badge-yellow">Web</span>
+              <span class="badge badge-success">✅ Aktif</span>
+            </div>
+            <h3 class="font-bold text-lg mb-1">Başlangıç Paketi</h3>
+            <p class="text-sm text-white/60 mb-4">5 sayfa, mobil uyumlu, SSL dahil.</p>
+            <div class="flex items-baseline gap-1 mb-4">
+              <span class="font-display text-3xl font-extrabold gradient-text">₺899</span>
+              <span class="text-white/50 text-sm">/ay</span>
+            </div>
+            <div class="flex items-center justify-between text-xs text-white/50 mb-4 pb-4 border-b border-yellow-500/10">
+              <span>📈 142 satış</span>
+              <span>👁️ 1.2K görüntüleme</span>
+            </div>
+            <div class="flex gap-2">
+              <a href="admin-detay.html" class="btn-o flex-1 text-sm text-center">👁️ Görüntüle</a>
+              <a href="admin-form.html" class="btn-y flex-1 text-sm text-center">✏️ Düzenle</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Popular -->
+        <div class="product-card glass rounded-2xl overflow-hidden relative" style="border-color: rgba(250,204,21,.5); box-shadow: 0 0 30px rgba(250,204,21,.2);">
+          <div class="absolute top-3 right-3 z-10 bg-gradient-to-r from-yellow-400 to-amber-500 text-black text-xs font-extrabold px-3 py-1 rounded-full">⭐ POPÜLER</div>
+          <div class="aspect-video bg-gradient-to-br from-yellow-500/30 to-amber-500/20 flex items-center justify-center text-7xl">🚀</div>
+          <div class="p-5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="badge badge-yellow">Web</span>
+              <span class="badge badge-success">✅ Aktif</span>
+            </div>
+            <h3 class="font-bold text-lg mb-1">Profesyonel Paket</h3>
+            <p class="text-sm text-white/60 mb-4">Sınırsız sayfa + blog + WhatsApp.</p>
+            <div class="flex items-baseline gap-1 mb-4">
+              <span class="font-display text-3xl font-extrabold gradient-text">₺1.999</span>
+              <span class="text-white/50 text-sm">/ay</span>
+            </div>
+            <div class="flex items-center justify-between text-xs text-white/50 mb-4 pb-4 border-b border-yellow-500/10">
+              <span>📈 387 satış</span>
+              <span>👁️ 5.4K görüntüleme</span>
+            </div>
+            <div class="flex gap-2">
+              <a href="admin-detay.html" class="btn-o flex-1 text-sm text-center">👁️</a>
+              <a href="admin-form.html" class="btn-y flex-1 text-sm text-center">✏️ Düzenle</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="product-card glass rounded-2xl overflow-hidden">
+          <div class="aspect-video bg-gradient-to-br from-yellow-500/20 to-amber-500/10 flex items-center justify-center text-7xl">🏢</div>
+          <div class="p-5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="badge badge-yellow">E-Ticaret</span>
+              <span class="badge badge-success">✅ Aktif</span>
+            </div>
+            <h3 class="font-bold text-lg mb-1">Kurumsal Paket</h3>
+            <p class="text-sm text-white/60 mb-4">E-ticaret + sanal POS + çoklu dil.</p>
+            <div class="flex items-baseline gap-1 mb-4">
+              <span class="font-display text-3xl font-extrabold gradient-text">₺3.999</span>
+              <span class="text-white/50 text-sm">/ay</span>
+            </div>
+            <div class="flex items-center justify-between text-xs text-white/50 mb-4 pb-4 border-b border-yellow-500/10">
+              <span>📈 89 satış</span>
+              <span>👁️ 2.8K görüntüleme</span>
+            </div>
+            <div class="flex gap-2">
+              <a href="admin-detay.html" class="btn-o flex-1 text-sm text-center">👁️</a>
+              <a href="admin-form.html" class="btn-y flex-1 text-sm text-center">✏️ Düzenle</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Pasif -->
+        <div class="product-card glass rounded-2xl overflow-hidden opacity-70">
+          <div class="aspect-video bg-gradient-to-br from-zinc-700 to-zinc-800 flex items-center justify-center text-7xl grayscale">📂</div>
+          <div class="p-5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="badge badge-yellow">Web</span>
+              <span class="badge badge-warning">⏸️ Pasif</span>
+            </div>
+            <h3 class="font-bold text-lg mb-1">Mini Vitrin</h3>
+            <p class="text-sm text-white/60 mb-4">3 sayfa, basit vitrin sitesi.</p>
+            <div class="flex items-baseline gap-1 mb-4">
+              <span class="font-display text-3xl font-extrabold text-white/50">₺499</span>
+              <span class="text-white/40 text-sm">/ay</span>
+            </div>
+            <div class="flex items-center justify-between text-xs text-white/50 mb-4 pb-4 border-b border-yellow-500/10">
+              <span>📈 12 satış</span>
+            </div>
+            <div class="flex gap-2">
+              <a href="#" class="btn-o flex-1 text-sm text-center">👁️</a>
+              <a href="#" class="btn-y flex-1 text-sm text-center">✏️ Düzenle</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+const t = document.getElementById('themeToggle');
+if(localStorage.getItem('admin_theme') === 'light') document.body.classList.add('light');
+t.addEventListener('click', () => { document.body.classList.toggle('light'); localStorage.setItem('admin_theme', document.body.classList.contains('light') ? 'light' : 'dark'); });
+document.getElementById('sidebarToggle').addEventListener('click', () => document.getElementById('sidebar').classList.toggle('sidebar-collapsed'));
+</script>
+</body>
+</html>
